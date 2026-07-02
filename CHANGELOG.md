@@ -4,6 +4,16 @@ All notable changes to the Decker AI are documented in this file.
 
 ---
 
+## [v1.7.0] - 2026-07-02
+
+### Added (Market State API v0)
+
+- **Market State API v0**: `GET /api/v1/public/state/{symbol}/{tf}` (current bar) + `/timeline` (per-bar, `since`/`limit`) — the engine's persisted structural state read as-is (zero recompute). Response = `state` (label · swing_phase · c_state · key levels · action_gate) + `why` (reason_codes · hold_reason · mtf_verdict) + `provenance`. Absent axes are `null` — the API never fills or fabricates. Uses the existing X-API-Key tiers and rate limits.
+- **MCP tools 4 → 6**: `decker.get_market_state` / `decker.get_state_timeline` — same schema over MCP, same key.
+- **Accuracy statement**: what we prove is *state accuracy* (engine emit ≡ persisted ≡ API response, contract-tested); we do not sell trade instructions or promise returns. `action_gate` is a transition posture (GO/WATCH/HOLD), not an order command.
+
+---
+
 ## [v1.6.0] - 2026-05-02
 
 ### Added (Sprint 3 — MCP server · Skill Overlay · Pricing 정책)

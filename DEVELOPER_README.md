@@ -83,6 +83,8 @@ Full OpenAPI spec: **[api.decker-ai.com/docs](https://api.decker-ai.com/docs)**.
 | `GET`  | `/api/v1/public/signals/{symbol}/narrative` | Rule-based / LLM structural narrative |
 | `GET`  | `/api/v1/public/signals/{symbol}/mtf` | MTF consumer signal + Skill Overlay applied |
 | `GET`  | `/api/v1/public/state/live` | Engine state (c_state · gate · MTF) |
+| `GET`  | `/api/v1/public/state/{symbol}/{tf}` | **Market State v0** — persisted per-bar engine state, read as-is (zero recompute). `state` (label · swing · c_state · gate) + `why` (reason_codes · hold_reason · mtf_verdict) + `provenance` |
+| `GET`  | `/api/v1/public/state/{symbol}/{tf}/timeline` | Per-bar state timeline (`since`, `limit` ≤ 500). Bars the engine did not emit are simply absent — honest gaps, no filling |
 | `GET`  | `/api/v1/public/reading/{sym}/{tf}` | AI reading view v0.2 (8 blocks) |
 
 ### KRX (Beta — free)
@@ -107,7 +109,7 @@ KRX details: [`docs/krx/KRX_BUSINESS_MODEL_AND_ROADMAP_2026-05-09.md`](docs/krx/
 | Method | Path | Description |
 |--------|------|-------------|
 | `GET`  | `/api/v1/mcp/sse` | SSE handshake ([Way E](#mcp-server-way-e)) |
-| `POST` | `/api/v1/mcp/messages` | JSON-RPC 2.0 (4 tools) |
+| `POST` | `/api/v1/mcp/messages` | JSON-RPC 2.0 (6 tools) |
 | `GET`  | `/api/v1/mcp/health` | MCP server health |
 
 ---
@@ -175,12 +177,14 @@ Drop into `~/Library/Application Support/Claude/claude_desktop_config.json` (mac
 
 Same URL + headers. Most MCP clients accept an HTTP-SSE transport definition; consult your client's docs. The handshake is plain SSE — no custom transport required.
 
-### 4 tools (auto-applies your active Skill Overlay)
+### 6 tools (auto-applies your active Skill Overlay)
 
 | Tool | Purpose | Key params |
 |------|---------|-----------|
 | `decker.get_signals` | Active MTF consumer signals | `symbol?`, `min_progress?`, `gate?` (GO/WATCH/HOLD) |
 | `decker.get_reading` | AI reading view v0.2 (8 blocks: state · MTF · risk · narrative) | `symbol`, `timeframe` |
+| `decker.get_market_state` | **Market State v0** — current engine structural state for a bar (persisted emit, zero recompute). `action_gate` is a transition posture (GO/WATCH/HOLD), not an order command; absent axes are `null` | `symbol`, `timeframe` (30m/1h/4h/8h/1d) |
+| `decker.get_state_timeline` | Per-bar state timeline, same schema, ascending by `bar_ts` | `symbol`, `timeframe`, `since?`, `limit?` |
 | `decker.get_user_skills` | Catalog of trading skills + active overlay | — |
 | `decker.set_skill_overlay` | Switch overlay on the fly | `overlay` (`conservative_v0` \| `standard_v0` \| `aggressive_v0`) |
 
