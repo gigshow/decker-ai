@@ -261,6 +261,28 @@ curl -H "X-API-Key: $KEY" \
 
 Response meta: `gate_counts` · `action_counts` · `data_freshness` (fresh/stale/danger).
 
+### `GET /api/v1/public/krx/transitions` — Daily checkup (Beta)
+
+Only tickers whose engine state or gate **actually changed** at the latest close — a noise-zero daily diff. This is the data spine of the "daily checkup" product surface (site strip + Telegram closing-bell briefing).
+
+```bash
+curl -H "X-API-Key: dk_live_xxx" \
+  'https://api.decker-ai.com/api/v1/public/krx/transitions?limit=40'
+```
+
+```jsonc
+{
+  "transitions": [{
+    "ticker": "000660", "company_name": "SK하이닉스",
+    "prev_c_state": "B_SET", "c_state": "B_OBSERVING",
+    "prev_gate": "HOLD", "gate": "GO", "gate_changed": true,
+    "portfolio_action": "ADD", "key_price_krw": 2650000.0,
+    "is_new": false, "evaluated_at": "2026-07-03T06:30:00"
+  }],
+  "total": 24, "evaluated_date": "2026-07-03"
+}
+```
+
 ### `GET /api/v1/public/krx/market` — KRX market macro (Beta)
 
 Market header — USD/KRW · base rate · KOSPI200 · signal distribution + sector breakdown + data_freshness.
@@ -283,7 +305,9 @@ Any symbol/TF outside this list returns **404**.
 
 ### KRX Korean stocks (Beta)
 **KOSPI 948 + KOSDAQ 1,822 = 2,770 tickers** with daily OHLCV. Evaluation universe = top 200 by trading value ∪ user watchlist ∪ momentum spike ∪ volume spike (`/krx/signals` returns universe top 200 by default).
-Ticker format: 6-digit numeric (`005930` Samsung Electronics, `010170` Daehan Optic, etc). Timeframe `1d` (1w expanding).
+Ticker format: 6-digit numeric (`005930` Samsung Electronics, `010170` Daehan Optic, etc). Timeframes: `1d` (daily close, evaluated 16:30 KST) and `1w` (weekly, evaluated Fridays 17:00 KST).
+
+KRX symbols are also served by **Market State API v0 and MCP** with the same schema as crypto: `GET /api/v1/public/state/000270.KRX/1d` or `decker.get_market_state("000270.KRX", "1d")`.
 
 ---
 

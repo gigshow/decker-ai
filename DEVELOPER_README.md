@@ -85,6 +85,16 @@ Full OpenAPI spec: **[api.decker-ai.com/docs](https://api.decker-ai.com/docs)**.
 | `GET`  | `/api/v1/public/state/live` | Engine state (c_state · gate · MTF) |
 | `GET`  | `/api/v1/public/state/{symbol}/{tf}` | **Market State v0** — persisted per-bar engine state, read as-is (zero recompute). `state` (label · swing · c_state · gate) + `why` (reason_codes · hold_reason · mtf_verdict) + `provenance` |
 | `GET`  | `/api/v1/public/state/{symbol}/{tf}/timeline` | Per-bar state timeline (`since`, `limit` ≤ 500). Bars the engine did not emit are simply absent — honest gaps, no filling |
+
+**Market State v0 coverage** — one schema, three symbol families:
+
+| Family | Symbol format | Timeframes | Refresh | Provenance |
+|--------|---------------|------------|---------|------------|
+| Crypto (Binance) | `BTCUSDT` | `30m` `1h` `4h` `8h` `1d` | real-time (bar close) | `engine:live_l1` |
+| Hyperliquid TradFi (HIP-3) | `XYZ_SP500USD` | same | same | `engine:live_l1:hyperliquid_xyz` |
+| KRX Korean stocks | `000270.KRX` | `1d` `1w` | daily 16:30 KST (`1w` Fri 17:00) | `krx:daily` |
+
+KRX is a daily batch, so a large `freshness_sec` is the honest value, not staleness.
 | `GET`  | `/api/v1/public/reading/{sym}/{tf}` | AI reading view v0.2 (8 blocks) |
 
 ### KRX (Beta — free)
@@ -93,6 +103,7 @@ Full OpenAPI spec: **[api.decker-ai.com/docs](https://api.decker-ai.com/docs)**.
 |--------|------|-------------|
 | `GET` | `/api/v1/public/krx/signals` | KOSPI + KOSDAQ batch with 4 actions (ADD/HOLD/REDUCE/EXIT) |
 | `GET` | `/api/v1/public/krx/market` | Market macro + signal summary |
+| `GET` | `/api/v1/public/krx/transitions` | **Daily checkup** — only tickers whose state/gate actually changed at today's close (noise-zero diff; powers the site strip and the Telegram closing-bell briefing) |
 
 ```bash
 curl -H "X-API-Key: $KEY" \

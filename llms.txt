@@ -8,7 +8,7 @@ This repo ships a **working public API**, runnable samples, and operation rules 
 - README.md — Overview, State Engine, Try It Now (30s / 3min / 5min), article links
 - docs/architecture.md — Pipeline: Market Data → Label → FSM → Gate → RULES → (optional) LLM
 - docs/api-guide.md — GET /signals, /strategy, POST /signals/push — api.decker-ai.com
-- DEVELOPER_README.md §Market State v0 — GET /public/state/{symbol}/{tf} (+/timeline) and MCP tools decker.get_market_state / get_state_timeline: persisted per-bar engine state, zero recompute, honest nulls
+- DEVELOPER_README.md §Market State v0 — GET /public/state/{symbol}/{tf} (+/timeline) and MCP tools decker.get_market_state / get_state_timeline: persisted per-bar engine state, zero recompute, honest nulls. Covers crypto (BTCUSDT), Hyperliquid TradFi (XYZ_SP500USD) and KRX Korean stocks (000270.KRX, 1d/1w) with one schema. KRX daily diff: GET /public/krx/transitions
 - operation_rules/RULES.yaml — Rules (progress_min, tf_alignment, entry_timing, swing_state, etc.)
 - docs/roadmap.md — Shipped, in progress, planned (product Phase 4 vs article “Context Engine” noted there)
 

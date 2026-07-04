@@ -125,3 +125,32 @@ python scripts/set_telegram_bot_commands.py --dry-run
 ---
 
 *명령 추가 시: `telegram_webhook.py`의 `_dispatch_slash_command`, 이 표, **`telegram_bot_menu_commands.py`**, 그리고 필요 시 `set_telegram_bot_commands.py` 실행까지 함께 갱신할 것.*
+
+
+---
+
+## KRX 봇 (@krxdeckerbot) — 한국주식 "점검" 채널
+
+**정체**: 크립토 봇과 별개 봇. 매수·매도 신호가 아니라 **포트폴리오 4행동(ADD/HOLD/REDUCE/EXIT)** 과 근거를 배달한다.
+**핵심 리듬**: 매일 **16:30 KST 장마감 점검 브리핑** — 상태가 바뀐 종목만(변화 없는 종목은 보내지 않음).
+
+| `/` 명령 | 별칭 | 자연어 예 | 설명 |
+|----------|------|-----------|------|
+| `/krx` | `/brief`, `/today` | — | 현재 시점 브리핑 (24h 창) |
+| `/market_krx` | `/market`, `/macro` | — | 매크로(환율·기준금리·국고채) + GO/WATCH/HOLD 분포 |
+| `/signal 005930` | `/sig` | — | 종목 단건 시그널 |
+| `/why 005930` | `/w`, **자연어 `삼성전자 왜?`·`기아`** | 기아 왜?, 005930 | **왜 이 판정?** — 상태·게이트·행동·근거·평가 시각 카드 (웹 상세와 동일 산출) |
+| `/subscribe_krx` | `/sub` | — | 16:30 KST 장마감 점검 브리핑 ON |
+| `/unsubscribe_krx` | `/unsub` | — | 브리핑 OFF |
+| `/myid` | `/chatid` | — | chat_id 확인 |
+
+**점검 브리핑 형식** (매일 자동):
+
+```
+🇰🇷 오늘의 점검 | 07/03 장마감
+상태가 바뀐 종목 85 — 변화 없는 종목은 담지 않았습니다.
+📈 매집 (ADD) 20
+• SK하이닉스 000660 | 🟢 신호형성 · 게이트 HOLD→GO · 키 ₩2,650,000
+…
+매일 장마감, 내 종목 점검 · decker-ai.com/krx
+```

@@ -4,6 +4,23 @@ All notable changes to the Decker AI are documented in this file.
 
 ---
 
+## [v1.8.0] - 2026-07-04
+
+### Added (KRX "daily checkup")
+
+- **KRX in Market State API v0 + MCP**: `GET /api/v1/public/state/000270.KRX/1d` and `decker.get_market_state("000270.KRX", "1d")` now return the same schema as crypto — one grammar across crypto, Hyperliquid TradFi and Korean stocks. `1w` timeframe added.
+- **`GET /api/v1/public/krx/transitions`**: noise-zero daily diff — only tickers whose engine state/gate actually changed at the latest close. Powers the site's "daily checkup" strip and the Telegram closing-bell briefing.
+- **Telegram closing-bell briefing** (@krxdeckerbot, 16:30 KST daily): transitions only, grouped by portfolio action (ADD/EXIT/REDUCE/HOLD). Idempotent delivery via the outbox pipeline.
+- **`/why` bot command** (+ natural language, e.g. `삼성전자 왜?`): state · gate · portfolio action · reasoning · evaluation time — same data source as the web detail page.
+- **KRX weekly (`1w`) evaluation**: Fridays 17:00 KST, weekly-bar structural state as multi-timeframe context for daily signals.
+
+### Fixed
+
+- KRX detail reading previously returned empty state blocks for all tickers (signal-lineage filter excluded the KRX source); now resolved — list and detail agree.
+- Macro feed (USD/KRW · base rate · KTB 3Y · CPI) and DART filings are refreshed daily again (collection had been stale since early May).
+
+---
+
 ## [v1.7.0] - 2026-07-02
 
 ### Added (Market State API v0)
