@@ -72,7 +72,7 @@ git clone https://github.com/gigshow/decker-ai.git
 | 전체 플랫폼 상태·로드맵 | 비공개 [decker-trading-platform](https://github.com/gigshow/decker-trading-platform) 의 `docs/WORK_STATUS_AND_ROADMAP.md` (접근 가능한 경우) |
 | 엔지니어링 워크플로 스킬 표 | [DECKER_AGENT_SKILLS.md](./DECKER_AGENT_SKILLS.md) §3 — 일부 번들(`.agents/skills/gstack`)은 monorepo에만 존재 |
 | 이슈·Discussions | [GITHUB_COMMUNITY.md](./GITHUB_COMMUNITY.md), [`.github/ISSUE_TEMPLATE/`](../.github/ISSUE_TEMPLATE/) |
-| 릴리즈 시 공개 문서 | [RELEASE_CHECKLIST_PUBLIC_DOCS.md](./RELEASE_CHECKLIST_PUBLIC_DOCS.md) |
+| 릴리즈 시 공개 문서 | [RELEASE_CHECKLIST_PUBLIC_DOCS.md](../.github/RELEASE_CHECKLIST_PUBLIC_DOCS.md) |
 | 기여·문서 톤 | [CONTRIBUTING.md](../CONTRIBUTING.md) (루트) |
 
 ---
@@ -87,7 +87,7 @@ git clone https://github.com/gigshow/decker-ai.git
 | [TELEGRAM_AGENT_COMMANDS.md](./TELEGRAM_AGENT_COMMANDS.md) | 텔레그램·웹 PhaseD 구분 |
 | [CLAUDE.md](../CLAUDE.md) | 세션 진입 요약 |
 | [GITHUB_COMMUNITY.md](./GITHUB_COMMUNITY.md) | Discussions·이슈 템플릿 |
-| [RELEASE_CHECKLIST_PUBLIC_DOCS.md](./RELEASE_CHECKLIST_PUBLIC_DOCS.md) | 태그·대외 릴리즈 전 문서 |
+| [RELEASE_CHECKLIST_PUBLIC_DOCS.md](../.github/RELEASE_CHECKLIST_PUBLIC_DOCS.md) | 태그·대외 릴리즈 전 문서 |
 | [CONTRIBUTING.md](../CONTRIBUTING.md) (루트) | 기여·공개 문서 톤 |
 
 ---

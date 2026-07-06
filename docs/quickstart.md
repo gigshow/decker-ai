@@ -14,11 +14,11 @@
 
 All API paths (REST and SDK) require an API key. Get one now:
 
-1. Open Telegram → [@deckerclawbot](https://t.me/deckerclawbot)
-2. Send `/start`
-3. Send `/apikey` → receive `dk_live_xxxxxxxxxxxxxxxxxxxxxxxx`
+**Web (fastest)**: [decker-ai.com](https://decker-ai.com) → sign up → **Settings → API Keys → issue**. The key is shown once — copy it immediately.
 
-> **Lost your key?** Run `/apikey reset` — revokes and reissues.
+**Telegram (alternative)**: [@deckerclawbot](https://t.me/deckerclawbot) → `/start` → `/apikey`.
+
+> **Lost your key?** Issue a new one in Settings → API Keys (old keys can be revoked there), or run `/apikey reset` in the bot.
 
 ---
 

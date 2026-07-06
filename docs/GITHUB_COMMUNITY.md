@@ -32,4 +32,4 @@
 ## 빠른 링크
 
 - [공개 온보딩](./ONBOARDING_PUBLIC.md)
-- [릴리즈 시 공개 문서](./RELEASE_CHECKLIST_PUBLIC_DOCS.md)
+- [릴리즈 시 공개 문서](../.github/RELEASE_CHECKLIST_PUBLIC_DOCS.md)

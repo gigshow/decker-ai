@@ -4,6 +4,28 @@ All notable changes to the Decker AI are documented in this file.
 
 ---
 
+## [v1.9.0] - 2026-07-06
+
+### Added
+
+- **Daily briefing section in README**: the engine's morning view per symbol, **scored in public every evening — misses included**. Web hub `/briefing` + `@deckerclawbot /briefing` subscription.
+- **Multi-agent framework integration guide** (`docs/integrations/multi-agent-frameworks.md`): use Decker as the deterministic market-state instrument for TradingAgents / LangGraph / AutoGen crews — role mapping, MCP one-liner, REST tool function, receipts pattern. Co-building invite.
+- **docs/README.md**: persona-based docs index (Trader / Builder / Curious / Evaluating claims).
+
+### Changed
+
+- **`signal-performance.md` rewritten as "a living ledger"** — removed legacy backtest return/win-rate figures; performance claims are now exactly what the product stamps and scores in public (state accuracy — yes · profit guarantees — no).
+- **API key issuance docs corrected**: keys are issued from the web UI (**Settings → API Keys**) *and* Telegram `/apikey` — previous docs said Telegram-only.
+- `roadmap.md`: removed internal sync/process paragraphs; tier vocabulary aligned to FREE/PRO/ENTERPRISE.
+
+### Removed
+
+- `docs/waitlist.md` (pre-beta planning note; open beta is live).
+- Committed `__pycache__`/`.pyc` artifacts from the SDK tree (now gitignored).
+- Internal release checklist moved out of visitor docs (`docs/` → `.github/`).
+
+---
+
 ## [v1.8.0] - 2026-07-04
 
 ### Added (KRX "daily checkup")
@@ -134,7 +156,7 @@ All notable changes to the Decker AI are documented in this file.
 
 ### Added
 
-- **에이전트·공개 문서** (ClawHub·방문자 온보딩): `docs/ONBOARDING_PUBLIC.md`, `AGENT_SKILLS_PUBLIC_SUMMARY.md`, `TELEGRAM_AGENT_COMMANDS.md`, `DECKER_AGENT_SKILLS.md`, `GITHUB_COMMUNITY.md`, `RELEASE_CHECKLIST_PUBLIC_DOCS.md` (당시 초안 `PUBLIC_REPO_REBUILD_PROPOSAL.md`는 이후 공개 레포에서 제거됨)
+- **에이전트·공개 문서** (ClawHub·방문자 온보딩): `docs/ONBOARDING_PUBLIC.md`, `AGENT_SKILLS_PUBLIC_SUMMARY.md`, `TELEGRAM_AGENT_COMMANDS.md`, `DECKER_AGENT_SKILLS.md`, `GITHUB_COMMUNITY.md`, `RELEASE_CHECKLIST_PUBLIC_DOCS.md`(현 `.github/`) (당시 초안 `PUBLIC_REPO_REBUILD_PROPOSAL.md`는 이후 공개 레포에서 제거됨)
 - **루트 `CLAUDE.md`** — 세션 진입용 에이전트 요약 (이 레포 기준)
 - **`.github/ISSUE_TEMPLATE`** — `config.yml` + 페르소나별 `01`–`04` (제품 / API / IDE 스킬 / 자체 호스팅)
 - **README** — 상단 Visitor paths(3갈래) + Docs 표에 위 문서 링크

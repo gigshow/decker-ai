@@ -4,7 +4,7 @@
 
 # Decker AI — Developer Guide
 
-Build with Decker: REST API · MCP server · Python SDK · OpenClaw skill.
+Build with Decker: REST API · MCP server · Python SDK · OpenClaw skill · [multi-agent crews](docs/integrations/multi-agent-frameworks.md).
 
 [Main README](README.md) · [API docs](https://api.decker-ai.com/docs) · [DEVELOPER_API_GUIDE.md](docs/DEVELOPER_API_GUIDE.md)
 
@@ -19,6 +19,7 @@ Build with Decker: REST API · MCP server · Python SDK · OpenClaw skill.
 - [Auth](#auth)
 - [Rate limits](#rate-limits)
 - [MCP server (Way E) — full guide](#mcp-server-way-e)
+- [Multi-agent frameworks (TradingAgents · LangGraph · AutoGen)](docs/integrations/multi-agent-frameworks.md)
 - [Python SDK](#python-sdk)
 - [OpenClaw skill (Way 2)](#openclaw-skill-way-2)
 - [Self-host (Way D)](#self-host-way-d)
@@ -31,11 +32,11 @@ Build with Decker: REST API · MCP server · Python SDK · OpenClaw skill.
 
 ### 1. Get your API key — 30 seconds
 
-1. Open Telegram → [@deckerclawbot](https://t.me/deckerclawbot)
-2. Send `/start`
-3. Send `/apikey` → receive `dk_live_xxxxxxxxxxxxxxxxxxxxxxxx`
+**Web (fastest)**: [decker-ai.com](https://decker-ai.com) → sign up → **Settings → API Keys → issue**. The key is shown once — copy it immediately.
 
-> **Lost your key?** Run `/apikey reset` in the bot — revokes and reissues.
+**Telegram (alternative)**: [@deckerclawbot](https://t.me/deckerclawbot) → `/start` → `/apikey`.
+
+> **Lost your key?** Issue a new one in Settings → API Keys (old keys can be revoked there), or run `/apikey reset` in the bot.
 
 ### 2. First call
 
@@ -131,7 +132,7 @@ KRX details: [`docs/krx/KRX_BUSINESS_MODEL_AND_ROADMAP_2026-05-09.md`](docs/krx/
 X-API-Key: dk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
-Keys are issued via Telegram `/apikey` — **not** from the web UI. See [DEVELOPER_API_GUIDE.md](docs/DEVELOPER_API_GUIDE.md) for full auth flow, scopes, and rotation.
+Keys are issued from the web UI (**Settings → API Keys**) or via Telegram `/apikey`. See [DEVELOPER_API_GUIDE.md](docs/DEVELOPER_API_GUIDE.md) for full auth flow, scopes, and rotation.
 
 ---
 
@@ -294,7 +295,7 @@ Symbols / timeframes outside this list return `404`. More symbols expanding.
 ## FAQ
 
 **Where do I get an API key?**
-Telegram only: [@deckerclawbot](https://t.me/deckerclawbot) → `/apikey`. Not from the web UI.
+[decker-ai.com](https://decker-ai.com) → **Settings → API Keys**, or Telegram [@deckerclawbot](https://t.me/deckerclawbot) → `/apikey`.
 
 **Why no `pip install decker-client`?**
 PyPI publish is planned; not yet shipped. Until then, install from this repo with `pip install -e sdk/python/`.

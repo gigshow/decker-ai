@@ -92,7 +92,7 @@ X-API-Key: dk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 | Field | Value |
 |-------|-------|
 | Key format | `dk_live_<32 URL-safe chars>` |
-| Where to issue | Telegram `/apikey` |
+| Where to issue | Web: Settings → API Keys · Telegram: `/apikey` |
 | Expiry | None by default |
 | Revoke | `/apikey reset` |
 

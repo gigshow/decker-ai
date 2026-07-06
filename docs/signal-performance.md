@@ -1,106 +1,26 @@
-# Decker 시그널 성과
+# Performance — a living ledger, not a marketing number
 
-**업데이트**: 2026-04-23  
-**기준**: 엔진 소스(`engine:live_l1`) 시그널, progress_pct 기반 오퍼레이션 룰북 v2.4.7+  
-**참고**: 아래 수치는 백테스트 기반입니다. 실시간 시그널 현황은 [api.decker-ai.com/docs](https://api.decker-ai.com/docs) 또는 Telegram 봇에서 확인하세요.
+> **We do not advertise returns or win rates.** An earlier version of this page carried
+> backtest profit figures; we removed them deliberately. Decker sells *state reading
+> accuracy*, not profit promises — and reading accuracy is something you can audit live.
 
----
+## What we publish instead
 
-## 개요
+Every engine view is **stamped per bar and scored in public**:
 
-Decker는 **progress_pct(진행도)** 기반으로 시그널의 "타이밍 소진도"를 수치화합니다.
+| Surface | What it shows |
+|---|---|
+| **Daily briefing** (Telegram · [decker-ai.com/briefing](https://decker-ai.com/briefing)) | Morning: the engine's view per symbol (baseline, what winning/losing looks like). **Evening: the same view scored against what actually happened** — hit, miss, invalidated. Misses are printed, not hidden. |
+| **Signal lifecycle** | Every signal carries entry / stop / target + `progress_pct`. When the invalidation line is hit, the signal is stamped `invalidated` on the chart and in the API — permanently. |
+| **/review** | Your own trades measured against the engine's signals. |
+| **`trace_id`** | Every output traces to a bar-stamped ledger row — same input, same output, reproducible. |
 
-- 진입가·목표가·손절가 + 현재가 → 0~100% 진행도
-- 이 진행도 구간별로 전략을 분기 (오퍼레이션 룰북)
-- 일반 시그널(bullish/bearish)과 달리 **"얼마나 진행되었는가"**를 정량화
+## Why this framing
 
----
+- A signal service that only shows its winners is unfalsifiable. Ours stamps every view,
+  every bar, in advance — that is the product.
+- Accuracy statement: **state accuracy — yes · profit guarantee — no.** Markets carry risk;
+  what we provide is a structural reading you can verify, then decide with.
 
-## 성과 요약 (원물 기준)
-
-| 지표 | 값 | 설명 |
-|------|-----|------|
-| **월 성과** | 20~30%+ | 횡보장 기준, 원물 시그널 (최소 수익률) |
-| **Win Rate** | 횡보장 50~70%+, 강세·추세장 70%+ | 백테스트 기준 (실거래 80~90%) |
-| 최대 드로다운 | 3~4% | 낮은 편, 리스크 제어 |
-| 평균 손절 | 1~2% | 좁은 손절로 손실 최소화 |
-| 레인지 구간 | 5~7할+ | 좁은 레인지 시장 적응 |
-| 강세·추세장 | 7할+ | 추세 시장 적응 |
-
-**참고**: 월 성과 20~30%는 **횡보장** 최소 수익률. 추세장에서는 더 높음. 실거래는 8~9할 수준이나 데이터 제시 제약으로 백테스트 결과 공개.
-
----
-
-## progress_pct 기반 타이밍
-
-| progress 구간 | 의미 | 룰북 전략 |
-|---------------|------|----------|
-| 0~33% | 초기 | default (목표까지 홀드) |
-| 33~50% | 진입·초기 익절 | risk=low 시 5% 초기 익절 |
-| 50~66% | 중반 | 20% 부분 익절 또는 홀드 |
-| 66~80% | 후반 | 30~50% 부분 익절 |
-| 80~90% | 목표 근접 | 50~70% 부분 익절 |
-| 90~95% | 직전 | 70~80% 부분 익절 |
-| 95%+ | 직전 | 80% 부분 또는 전량 청산 |
-| target_reached | 목표 도달 | 전량 청산 |
-| stop_hit | 손절 | 청산 또는 관망 |
-
----
-
-## 방법론
-
-- **시그널**: judgment_signals (다중 소스)
-- **진행도**: `build_signal_state` (entry/target/stop + current_price)
-- **전략**: RULES.yaml 35개+ 규칙 매칭 (status, progress_min, timeframe, risk_appetite, market_state, tf_alignment, swing_state, entry_timing)
-- **리스크**: 1회 최대 포지션%, 일일 손실 한도, /stop 비상 정지
-
----
-
-## Progress 구간별 Win Rate (백테스트 결과)
-
-RULES.yaml 기반 백테스트 결과입니다.
-
-| progress 구간 | 의미 | Win Rate | 샘플 | 비고 |
-|---------------|------|----------|------|------|
-| 33~60 | 초기 진입 | 55~65% | ~120건 | 진입 타이밍 민감 |
-| 61~80 | 중반 부분 익절 | 65~75% | ~90건 | 부분 익절 효과 |
-| 81~95 | 후반·목표 직전 | 70~80% | ~70건 | 목표 근접 시 유리 |
-| 95~100 / target | 목표 도달 | 80~90% | ~50건 | 전량 청산 구간 |
-
-**참고**: 실거래 성과는 80~90% 수준이나, 데이터 공개 제약으로 백테스트 결과를 제시합니다.
-
----
-
-## 시장 구간별 Win Rate (백테스트 결과)
-
-| 시장 구간 | 조건 | 월 수익률 | Win Rate | 샘플 |
-|-----------|------|-----------|----------|------|
-| 횡보장 | 레인지, 변동성 낮음 | 20~30% | **50~70%+** | 8~12건/월 |
-| 강세·추세장 | 상승 추세, 방향성 명확 | 30~60%+ | **70%+** | 10~18건/월 |
-
-횡보장 5~7할 이상, 강세·추세장 7할 이상. 실거래는 8~9할 수준이나 데이터 제시 제약으로 백테스트 기준 공개.
-
----
-
-## 샘플별 수익률 (백테스트 결과)
-
-| 구간 | 평균 수익 (성공 시) | 평균 손실 (손절 시) | R:R |
-|------|---------------------|---------------------|-----|
-| 33~60 | 3~5% | -1~2% | 1.5~2.5 |
-| 61~80 | 4~7% | -1~2% | 2~3.5 |
-| 81~95 | 5~10% | -1~2% | 2.5~5 |
-| target_reached | 8~15% | — | — |
-
-risk_reward_ratio 2.0 이상 룰, 좁은 손절(1~2%) 적용.
-
----
-
-## 산출 근거
-
-| 항목 | 내용 |
-|------|------|
-| **기간** | 최근 운영 데이터 (원물 시그널) |
-| **조건** | 횡보장(레인지) 구간 우선 |
-| **방법론** | build_signal_state + RULES.yaml 매칭, judgment_signals 다중 소스 |
-| **백테스트** | RULES.yaml 기반 시뮬레이션. 실거래는 80~90% 수준이나 데이터 공개 제약으로 백테스트 결과 제시 |
-| **보수적 표기** | 20~30%는 최소 구간. 추세장·데이터 확대 시 상향 가능 |
+**See the live numbers yourself**: [decker-ai.com/briefing](https://decker-ai.com/briefing) ·
+[decker-ai.com/today](https://decker-ai.com/today) · Telegram [@deckerclawbot](https://t.me/deckerclawbot)

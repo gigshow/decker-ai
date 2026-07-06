@@ -101,14 +101,14 @@
 | `docs/WORK_STATUS_AND_ROADMAP.md` | 상태·로드맵 |
 | `docs/AGENT.md` | 에이전트 고도화 로드맵 |
 | `docs/TELEGRAM_AGENT_COMMANDS.md` | 텔레그램 `/` 명령·자연어 |
-| `docs/RELEASE_CHECKLIST_PUBLIC_DOCS.md` | 태그·대외 릴리즈 시 문서 동기화 (§8) |
+| `.github/RELEASE_CHECKLIST_PUBLIC_DOCS.md` | 태그·대외 릴리즈 시 문서 동기화 (§8) |
 | `docs/GITHUB_COMMUNITY.md` | Discussions·이슈 템플릿·라벨 안내 |
 
 ---
 
 ## 8. 릴리즈 시 공개 문서 동기화 (P4)
 
-버전 태그·ClawHub·대외 공지 전에 **`docs/RELEASE_CHECKLIST_PUBLIC_DOCS.md`** 체크리스트를 따른다. 요약:
+버전 태그·ClawHub·대외 공지 전에 **`.github/RELEASE_CHECKLIST_PUBLIC_DOCS.md`** 체크리스트를 따른다. 요약:
 
 - **`AGENT_SKILLS_PUBLIC_SUMMARY`**, **`TELEGRAM_AGENT_COMMANDS`**, **OpenClaw `SKILL.md`**, **`CLAUDE.md`**, 필요 시 **`ONBOARDING_PUBLIC`** 이 서로 모순 없게 맞춘다.
 - 스킬 표·§3 워크플로 표를 바꿀 때는 **이 문서(§1–§3)를 먼저** 고친 뒤 `CLAUDE.md`는 링크·한 줄만 맞춘다 (기존 규칙과 동일).

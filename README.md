@@ -74,14 +74,16 @@ You get the structural state (state machine phase), the multi-timeframe alignmen
 
 Same deterministic engine, applied to KOSPI + KOSDAQ. Portfolio actions instead of buy/sell: **ADD / HOLD / REDUCE / EXIT**. Universe = top 200 by trading value ∪ your watchlist ∪ momentum / volume spikes.
 
-### Telegram channels — alerts that show the *whole picture*
+### Daily briefing — the engine's view, scored in public every evening
 
 <div align="center">
-<img src="assets/screenshots/16_telegram_deckerclaw.jpg" width="220" alt="@deckerclawbot — crypto signal status briefing for 6 majors" />
-<img src="assets/screenshots/17_telegram_krx.jpg" width="220" alt="@krxdeckerbot — KRX end-of-day portfolio briefing with ADD candidates" />
+<img src="assets/screenshots/16_telegram_deckerclaw.jpg" width="220" alt="@deckerclawbot — daily crypto briefing" />
+<img src="assets/screenshots/17_telegram_krx.jpg" width="220" alt="@krxdeckerbot — KRX end-of-day checkup briefing" />
 </div>
 
-Not a stream of single-symbol alerts — a periodic briefing across all symbols you care about. Crypto majors via [@deckerclawbot](https://t.me/deckerclawbot), KRX end-of-day via [@krxdeckerbot](https://t.me/krxdeckerbot).
+Every morning (08:00 KST) you get the engine's view per symbol — where the game stands (baseline price), what winning and losing look like, and a pick you can answer. **Every evening the same view is scored against what actually happened — hits and misses alike, on the record.** That's the core promise: *we stamp our wrong calls too.*
+
+Web hub: [decker-ai.com/briefing](https://decker-ai.com/briefing) · Subscribe: [@deckerclawbot](https://t.me/deckerclawbot) → `/briefing` · KRX closing-bell checkup (16:30 KST): [@krxdeckerbot](https://t.me/krxdeckerbot)
 
 ### Strategy presets + review your own performance
 
@@ -152,7 +154,7 @@ curl https://api.decker-ai.com/api/v1/public/demo
 ```
 
 ```bash
-# With an API key (get one in Telegram: @deckerclawbot → /apikey)
+# With an API key (decker-ai.com → Settings → API Keys, or Telegram /apikey)
 curl "https://api.decker-ai.com/api/v1/public/signals/BTCUSDT/latest?timeframe=1h" \
   -H "X-API-Key: dk_live_xxx"
 ```
@@ -176,6 +178,8 @@ curl "https://api.decker-ai.com/api/v1/public/signals/BTCUSDT/latest?timeframe=1
 ```
 
 Full guide → **[DEVELOPER_README.md](DEVELOPER_README.md)** (endpoints · auth · rate limits · MCP 4 tools · SDK · OpenClaw · self-host).
+
+**Running a multi-agent crew** (TradingAgents / LangGraph / AutoGen)? Give your analysts one deterministic market-state instrument — with receipts — instead of re-deriving structure per prompt: → **[docs/integrations/multi-agent-frameworks.md](docs/integrations/multi-agent-frameworks.md)**
 
 ---
 

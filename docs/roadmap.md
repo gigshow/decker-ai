@@ -16,11 +16,7 @@
 
 *Note on naming: "Phase 4" in the product roadmap refers to the proactive signals feature. The "Phase 4 Context Engine" referenced in the [article series](medium/README.md) refers to the sequence labeling + state machine + operation gate architecture — a separate milestone.*
 
-**내부 SSOT와 맞추는 한 줄 (비전 단계)**: 비공개 모노레포 `WORK_STATUS` **§1 한눈에 보기** 기준 — **1단계(대화형)는 완료**, **중기(상의)는 “준비 중”**으로 표기한다. 그와 동시에 R3/R4·상의 API·엔진 merge·채널은 **이미 가동**한다. 즉 “기능이 없다”가 아니라, **비전 단계의 ‘완료’와 ‘제품 가동’을 혼동하면 안 된다**는 뜻이다. 아래 표의 R3·R4는 **완료**가 아니라 **가동·강화** 축에 둔다.
-
-**구현·배포 정본**: 공개 개념·다이어그램은 **의도·스토리**다. 실제 플래그·엔진·API JSON·`merge` 평면(plane 2.5)·`operation_rules` 로더는 **비공개 플랫폼 모노레포**가 정본이며, 공개본은 [operation_rules/RULES.yaml](../operation_rules/RULES.yaml) `version`/`updated`로만 추적한다. (내부 전용 경로·IP·절대 문서명은 **공개 repo에 싣지 않는다**.)
-
-**내부 본선(요약, 단일 맨락 아님)**: 엔진·데이터·트리거·플랫폼·UX는 **서로 다른 우선순위 큐**(예: 상류 L0–L1, 티어1~3, 엔진 스프린트, FP empirical 출구, CBA/SMS, 운영 장애 복구)로 **병행**된다. “2026 Q2 엔진-퍼스트”는 **한 덩어리가 아니라** 내부 문서에 정의된 **다수 맨락**의 방향을 한 줄로 요약한 것이며, **끝난 일의 체크리스트가 아니다** — 세부·열림 이슈는 **비공개** `WORK_STATUS` §0·`HANDOFF`가 SSOT.
+**Source of truth**: public concept docs describe *intent*. The production engine and API live in a private monorepo; the public mirror is tracked via [operation_rules/RULES.yaml](../operation_rules/RULES.yaml) `version`/`updated`.
 
 ---
 
@@ -54,7 +50,7 @@
 | Hyperliquid·Polymarket | HL·PM 주문                                                                                                                             |
 | HL 시세·시그널 (백엔드)        | HL `allMids` → DB 시세(`hyperliquid`), 시장상태 시계열, funding 시그널(`hyperliquid_market`), watchlist 최초 노출 DB·알림, 배포 전 HL 단위테스트 CI 게이트        |
 | OpenClaw 스킬            | SKILL.md 공개, web_fetch → Decker API                                                                                                  |
-| **공개 API + Python SDK** | `POST /public/auth/verify` · `X-API-Key` 인증 · tier 기반 Rate Limit (FREE 100/BASIC 10k/PREMIUM 100k req/day) · Redis INCR+EXPIREAT · `pip install decker-client` v0.1.0 · OpenAPI 공개 스펙 · [DEVELOPER_API_GUIDE.md](DEVELOPER_API_GUIDE.md) |
+| **공개 API + Python SDK** | `POST /public/auth/verify` · `X-API-Key` 인증 · tier 기반 Rate Limit (FREE 30 / PRO 10k / ENTERPRISE 100k req/day) · Redis INCR+EXPIREAT · Python SDK v0.1.0 (repo install · PyPI 준비 중) · OpenAPI 공개 스펙 · [DEVELOPER_API_GUIDE.md](DEVELOPER_API_GUIDE.md) |
 
 
 ---
@@ -94,7 +90,7 @@
 | Discord 연동                   | 다음 세션 검토 (팀·커뮤니티 채널)                                                                       |
 | What People Say              | 초기 사용자 쿼트 수집                                                                               |
 | clawhub                      | decker 스킬 publish (후순위, 홍보·생태계 노출용)                                                        |
-| Stripe 과금 연동                  | 유료 티어 Stripe 구독 결제 (BASIC/PREMIUM 업그레이드 플로우)                                               |
+| Stripe 과금 연동                  | 유료 티어 Stripe 구독 결제 (PRO/ENTERPRISE — 오픈베타 이후)                                               |
 
 
 ---
@@ -129,7 +125,6 @@
 | **로컬 Docker** | Postgres 초기화 시 HL 테이블 부트스트랩 스크립트 포함(신규 볼륨 기준)                                                          |
 
 
-동기화: 비공개 작업 트리 `decker_ai_strategy_builder_sync/` → 스크립트 `scripts/sync_decker_ai_strategy_builder.sh`로 공개 레포 `decker-ai` 반영.
 
 ---
 
