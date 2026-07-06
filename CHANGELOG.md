@@ -4,6 +4,16 @@ All notable changes to the Decker AI are documented in this file.
 
 ---
 
+## [v1.9.1] - 2026-07-06
+
+### Fixed (MCP dogfood pass — full A-to-Z tool exercise against the live server)
+
+- **Tool parameter names corrected to match the live schema**: `get_signals` takes `symbols` (array) / `action_gate` / `min_progress` / `limit`; `get_reading` takes `tf` + `include_tfs`; `set_skill_overlay` takes `skill_id`. Sample JSON-RPC call fixed accordingly.
+- Tool count unified to **6** everywhere (a "4 tools" figure lingered in two pricing tables).
+- Server-side (API, deployed separately): `get_user_skills` 500 fixed; `get_signals` `action_gate` filter now actually filters (vocabulary unified to `GO/WATCH/HOLD`); demo response now points to the web key path.
+
+---
+
 ## [v1.9.0] - 2026-07-06
 
 ### Added

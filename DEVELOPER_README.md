@@ -151,7 +151,7 @@ Exceeded → HTTP `429` with `Retry-After`.
 | Tier | Daily limit | MCP | Auto-trade |
 |------|-------------|-----|-----------|
 | **FREE** | 30 calls / day | read-only (1d cache) | ❌ |
-| **PRO** | 10,000 / day | full (4 tools) | virtual + real |
+| **PRO** | 10,000 / day | full (6 tools) | virtual + real |
 | **ENTERPRISE** | 100,000+ / day · custom | full + per-org skill catalog | + custom integration |
 
 > **Beta (now):** authenticated users get **PRO for free** via `BETA_TIER_OVERRIDE=PRO`. No payment required.
@@ -193,12 +193,12 @@ Same URL + headers. Most MCP clients accept an HTTP-SSE transport definition; co
 
 | Tool | Purpose | Key params |
 |------|---------|-----------|
-| `decker.get_signals` | Active MTF consumer signals | `symbol?`, `min_progress?`, `gate?` (GO/WATCH/HOLD) |
-| `decker.get_reading` | AI reading view v0.2 (8 blocks: state · MTF · risk · narrative) | `symbol`, `timeframe` |
+| `decker.get_signals` | Active consumer signals (Skill Overlay applied) | `symbols?` (array), `min_progress?`, `action_gate?` (GO/WATCH/HOLD — rows with no engine gate emit are excluded), `limit?` |
+| `decker.get_reading` | AI reading view v0.2 (8 blocks: state · MTF · risk · narrative) | `symbol`, `tf?` (default 4h), `include_tfs?` (comma list) |
 | `decker.get_market_state` | **Market State v0** — current engine structural state for a bar (persisted emit, zero recompute). `action_gate` is a transition posture (GO/WATCH/HOLD), not an order command; absent axes are `null` | `symbol`, `timeframe` (30m/1h/4h/8h/1d) |
 | `decker.get_state_timeline` | Per-bar state timeline, same schema, ascending by `bar_ts` | `symbol`, `timeframe`, `since?`, `limit?` |
 | `decker.get_user_skills` | Catalog of trading skills + active overlay | — |
-| `decker.set_skill_overlay` | Switch overlay on the fly | `overlay` (`conservative_v0` \| `standard_v0` \| `aggressive_v0`) |
+| `decker.set_skill_overlay` | Switch overlay on the fly | `skill_id` (`conservative_v0` \| `standard_v0` \| `aggressive_v0`) |
 
 All tool calls inherit the API key's tier (FREE = read-only with cache, PRO = full). Tool responses are JSON-RPC 2.0; errors return standard `{ "error": { "code": ..., "message": ... } }`.
 
@@ -219,7 +219,7 @@ curl -X POST https://api.decker-ai.com/api/v1/mcp/messages \
 curl -X POST https://api.decker-ai.com/api/v1/mcp/messages \
   -H "X-API-Key: dk_live_xxx" \
   -H "Content-Type: application/json" \
-  -d '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"decker.get_signals","arguments":{"symbol":"BTCUSDT"}}}'
+  -d '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"decker.get_signals","arguments":{"symbols":["BTCUSDT"]}}}'
 ```
 
 Full spec: [docs/mcp-server.md](docs/mcp-server.md).
