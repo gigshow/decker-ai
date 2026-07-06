@@ -30,7 +30,7 @@ Decker solves exactly that layer, and only that layer:
 
 | Crew role (TradingAgents-style) | What Decker feeds it |
 |---|---|
-| **Technical analyst** | `get_market_state`: state-machine phase (`C_SET → B_SET → …`), gate (`GO / WATCH / HOLD`), multi-timeframe alignment — pre-computed, 24/7 |
+| **Technical analyst** | **`get_view`** — the interpreted card (verdict · narrative · coordinates · "at this price, this view") straight from the same composer our daily briefing uses; drop to `get_market_state` for raw state-machine fields (phase, gate, MTF) |
 | **Risk manager** | hard invalidation line (`stop`), baseline price, `progress_pct` (a 25%-progress signal ≠ an 80% one), per-bar invalidation stamps |
 | **Trader** | `entry / target / stop` triplet + gate — actionable coordinates, not prose |
 | **Portfolio manager** | one grammar across **crypto (24/7) + Hyperliquid TradFi synthetics (S&P500, gold, oil, NVDA…) + Korean equities (KOSPI/KOSDAQ)** — cross-market state comparison for free |
@@ -68,16 +68,16 @@ Decker solves exactly that layer, and only that layer:
 ```python
 import requests
 
-def get_market_state(symbol: str, timeframe: str = "1h") -> dict:
-    """Deterministic market state for an agent crew: phase, gate, progress, coordinates."""
+def get_engine_view(symbol: str) -> dict:
+    """The engine's composed VIEW (same card the daily briefing sends): verdict,
+    narrative lines, ref/target/invalidation coordinates, recent self-scoring."""
     r = requests.get(
-        f"https://api.decker-ai.com/api/v1/public/signals/{symbol}/latest",
-        params={"timeframe": timeframe},
+        f"https://api.decker-ai.com/api/v1/public/view/{symbol}",
         headers={"X-API-Key": "dk_live_xxx"},  # decker-ai.com → Settings → API Keys
         timeout=10,
     )
     r.raise_for_status()
-    return r.json()  # {direction, entry_price, target_price, stop_loss, progress_pct, operation_gate, ...}
+    return r.json()  # {layer: STATE_VIEW, lines[], ref_price, wait_target, invalidation, verdict_recent[], provenance}
 ```
 
 Register it as a tool for your analyst/risk nodes and cite the response (including its

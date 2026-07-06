@@ -121,7 +121,7 @@ KRX details: [`docs/krx/KRX_BUSINESS_MODEL_AND_ROADMAP_2026-05-09.md`](docs/krx/
 | Method | Path | Description |
 |--------|------|-------------|
 | `GET`  | `/api/v1/mcp/sse` | SSE handshake ([Way E](#mcp-server-way-e)) |
-| `POST` | `/api/v1/mcp/messages` | JSON-RPC 2.0 (6 tools) |
+| `POST` | `/api/v1/mcp/messages` | JSON-RPC 2.0 (7 tools) |
 | `GET`  | `/api/v1/mcp/health` | MCP server health |
 
 ---
@@ -151,7 +151,7 @@ Exceeded → HTTP `429` with `Retry-After`.
 | Tier | Daily limit | MCP | Auto-trade |
 |------|-------------|-----|-----------|
 | **FREE** | 30 calls / day | read-only (1d cache) | ❌ |
-| **PRO** | 10,000 / day | full (6 tools) | virtual + real |
+| **PRO** | 10,000 / day | full (7 tools) | virtual + real |
 | **ENTERPRISE** | 100,000+ / day · custom | full + per-org skill catalog | + custom integration |
 
 > **Beta (now):** authenticated users get **PRO for free** via `BETA_TIER_OVERRIDE=PRO`. No payment required.
@@ -189,10 +189,11 @@ Drop into `~/Library/Application Support/Claude/claude_desktop_config.json` (mac
 
 Same URL + headers. Most MCP clients accept an HTTP-SSE transport definition; consult your client's docs. The handshake is plain SSE — no custom transport required.
 
-### 6 tools (auto-applies your active Skill Overlay)
+### 7 tools (auto-applies your active Skill Overlay)
 
 | Tool | Purpose | Key params |
 |------|---------|-----------|
+| **`decker.get_view`** ★ | **The engine's VIEW — the same composed card the daily briefing sends** (single composer): verdict, plain-language narrative, coordinates (ref/target/invalidation), "at this price, this view", recent self-scoring (receipts). Start here. | `symbol` |
 | `decker.get_signals` | Active consumer signals (Skill Overlay applied) | `symbols?` (array), `min_progress?`, `action_gate?` (GO/WATCH/HOLD — rows with no engine gate emit are excluded), `limit?` |
 | `decker.get_reading` | AI reading view v0.2 (8 blocks: state · MTF · risk · narrative) | `symbol`, `tf?` (default 4h), `include_tfs?` (comma list) |
 | `decker.get_market_state` | **Market State v0** — current engine structural state for a bar (persisted emit, zero recompute). `action_gate` is a transition posture (GO/WATCH/HOLD), not an order command; absent axes are `null` | `symbol`, `timeframe` (30m/1h/4h/8h/1d) |

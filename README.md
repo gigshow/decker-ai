@@ -133,7 +133,7 @@ Entry                                                           Target
 | Tier | Price | Daily API limit | MCP | Auto-trade |
 |------|-------|-----------------|-----|------------|
 | **FREE** | $0 forever | 30 calls/day | read-only (1d cache) | ❌ |
-| **PRO** | $20 / mo · 7-day trial | 10,000 / day | full (6 tools) | virtual + real |
+| **PRO** | $20 / mo · 7-day trial | 10,000 / day | full (7 tools) | virtual + real |
 | **ENTERPRISE** | Contact us | 100,000+ / day · custom | full + per-org skill catalog | + custom integration |
 
 > **Beta (now):** all authenticated users get **PRO for free** via `BETA_TIER_OVERRIDE=PRO`. No payment required.
@@ -159,9 +159,14 @@ curl "https://api.decker-ai.com/api/v1/public/signals/BTCUSDT/latest?timeframe=1
   -H "X-API-Key: dk_live_xxx"
 ```
 
+The demo returns the **composed view** — the same card our daily briefing sends:
+
 ```json
-{ "symbol": "BTCUSDT", "direction": "long", "entry_price": 94200.0,
-  "target_price": 97500.0, "progress_pct": 67.3, "operation_gate": "GO" }
+{ "layer": "STATE_VIEW", "symbol": "BTCUSDT", "ref_price": 63650.0,
+  "lines": ["■ BTC — 층간 힘겨루기: 주 판 아래쪽 · 지금 판 위쪽", "…"],
+  "wait_target": "...", "invalidation": "...",
+  "verdict_recent": [{"briefing_date": "2026-07-05", "slot": "morning", "verdict": "hit"}],
+  "provenance": { "composer": "briefing_story.compose_card" } }
 ```
 
 **Add to Claude Desktop / Cursor (MCP):**
@@ -177,7 +182,7 @@ curl "https://api.decker-ai.com/api/v1/public/signals/BTCUSDT/latest?timeframe=1
 }
 ```
 
-Full guide → **[DEVELOPER_README.md](DEVELOPER_README.md)** (endpoints · auth · rate limits · MCP 6 tools · SDK · OpenClaw · self-host).
+Full guide → **[DEVELOPER_README.md](DEVELOPER_README.md)** (endpoints · auth · rate limits · MCP 7 tools · SDK · OpenClaw · self-host).
 
 **Running a multi-agent crew** (TradingAgents / LangGraph / AutoGen)? Give your analysts one deterministic market-state instrument — with receipts — instead of re-deriving structure per prompt: → **[docs/integrations/multi-agent-frameworks.md](docs/integrations/multi-agent-frameworks.md)**
 

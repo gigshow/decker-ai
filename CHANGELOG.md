@@ -4,6 +4,16 @@ All notable changes to the Decker AI are documented in this file.
 
 ---
 
+## [v1.9.2] - 2026-07-06
+
+### Added — **View API: the engine's view, on demand**
+
+- **`GET /api/v1/public/view/{symbol}`** + MCP **`decker.get_view`** (7th tool): the same composed card the daily briefing sends — verdict, plain-language narrative, coordinates (ref / target / invalidation), *"at this price, this view"*, and recent self-scoring verdicts (receipts). Single composer guarantee: briefing card ≡ API response, verbatim.
+- **`/public/demo` now returns the composed view** (was: raw signal payload) — the first impression is the product, not the raw material.
+- Docs: integration guide's REST example switched to `get_engine_view`; tool tables updated to 7.
+
+---
+
 ## [v1.9.1] - 2026-07-06
 
 ### Fixed (MCP dogfood pass — full A-to-Z tool exercise against the live server)
