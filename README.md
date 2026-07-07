@@ -59,27 +59,28 @@
 curl -s https://api.decker-ai.com/api/v1/public/demo | jq .
 ```
 
-https://github.com/user-attachments/assets/26e4abb2-2bde-456d-8f6c-4a6a70d67c2f
+<a href="assets/video/decker-mcp-demo.mp4"><img src="assets/screenshots/posters/decker-mcp-demo.jpg" width="760" alt="MCP demo — curl the public demo, then an agent calls the deterministic get_view tool" /></a>
 
-Then one MCP line gives any agent the same read — **zero LLM in the signal path.**
+▶️ **[Play — MCP demo (48s)](assets/video/decker-mcp-demo.mp4)** · Then one MCP line gives any agent the same read — **zero LLM in the signal path.**
 
 ### The engine room — live FSM, MTF alignment, R:R
 
-https://github.com/user-attachments/assets/dc0ddef4-fa92-4aec-8490-95e8a22dcaa2
+<a href="assets/video/decker-webapp-dashboard.mp4"><img src="assets/screenshots/posters/decker-webapp-dashboard.jpg" width="760" alt="The live cockpit — full universe grid with per-symbol state and AI reading" /></a>
 
-Every signal traces to a structural cause: `progress_pct` + `operation_gate` + entry / stop / target.
+▶️ **[Play — the live cockpit (16s)](assets/video/decker-webapp-dashboard.mp4)** · Every signal traces to a structural cause: `progress_pct` + `operation_gate` + entry / stop / target.
 
 ### Signal → execution, non-custodial
 
-https://github.com/user-attachments/assets/2decc6fb-f7de-435c-aec9-7d5e88489572
+<a href="assets/video/decker-hyperliquid-page.mp4"><img src="assets/screenshots/posters/decker-hyperliquid-page.jpg" width="760" alt="Hyperliquid — state, signal-engine coordinates, and a non-custodial order" /></a>
 
-Click Order · wallet-sign · **custody 0**. Decker relays your signature only (revocable agent wallet, EIP-712). *For information only — not investment advice.*
+▶️ **[Play — non-custodial execution (16s)](assets/video/decker-hyperliquid-page.mp4)** · Click Order · wallet-sign · **custody 0**. Decker relays your signature only (revocable agent wallet, EIP-712). *For information only — not investment advice.*
 
 ### Read it daily — and we score our own calls
 
-https://github.com/user-attachments/assets/5b6517f7-71af-4624-b26a-632af5140c12
+<a href="assets/video/decker-daily-briefing.mp4"><img src="assets/screenshots/posters/decker-daily-briefing.jpg" width="620" alt="The web briefing hub — per-symbol view with baseline, target, and invalidation" /></a>
+<a href="assets/video/decker-telegram-briefing.mp4"><img src="assets/screenshots/posters/decker-telegram-briefing.jpg" width="260" alt="The daily briefing on Telegram — picks and subscribe" /></a>
 
-https://github.com/user-attachments/assets/23a2387b-b5ba-4f55-b55b-5243eca389b5
+▶️ **Play:** [web hub (10s)](assets/video/decker-daily-briefing.mp4) · [Telegram (6s)](assets/video/decker-telegram-briefing.mp4)
 
 Every morning (08:00 KST): the engine's view per symbol — baseline, what winning and losing look like, and a pick you can answer. Evening: the **same view scored against what actually happened — hits and misses alike, on the record.** *We stamp our wrong calls too.*
 
@@ -87,9 +88,9 @@ Web hub: [decker-ai.com/briefing](https://decker-ai.com/briefing) · Subscribe: 
 
 ### Korean equities (KRX) — Beta, free
 
-https://github.com/user-attachments/assets/e7f526fa-8614-417f-93b3-fa06a2551c6d
+<a href="assets/video/decker-krx-page.mp4"><img src="assets/screenshots/posters/decker-krx-page.jpg" width="760" alt="Korean equities — today's hot market and portfolio actions on KOSPI" /></a>
 
-Same deterministic engine on KOSPI + KOSDAQ. Portfolio states — **ADD / HOLD / REDUCE / EXIT**, not buy/sell. Daily closing-bell checkup at 16:30 KST · [@krxdeckerbot](https://t.me/krxdeckerbot).
+▶️ **[Play — KRX (16s)](assets/video/decker-krx-page.mp4)** · Same deterministic engine on KOSPI + KOSDAQ. Portfolio states — **ADD / HOLD / REDUCE / EXIT**, not buy/sell. Daily closing-bell checkup at 16:30 KST · [@krxdeckerbot](https://t.me/krxdeckerbot).
 
 ---
 
