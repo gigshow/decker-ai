@@ -162,7 +162,9 @@ Exceeded → HTTP `429` with `Retry-After`.
 
 Add Decker AI to any [MCP-compatible](https://modelcontextprotocol.io/) AI agent — Claude Desktop, Cursor, Codex, or your own MCP client. Same `X-API-Key`, same Skill Overlay, same rulebook.
 
-### Endpoints (live · 2026-05-02)
+> **New here?** The fastest path is the step-by-step page → **[decker-ai.com/mcp](https://decker-ai.com/mcp)** (per-client config for Claude Desktop / Cursor / Codex, copy-paste prompts, troubleshooting). This section is the reference.
+
+### Endpoints (live)
 
 ```
 GET  https://api.decker-ai.com/api/v1/mcp/sse           (SSE handshake)
@@ -170,24 +172,40 @@ POST https://api.decker-ai.com/api/v1/mcp/messages      (JSON-RPC 2.0)
 GET  https://api.decker-ai.com/api/v1/mcp/health        (monitoring)
 ```
 
-### Claude Desktop config
+Config differs by client — pick yours (or use the guided page: **[decker-ai.com/mcp](https://decker-ai.com/mcp)**).
+
+### Claude Desktop / Codex (via `mcp-remote`, needs Node/npx)
+
+`Settings → Developer → Edit Config` (Claude Desktop) or `~/.codex/config.toml` (Codex). Claude Desktop reaches a remote SSE server through the `mcp-remote` bridge:
 
 ```json
 {
   "mcpServers": {
-    "decker-ai": {
-      "url": "https://api.decker-ai.com/api/v1/mcp/sse",
-      "headers": { "X-API-Key": "dk_live_xxx" }
+    "decker": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://api.decker-ai.com/api/v1/mcp/sse", "--header", "X-API-Key:${DECKER_API_KEY}"],
+      "env": { "DECKER_API_KEY": "dk_live_YOUR_KEY" }
     }
   }
 }
 ```
 
-Drop into `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or the equivalent path on Windows / Linux, then restart Claude Desktop. Decker tools appear in the tool picker.
+### Cursor (native remote SSE — no bridge)
 
-### Cursor / Codex / generic MCP client
+`~/.cursor/mcp.json` accepts a URL + headers directly:
 
-Same URL + headers. Most MCP clients accept an HTTP-SSE transport definition; consult your client's docs. The handshake is plain SSE — no custom transport required.
+```json
+{
+  "mcpServers": {
+    "decker": {
+      "url": "https://api.decker-ai.com/api/v1/mcp/sse",
+      "headers": { "X-API-Key": "dk_live_YOUR_KEY" }
+    }
+  }
+}
+```
+
+Then fully quit and reopen the app — Decker tools appear in the tool picker. Verify the server + tool list with no key: `curl https://api.decker-ai.com/api/v1/mcp/health`.
 
 ### 7 tools (auto-applies your active Skill Overlay)
 
@@ -199,7 +217,7 @@ Same URL + headers. Most MCP clients accept an HTTP-SSE transport definition; co
 | `decker.get_market_state` | **Market State v0** — current engine structural state for a bar (persisted emit, zero recompute). `action_gate` is a transition posture (GO/WATCH/HOLD), not an order command; absent axes are `null` | `symbol`, `timeframe` (30m/1h/4h/8h/1d) |
 | `decker.get_state_timeline` | Per-bar state timeline, same schema, ascending by `bar_ts` | `symbol`, `timeframe`, `since?`, `limit?` |
 | `decker.get_user_skills` | Catalog of trading skills + active overlay | — |
-| `decker.set_skill_overlay` | Switch overlay on the fly | `skill_id` (`conservative_v0` \| `standard_v0` \| `aggressive_v0`) |
+| `decker.set_skill_overlay` | Switch overlay on the fly | `skill_id` — one of 8: `conservative_v0` \| `standard_v0` \| `aggressive_v0` \| `default_v0` \| `scalp_v0` \| `tight_v0` \| `wide_v0` \| `swing_v0` (full catalog via `get_user_skills`) |
 
 All tool calls inherit the API key's tier (FREE = read-only with cache, PRO = full). Tool responses are JSON-RPC 2.0; errors return standard `{ "error": { "code": ..., "message": ... } }`.
 
@@ -223,7 +241,7 @@ curl -X POST https://api.decker-ai.com/api/v1/mcp/messages \
   -d '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"decker.get_signals","arguments":{"symbols":["BTCUSDT"]}}}'
 ```
 
-Full spec: [docs/mcp-server.md](docs/mcp-server.md).
+Full step-by-step guide (per-client config, prompts, troubleshooting): **[decker-ai.com/mcp](https://decker-ai.com/mcp)**.
 
 ---
 

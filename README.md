@@ -170,20 +170,22 @@ The demo returns the **composed view** — the same card our daily briefing send
   "provenance": { "composer": "briefing_story.compose_card" } }
 ```
 
-**Add to Claude Desktop / Cursor (MCP):**
+**Add to Claude Desktop / Cursor (MCP):** guided 2-minute setup with per-client config → **[decker-ai.com/mcp](https://decker-ai.com/mcp)**.
+
+Cursor (`~/.cursor/mcp.json`) takes a remote server directly:
 
 ```json
 {
   "mcpServers": {
-    "decker-ai": {
+    "decker": {
       "url": "https://api.decker-ai.com/api/v1/mcp/sse",
-      "headers": { "X-API-Key": "dk_live_xxx" }
+      "headers": { "X-API-Key": "dk_live_YOUR_KEY" }
     }
   }
 }
 ```
 
-Full guide → **[DEVELOPER_README.md](DEVELOPER_README.md)** (endpoints · auth · rate limits · MCP 7 tools · SDK · OpenClaw · self-host).
+Claude Desktop / Codex reach it through the `mcp-remote` bridge (needs Node/npx) — see [decker-ai.com/mcp](https://decker-ai.com/mcp) or **[DEVELOPER_README.md](DEVELOPER_README.md)** (endpoints · auth · rate limits · MCP 7 tools · SDK · OpenClaw · self-host).
 
 **Running a multi-agent crew** (TradingAgents / LangGraph / AutoGen)? Give your analysts one deterministic market-state instrument — with receipts — instead of re-deriving structure per prompt: → **[docs/integrations/multi-agent-frameworks.md](docs/integrations/multi-agent-frameworks.md)**
 

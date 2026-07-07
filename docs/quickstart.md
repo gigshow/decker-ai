@@ -1,10 +1,11 @@
 # Quick Start
 
-**Signal → State → Strategy. Three ways in.**
+**Signal → State → Strategy. Four ways in.**
 
 | Path | Time | Start |
 |------|------|-------|
 | **Telegram Bot** | 1 min | [@deckerclawbot](https://t.me/deckerclawbot) → `/btc` |
+| **MCP (Claude / Cursor)** | 2 min | Already have Claude Desktop or Cursor? → [decker-ai.com/mcp](https://decker-ai.com/mcp) |
 | **REST API** | 3 min | Get key → curl |
 | **Python SDK** | 5 min | Get key → git clone → pip install |
 
