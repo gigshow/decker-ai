@@ -195,7 +195,7 @@ Not all rules are created equal. Decker AI uses tiers to differentiate:
 |------|-------|-------------|
 | **Basic** | `target_reached`, `stop_hit`, `default` | Everyone (Free) |
 | **Standard** | `progress_50`, `progress_66`, `progress_80`, `progress_90`, `progress_80_trend` | Pro subscribers |
-| **Premium** | `progress_33`, `progress_40`, `progress_66_4h`, `progress_66_1h`, `progress_80_1d`, `progress_66_range`, portfolio rules | Trader/API tier |
+| **Premium** | `progress_33`, `progress_40`, `progress_66_4h`, `progress_66_1h`, `progress_80_1d`, `progress_66_range`, portfolio rules | Pro / Enterprise |
 
 Free users get the essentials: exit at target, exit at stop, hold otherwise. Paying users get the nuanced mid-lifecycle strategies that make the difference between a good return and a great one.
 
