@@ -233,7 +233,8 @@ What we stand on instead:
   RULES.yaml is open, so you can re-derive any verdict yourself.
 - **Scored in public, daily.** The morning briefing's view is graded against
   what actually happened that evening — hits and misses alike, on the record.
-  → [decker-ai.com/briefing](https://decker-ai.com/briefing)
+  → [decker-ai.com/briefing](https://decker-ai.com/briefing) · a GitHub Action
+  stamps the daily scorecard straight into this repo: [TRACK_RECORD.md](TRACK_RECORD.md)
 
 Method and rulebook are open: [Model & Algorithm](docs/model.md) · [Operation Rules (YAML)](operation_rules/RULES.yaml) · [Signal Performance](docs/signal-performance.md).
 

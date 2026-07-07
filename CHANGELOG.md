@@ -4,6 +4,20 @@ All notable changes to the Decker AI are documented in this file.
 
 ---
 
+## [v1.10.0] - 2026-07-07
+
+### Added
+- **Video walkthroughs** in "See it in action" — MCP demo, the live cockpit, non-custodial Hyperliquid execution, the web + Telegram daily briefing, and KRX. Served via GitHub Pages so they play on desktop and mobile alike.
+- **Runnable examples** — `examples/quickstart.py` (stdlib, no key) prints the composed view + receipts; `examples/langgraph_decker_tool.py` wraps Decker as one deterministic tool for a LangChain / LangGraph / AutoGen crew. Consolidated `samples/` into a single `examples/`.
+- **Track record** — a daily GitHub Action stamps the engine's own scorecard (hit / miss / invalidated) into `TRACK_RECORD.md`; `track record — stamped daily` badge.
+
+### Changed
+- **Agent-first positioning** — new headline ("the deterministic market-state layer your trading agents call") and desktop hero.
+- **Performance** rewritten to a living-ledger frame — no headline win-rate or return figures; deterministic, auditable (`provenance` + engine trace), scored in public.
+- Web-first API-key path (Settings → API Keys); canonical **FREE / PRO ($20) / ENTERPRISE** tiers throughout; SDK install guidance (PyPI publish pending).
+
+---
+
 ## [v1.9.2] - 2026-07-06
 
 ### Added — **View API: the engine's view, on demand**
