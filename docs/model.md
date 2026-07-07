@@ -122,17 +122,21 @@ RULES.yaml 위→아래 순서로 검사. **첫 매칭 규칙** 반환. `state.p
 
 목표 구조가 확인된 경우에만 포지션을 열어, 랜덤 진입을 회피합니다.
 
-### 4.2 Strategy Metrics
+### 4.2 What the engine stands on
 
-| Metric | Result |
-|--------|--------|
-| **Win Rate** | 61–68% |
-| **Avg Profit** | 5–12% |
-| **Max Drawdown** | < 9% |
-| **Signal Frequency** | 1–3 / day |
+We don't publish a headline win rate or return figure — backtest numbers without
+method and sample size are marketing, not evidence. What the rules path gives you:
+
+- **Deterministic & reproducible** — same input → same output, always.
+- **Auditable** — every read carries its `provenance` and traces back to the exact engine emit.
+- **Scored in public, daily** — the morning briefing's view is graded that evening, hits and misses alike ([decker-ai.com/briefing](https://decker-ai.com/briefing)).
+
+Descriptive characteristics (not a performance promise):
+
+| Metric | Typical |
+|--------|---------|
+| **Signal Frequency** | 1–3 / day per symbol |
 | **Avg Holding Time** | 4h – 2d |
-
-*출처: 오퍼레이션 룰북(progress 33~95%) 기반 백테스트·실거래 튜닝. 기간·종목·시장 환경에 따라 상이할 수 있습니다.*
 
 ### 4.3 지표 정의
 
@@ -158,18 +162,15 @@ Structural cycle completes → Target defined → Entry with risk bounds
 3. RULES 첫 매칭으로 전략·choices 제공
 4. (선택) LLM이 동일 입력을 자연어로 설명
 
-### 4.5 Backtest Example
+### 4.5 Reproducibility, not a headline number
 
-```
-BTCUSDT 2023–2025 (예시)
+Because the rules path has zero LLM in it, any historical signal can be
+re-derived bit-for-bit from the same inputs and the versioned `RULES.yaml` —
+so you can audit the engine's calls yourself rather than trust a backtest figure.
+Live accountability is public: the daily briefing scores its own view every
+evening, hits and misses alike ([decker-ai.com/briefing](https://decker-ai.com/briefing)).
 
-Trades: 312
-Win Rate: 64.2%
-Average R:R: 1 : 2.3
-Max DD: 8.1%
-```
-
-*검증: 백테스트 엔진·실거래 결과는 전략·기간·종목별로 상이합니다. 과거 성과가 미래 수익을 보장하지 않습니다.*
+*For information only. Not investment advice.*
 
 ### 4.6 핵심 거래 로직
 

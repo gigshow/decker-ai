@@ -107,9 +107,9 @@ curl -H "X-API-Key: dk_live_..." \
 
 | Tier | 일일 한도 | 비고 |
 |------|-----------|------|
-| FREE | 100 req/day | 텔레그램 /apikey 자동 발급 |
-| BASIC | 10,000 req/day | 문의 |
-| PREMIUM | 100,000 req/day | 문의 |
+| FREE | 30 req/day | 웹 Settings→API Keys · 텔레그램 /apikey |
+| PRO | 10,000 req/day | $20/mo |
+| ENTERPRISE | 100,000 req/day | 문의 |
 
 429 응답 시 내일 리셋. 헤더: `X-RateLimit-Remaining`.
 

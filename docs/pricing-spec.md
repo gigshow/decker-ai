@@ -1,42 +1,38 @@
-# Pricing Spec (4-Tier)
+# Pricing Spec (3-Tier)
 
-**작업계획 기준.** 랜딩 pricing 섹션 반영용.
+Canonical tiers: **FREE / PRO / ENTERPRISE**. Matches the [README pricing table](../README.md#pricing).
 
-> **베타**: 현재 한도·과금 미적용. 시그널·전략·룰북 모델만 제공. 아래 티어는 정식 출시 후 적용 예정.
+> **Open beta (now):** all authenticated users get **PRO for free** (`BETA_TIER_OVERRIDE=PRO`). No payment required. Web sign-up and the Telegram bot are always free for the basics.
 
-| 티어 | 가격 | 핵심 기능 |
-|------|------|----------|
-| **Free** | $0 | 5 심볼, 기본 시그널, 에이전트 기본 |
-| **Pro** | $29/mo | 20 심볼, 실시간 알람, 전략 상세 |
-| **Trader** | $99/mo | 무제한, 자동주문, 커스텀 룰북 |
-| **API** | $299/mo | API 접근, Webhook, 개발자용 |
+| Tier | Price | Daily API limit | MCP | Auto-trade |
+|------|-------|-----------------|-----|------------|
+| **FREE** | $0 forever | 30 calls/day | read-only (1d cache) | — |
+| **PRO** | $20/mo · 7-day trial | 10,000/day | full (7 tools) | virtual + real |
+| **ENTERPRISE** | Contact us | 100,000+/day · custom | full + per-org skill catalog | + custom integration |
 
 ---
 
-## Free
+## FREE
 
-- 5 심볼
-- 기본 시그널 조회
-- 에이전트 (텔레그램 권장, OpenClaw 스킬) 기본
-- API: 500 호출/월
+- Web dashboard + Telegram bot
+- Signals, strategy detail (`progress_pct`, rulebook)
+- MCP: read-only (1-day cache)
+- API: 30 calls/day
 
-## Pro
+## PRO — $20/mo
 
-- 20 심볼
-- 실시간 시그널 알람
-- 전략 상세 (progress_pct, 룰북)
-- 7일 무료 체험
-- API: 10,000 호출/월
+- Everything in FREE
+- Real-time signal alerts
+- Full MCP (7 tools)
+- Auto-trade (virtual + real)
+- 7-day free trial
+- API: 10,000 calls/day
 
-## Trader
+## ENTERPRISE — contact us
 
-- 무제한 심볼
-- 자동주문
-- 커스텀 RULES.yaml (선택)
-- API: 50,000 호출/월
+- Everything in PRO
+- Per-org skill catalog
+- Custom integration + webhooks
+- API: 100,000+/day (custom)
 
-## API
-
-- 무제한 API 호출
-- Webhook
-- 전용 지원
+_For information only. Not investment advice._

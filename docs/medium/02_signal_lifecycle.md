@@ -4,6 +4,8 @@
 
 ---
 
+> *Backtest figures below are historical and illustrative of method (sample size and conditions shown), not a forward return promise. Decker publishes no headline win rate — see [Performance](../../README.md#performance). For information only; not investment advice.*
+
 ## The $1,000-to-$10,000 Problem
 
 My feed is full of them. "I built an AI bot that 10x'd my money." "I woke up and my $500 became $5,000." "This GPT trading agent made me $3,000 overnight."

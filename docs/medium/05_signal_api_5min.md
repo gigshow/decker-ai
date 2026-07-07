@@ -265,11 +265,12 @@ The API is the building block. What you build on top is up to you.
 
 The read endpoints are free because **adoption beats monetization at this stage**. The more developers building on Decker AI's API, the stronger the ecosystem.
 
-The revenue model is clear:
-- **Free**: 5 symbols, basic rules, 500 calls/month
-- **Pro** ($29/mo): 20 symbols, standard rules, real-time alerts
-- **Trader** ($99/mo): Unlimited, premium rules, auto-execution
-- **API** ($299/mo): Full API access, webhooks, custom integrations
+The revenue model is simple:
+- **Free**: 30 API calls/day, Web + Telegram included
+- **Pro** ($20/mo): 10,000 calls/day, full MCP (7 tools), auto-trade
+- **Enterprise**: custom limits, per-org skill catalog, custom integration
+
+During the open beta, signed-up users get **Pro for free**.
 
 But right now? Right now it's free. Go build something.
 

@@ -18,7 +18,7 @@ X-API-Key: dk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 2. Send `/apikey` → receive your key
 3. Lost it? `/apikey reset` revokes and reissues
 
-> Keys are issued via Telegram only. Web dashboard issuance is planned.
+> Keys can also be issued and revoked on the web: **decker-ai.com → Settings → API Keys**. Telegram and web are interchangeable.
 
 ---
 
@@ -62,7 +62,7 @@ curl -X POST https://api.decker-ai.com/api/v1/public/auth/verify \
 ```json
 {
   "valid": true,
-  "tier": "basic",
+  "tier": "pro",
   "rate_limit": 10000,
   "permissions": ["signals:read", "signals:narrative"]
 }
@@ -430,7 +430,7 @@ curl https://api.decker-ai.com/api/v1/public/demo
 ## Python SDK
 
 ```bash
-pip install decker-client    # Python 3.9+
+pip install ./sdk/python     # PyPI (decker-client) publish pending — install from source for now
 ```
 
 ```python

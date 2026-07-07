@@ -59,9 +59,9 @@ with Client(api_key="dk_live_xxx") as client:
 
 | Tier    | Daily limit    |
 |---------|---------------|
-| FREE    | 100 req/day   |
-| BASIC   | 10,000 req/day |
-| PREMIUM | 100,000 req/day |
+| FREE    | 30 req/day    |
+| PRO     | 10,000 req/day |
+| ENTERPRISE | 100,000 req/day |
 
 After any request, check `client.last_rate_limit`:
 

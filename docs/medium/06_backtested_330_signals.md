@@ -4,6 +4,8 @@
 
 ---
 
+> *Backtest figures below are historical and illustrative of method (sample size and conditions shown), not a forward return promise. Decker publishes no headline win rate — see [Performance](../../README.md#performance). For information only; not investment advice.*
+
 ## The Question
 
 I had a simple hypothesis: **the further a trading signal has progressed toward its target, the more likely it is to complete.**

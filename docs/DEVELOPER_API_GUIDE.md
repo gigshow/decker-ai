@@ -376,7 +376,7 @@ with Client(api_key="dk_live_xxx") as client:
 ## 8. FAQ
 
 **Q. Can I get an API key without Telegram?**  
-A. Not currently. Telegram `/apikey` is the only issuance path. Web dashboard issuance is planned.
+A. Yes — issue and revoke keys on the web at decker-ai.com → Settings → API Keys. Telegram `/apikey` works too; the two are interchangeable.
 
 **Q. I lost my key.**  
 A. Run `/apikey reset` in @deckerclawbot — revokes the old key and issues a new one.
@@ -388,7 +388,7 @@ A. No. Only `GO` is an entry signal. `WATCH`/`HOLD` means the engine is observin
 A. `Client(api_key="...", base_url="http://localhost:8000")`
 
 **Q. I keep getting 429.**  
-A. FREE tier is 100 req/day. Contact via Telegram bot to upgrade to BASIC.
+A. FREE tier is 30 req/day. Upgrade to PRO at decker-ai.com → Settings → API Keys (or via the Telegram bot).
 
 ---
 
