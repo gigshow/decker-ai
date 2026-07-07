@@ -9,6 +9,6 @@ the engine runs, deterministically, in the open.
 
 | Date (UTC) | Scope | Scorecard (hit · miss · invalidated) | Sample states |
 |------------|-------|--------------------------------------|---------------|
-| 2026-07-07 | BTC 4h (demo) | hit 1 · miss 1 · invalidated 2 | `B_SET` + · ref 63738.52 |
+| 2026-07-07 | 7 symbols | — (not yet scored) | BNBUSDT `B_FORMING`, BTCUSDT `BREAK_PLUS`, DOGEUSDT `BREAK_MINUS` |
 
 _For information only. Not investment advice._
