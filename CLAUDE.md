@@ -23,6 +23,6 @@ Full table and workflow slash commands: **[docs/DECKER_AGENT_SKILLS.md](docs/DEC
 
 ## Conventions
 
-- Samples: `samples/python`, `samples/curl`
+- Examples: `examples/python`, `examples/curl`
 - Rulebook: `operation_rules/RULES.yaml`
 - OpenClaw: `docs/openclaw_skills/`

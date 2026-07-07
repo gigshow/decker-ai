@@ -25,7 +25,7 @@ This repo ships a **working public API**, runnable samples, and operation rules 
 - docs/medium/part2/README.md — Sequences, FSM, gate, AI boundary, two-repo story
 
 ## Runnable
-- samples/signal-push-strategy.sh — curl: register signal → get strategy (2 steps)
+- examples/signal-push-strategy.sh — curl: register signal → get strategy (2 steps)
 
 ## Full doc index (duplicate of this section)
 - docs/llms.txt — points here; use root llms.txt as canonical

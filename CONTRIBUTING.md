@@ -7,12 +7,12 @@
 ### 문서
 
 - **번역**: docs/ 영문·한글 번역
-- **예제**: samples/ 코드 예제 추가·개선
+- **예제**: examples/ 코드 예제 추가·개선
 - **가이드**: api-guide.md, quickstart.md 보강
 
 ### 코드
 
-- **샘플**: `samples/python/`, `samples/curl/` 예제
+- **샘플**: `examples/python/`, `examples/curl/` 예제
 - **룰북**: `operation_rules/RULES.yaml` 규칙 추가 (이슈 논의 후)
 
 ### 이슈
