@@ -1,0 +1,33 @@
+name: Track record (daily)
+
+on:
+  schedule:
+    - cron: '30 23 * * *'   # daily 23:30 UTC — after the evening self-scoring
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: track-record
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Update track record
+        env:
+          DECKER_API_KEY: ${{ secrets.DECKER_API_KEY }}   # optional — richer scorecard if set
+        run: python scripts/update_track_record.py
+      - name: Commit if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add TRACK_RECORD.md
+          git diff --staged --quiet || git commit -m "chore(track-record): daily engine reading [skip ci]"
+          git push

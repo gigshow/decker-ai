@@ -18,6 +18,7 @@
 [![Kakao Channel](https://img.shields.io/badge/Kakao-Channel-FEE500?style=flat-square&logo=kakaotalk&logoColor=000000)](https://pf.kakao.com/_RxlxjVX)
 [![API Docs](https://img.shields.io/badge/API-docs-4D9FFF?style=flat-square)](https://api.decker-ai.com/docs)
 [![MCP Server](https://img.shields.io/badge/MCP-server-9C27B0?style=flat-square)](https://api.decker-ai.com/api/v1/mcp/health)
+[![Track record](https://img.shields.io/badge/track_record-stamped_daily-00C853?style=flat-square)](TRACK_RECORD.md)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
 <img src="assets/screenshots/hero_desktop.jpg" width="880" alt="Decker AI — the live market-state cockpit across crypto and Korean equities (KOSPI 200)" />
