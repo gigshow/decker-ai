@@ -55,44 +55,43 @@
 
 ## See it in action
 
-### Live signals — multi-timeframe, with a plain-language reading
+**Start here — 30 seconds. No signup, no key.**
 
-<div align="center">
-<img src="assets/screenshots/04_signal_detail.jpg" width="220" alt="Signal detail — ETH GO ALIGNED, entry / stop / target, MTF matrix" />
-<img src="assets/screenshots/05_signal_chart.jpg" width="220" alt="Signal chart — ETH/USDT 1h with entry / target / stop overlays" />
-<img src="assets/screenshots/06_signal_ai_reading.jpg" width="220" alt="AI reading view — MTF alignment summary, confidence, market context" />
-</div>
+```bash
+curl -s https://api.decker-ai.com/api/v1/public/demo | jq .
+```
 
-You get the structural state (state machine phase), the multi-timeframe alignment, the entry / stop / target, and a short reading that explains *why* — not just *what*.
+https://github.com/user-attachments/assets/26e4abb2-2bde-456d-8f6c-4a6a70d67c2f
+
+Then one MCP line gives any agent the same read — **zero LLM in the signal path.**
+
+### The engine room — live FSM, MTF alignment, R:R
+
+https://github.com/user-attachments/assets/dc0ddef4-fa92-4aec-8490-95e8a22dcaa2
+
+Every signal traces to a structural cause: `progress_pct` + `operation_gate` + entry / stop / target.
+
+### Signal → execution, non-custodial
+
+https://github.com/user-attachments/assets/2decc6fb-f7de-435c-aec9-7d5e88489572
+
+Click Order · wallet-sign · **custody 0**. Decker relays your signature only (revocable agent wallet, EIP-712). *For information only — not investment advice.*
+
+### Read it daily — and we score our own calls
+
+https://github.com/user-attachments/assets/5b6517f7-71af-4624-b26a-632af5140c12
+
+https://github.com/user-attachments/assets/23a2387b-b5ba-4f55-b55b-5243eca389b5
+
+Every morning (08:00 KST): the engine's view per symbol — baseline, what winning and losing look like, and a pick you can answer. Evening: the **same view scored against what actually happened — hits and misses alike, on the record.** *We stamp our wrong calls too.*
+
+Web hub: [decker-ai.com/briefing](https://decker-ai.com/briefing) · Subscribe: [@deckerclawbot](https://t.me/deckerclawbot) → `/briefing`
 
 ### Korean equities (KRX) — Beta, free
 
-<div align="center">
-<img src="assets/screenshots/13_krx_hot.jpg" width="220" alt="KRX — today's hot market, ADD / EXIT actions on KOSPI tickers" />
-<img src="assets/screenshots/14_krx_signals.jpg" width="220" alt="KRX signals — KOSPI200 GO 109 / WATCH 4 / HOLD 94 across 207 tickers" />
-</div>
+https://github.com/user-attachments/assets/e7f526fa-8614-417f-93b3-fa06a2551c6d
 
-Same deterministic engine, applied to KOSPI + KOSDAQ. Portfolio actions instead of buy/sell: **ADD / HOLD / REDUCE / EXIT**. Universe = top 200 by trading value ∪ your watchlist ∪ momentum / volume spikes.
-
-### Daily briefing — the engine's view, scored in public every evening
-
-<div align="center">
-<img src="assets/screenshots/16_telegram_deckerclaw.jpg" width="220" alt="@deckerclawbot — daily crypto briefing" />
-<img src="assets/screenshots/17_telegram_krx.jpg" width="220" alt="@krxdeckerbot — KRX end-of-day checkup briefing" />
-</div>
-
-Every morning (08:00 KST) you get the engine's view per symbol — where the game stands (baseline price), what winning and losing look like, and a pick you can answer. **Every evening the same view is scored against what actually happened — hits and misses alike, on the record.** That's the core promise: *we stamp our wrong calls too.*
-
-Web hub: [decker-ai.com/briefing](https://decker-ai.com/briefing) · Subscribe: [@deckerclawbot](https://t.me/deckerclawbot) → `/briefing` · KRX closing-bell checkup (16:30 KST): [@krxdeckerbot](https://t.me/krxdeckerbot)
-
-### Strategy presets + review your own performance
-
-<div align="center">
-<img src="assets/screenshots/11_strategy_preset.jpg" width="220" alt="Strategy presets — conservative / standard / aggressive, applied across all channels" />
-<img src="assets/screenshots/12_review_performance.jpg" width="220" alt="Review — 30-day P&L trend, per-symbol stats, 22 trades" />
-</div>
-
-Pick a **Skill Overlay** (`conservative` / `standard` / `aggressive`) — it applies everywhere (Web, Telegram, API, MCP). Review your own trades against the engine's signals to see what worked.
+Same deterministic engine on KOSPI + KOSDAQ. Portfolio states — **ADD / HOLD / REDUCE / EXIT**, not buy/sell. Daily closing-bell checkup at 16:30 KST · [@krxdeckerbot](https://t.me/krxdeckerbot).
 
 ---
 
@@ -159,6 +158,8 @@ curl "https://api.decker-ai.com/api/v1/public/signals/BTCUSDT/latest?timeframe=1
   -H "X-API-Key: dk_live_xxx"
 ```
 
+**Prefer a runnable file?** → [`examples/quickstart.py`](examples/quickstart.py) — zero dependencies (stdlib only), no key, prints the composed view + receipts in one run. Wrapping Decker for an agent crew: [`examples/langgraph_decker_tool.py`](examples/langgraph_decker_tool.py). More in [`examples/`](examples/).
+
 The demo returns the **composed view** — the same card our daily briefing sends:
 
 ```json
@@ -219,18 +220,24 @@ KRX details: [`docs/krx/KRX_BUSINESS_MODEL_AND_ROADMAP_2026-05-09.md`](docs/krx/
 
 ## Performance
 
-*Backtest results on the rules path. Past performance does not guarantee future results.*
+We don't publish a headline win rate. Backtest numbers without method
+and sample size are marketing, not evidence — and easy to cherry-pick.
 
-| Metric | Result | Condition |
-|--------|--------|-----------|
-| Win Rate | 61–75% | Ranging market |
-| Win Rate | 70%+ | Trending market |
-| Avg Profit | 4–10% | Per signal |
-| Avg Loss | 1–2% | Tight stop-loss |
-| Max Drawdown | < 9% | Capital preservation |
-| Signal Frequency | 1–3 / day | Per symbol |
+What we stand on instead:
 
-Details: [Signal Performance](docs/signal-performance.md).
+- **Deterministic & reproducible.** Same input → same output, always.
+  The rules path has zero LLM in it, so a signal is not a model's opinion —
+  it's a formal structural verdict you can re-derive.
+- **Auditable.** Every read carries its `provenance` (composer + the versioned
+  rulebook contract) and traces back to the exact engine emit. The full
+  RULES.yaml is open, so you can re-derive any verdict yourself.
+- **Scored in public, daily.** The morning briefing's view is graded against
+  what actually happened that evening — hits and misses alike, on the record.
+  → [decker-ai.com/briefing](https://decker-ai.com/briefing)
+
+Method and rulebook are open: [Model & Algorithm](docs/model.md) · [Operation Rules (YAML)](operation_rules/RULES.yaml) · [Signal Performance](docs/signal-performance.md).
+
+*For information only. Not investment advice.*
 
 ---
 
