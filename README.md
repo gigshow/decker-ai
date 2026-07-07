@@ -5,13 +5,11 @@
 -->
 <div align="center">
 
-<img src="assets/decker_claw_owl_v1.svg" width="96" alt="DeckerClaw — Owl with Claw mascot" />
+<h1><img src="assets/decker_claw_owl_v1.svg" height="46" align="top" alt="DeckerClaw" />&nbsp; Decker AI</h1>
 
-# Decker AI
+### The deterministic market-state layer your trading agents call.
 
-### A market structure engine — not another buy/sell bot.
-
-**Crypto + Korean equities (KRX).** Every signal is deterministic, traceable, and explained in plain language.
+**Rules trade, LLMs explain.** Live, non-custodial, with receipts.
 
 [Open the app](https://decker-ai.com) · [Telegram bot](https://t.me/deckerclawbot) · [Kakao channel](https://pf.kakao.com/_RxlxjVX) · [API docs](https://api.decker-ai.com/docs)
 
@@ -22,7 +20,7 @@
 [![MCP Server](https://img.shields.io/badge/MCP-server-9C27B0?style=flat-square)](https://api.decker-ai.com/api/v1/mcp/health)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
-<img src="assets/screenshots/01_hero_mobile.jpg" width="280" alt="Decker AI mobile hero — Korean tagline: 매매는 룰이. 설명은 LLM이." />
+<img src="assets/screenshots/hero_desktop.jpg" width="880" alt="Decker AI — the live market-state cockpit across crypto and Korean equities (KOSPI 200)" />
 
 </div>
 
