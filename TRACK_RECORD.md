@@ -9,5 +9,6 @@ the engine runs, deterministically, in the open.
 
 | Date (UTC) | Read | State | Dir | Ref price | Recent verdicts |
 |------------|------|-------|-----|-----------|-----------------|
+| 2026-07-07 | BTC 4h | `B_SET` | + | 63738.52 | hit 1 · invalidated 2 · miss 1 |
 
-_First row is written by the daily job — see `.github/workflows/track-record.yml`. For information only. Not investment advice._
+_For information only. Not investment advice._
