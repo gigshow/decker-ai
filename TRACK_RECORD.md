@@ -9,5 +9,6 @@ the engine runs, deterministically, in the open.
 
 | Date (UTC) | Scope | Scorecard (hit · miss · invalidated) | Sample states |
 |------------|-------|--------------------------------------|---------------|
+| 2026-07-07 | BTC 4h (demo) | hit 1 · miss 1 · invalidated 2 | `B_SET` + · ref 63738.52 |
 
-_First row is written by the daily job. For information only. Not investment advice._
+_For information only. Not investment advice._
