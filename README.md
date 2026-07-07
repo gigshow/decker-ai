@@ -45,7 +45,7 @@
 | 📱 **Web app** | Most people — full dashboard, mock trading, KRX watchlist | **[decker-ai.com](https://decker-ai.com)** — sign up free |
 | 🤖 **Telegram bot** | Quick signal checks on your phone | **[@deckerclawbot](https://t.me/deckerclawbot)** — `/start` |
 | 💛 **Kakao channel** | 한국 사용자, KRX 시그널 알림 | **[pf.kakao.com/_RxlxjVX](https://pf.kakao.com/_RxlxjVX)** |
-| 🧠 **MCP server** | Claude / Cursor / Codex users | [DEVELOPER_README.md](DEVELOPER_README.md#mcp-server-way-e) |
+| 🧠 **MCP server** | Claude / Cursor / Codex users | **[decker-ai.com/mcp](https://decker-ai.com/mcp)** — 2-min setup |
 | 🛠 **REST API** | Developers building bots & apps | [DEVELOPER_README.md](DEVELOPER_README.md#api-quickstart-3-steps) |
 
 > Free tier is generous (30 calls/day on the API; Web + Telegram included). During Beta, signed-up users get **PRO access for free**.
