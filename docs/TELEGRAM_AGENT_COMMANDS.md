@@ -32,10 +32,11 @@
 |----------|------|-----------|------|
 | `/position` | `/portfolio`, `/positions`, `/balances` | 포지션 보여줘 | 포트폴리오 (연동 필요) |
 | `/signal` | `/signals` | 시그널 알려줘 | 시그널 요약 |
+| (자연어) | — | **BTC 왜?**, XRP 어때, 골드 | 종목 상태 뷰 — 방향·판 계층·이기면/지면·엔진 자세 (엔진 emit 심볼, 브리핑 카드와 동일 조립기) |
 | `/signal_pos` | `/positions_signal` | 포지션별 시그널 | 시그널+포지션 개요 |
 | `/price` | `/quote`, `/p` | 비트코인 얼마 | 시세 (`/price`만 보내면 기본 BTC) |
 | `/market` | `/market_status` | 시장 상태 어때 | 시장 상태·바이어스 |
-| `/compare` | `/cmp` | 비트 이더 비교 | 종목 비교 (인자 없으면 기본 문구) |
+| `/compare` | `/cmp`, `compare` | 골드 에스앤피 비교, 비트 이더 비교, 코스피 비교 | 종목 비교 — 크립토·HL 상품/지수(골드·유가·에스앤피·코스피=KOSPI200) |
 | `/poly` | `/polymarket` | 폴리마켓 | 폴리마켓 브리핑 |
 | `/news` | `/digest` | 뉴스 (맥락) | 다이제스트 안내 (연동 여부에 따라 문구) |
 | `/news_now` | `/newsnow` | 뉴스 보여줘 | 즉시 뉴스 (연동 필요) |
@@ -46,7 +47,7 @@
 
 | `/` 명령 | 별칭 | 자연어 예 | 설명 |
 |----------|------|-----------|------|
-| `/apikey` | `/api_key`, `/getkey`, `/mykey` | API 키 발급해줘 | Public API 키(`dk_live_xxx`) 발급·조회 (연동 필요) |
+| `/apikey` | `/api_key`, `/getkey`, `/mykey` | API 키 발급해줘 | Public API 키(`dk_live_xxx`) 발급·조회 — 읽기전용, **전체 키 표시**(재조회 가능·연동 필요) |
 | `/apikey reset` | — | API 키 재발급 | 기존 키 폐기 후 새 키 발급 |
 
 **흐름**: 연동 완료 → `/apikey` → `dk_live_xxx` 수령 → `X-API-Key` 헤더로 API 호출  
