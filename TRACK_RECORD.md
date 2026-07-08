@@ -9,6 +9,7 @@ the engine runs, deterministically, in the open.
 
 | Date (UTC) | Scope | Scorecard (hit · miss · invalidated) | Sample states |
 |------------|-------|--------------------------------------|---------------|
+| 2026-07-08 | 8 symbols | — (not yet scored) | BNBUSDT `B_SET`, BTCUSDT `B_OBSERVING`, DOGEUSDT `C_SET` |
 | 2026-07-07 | 7 symbols | — (not yet scored) | BTCUSDT `C_SET`, DOGEUSDT `B_FORMING`, ETHUSDT `B_FORMING` |
 
 _For information only. Not investment advice._
