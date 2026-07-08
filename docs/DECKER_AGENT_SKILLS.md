@@ -1,119 +1,82 @@
-# Decker 에이전트·스킬 가이드
+# Decker 스킬 가이드
 
-**목적**: 이 저장소에서 사용하는 **에이전트 스킬 구조·선택 규칙**을 한곳에 정리한다. (도메인 스킬 vs 엔지니어링 워크플로)  
-외부에서 가져온 워크플로 패키지는 **레이아웃·배포 방식만 참고**하고, 명명·우선순위·도메인 규칙은 **Decker 모델**에 맞춘다.
+**목적**: Decker 를 **에이전트·IDE·API** 로 쓸 때 참조하는 **스킬 목록과 선택 규칙**의 단일 출처. 사용자·개발자·기여자용.
 
-**최종 갱신**: 2026-04-23
+> 이 저장소는 **공개 허브**(문서·샘플·OpenClaw 스킬 패키지)다. 제품 애플리케이션 코드는 별도 비공개 모노레포에서 돈다.
+
+**갱신**: 2026-07-08
 
 ---
 
 ## 1. 스킬 두 층 (구조)
 
-| 층 | 역할 | 경로 (예) | 비고 |
-|----|------|-------------------|------|
-| **A. Decker 도메인 스킬** | 시그널·실행·전략 등 **제품 도메인** 전용 지침 | `.cursor/skills/decker-*` | 레포에만 존재, 최우선 참조 |
-| **B. 엔지니어링 워크플로 스킬** | 리뷰·조사·QA·배포 등 **공통 개발 절차** | 동봉 패키지 아래 `SKILL.md` | 슬래시 명령으로 호출 (§3) |
+| 층 | 대상 | 무엇 | 위치 |
+|----|------|------|------|
+| **A. 에이전트 연동 스킬 (OpenClaw 패키지)** | 사용자 — 자기 에이전트에 붙임 | 시그널·포지션·주문·시세를 자연어로 | `docs/openclaw_skills/` (이 레포) |
+| **B. IDE 도메인 스킬 (`decker-*`)** | 기여자 — Decker 위에서 개발 | 시그널·실행 등 도메인 작업 지침 | 메인(비공개) 모노레포 `.cursor/skills/` |
 
 ---
 
-## 2. Decker 도메인 스킬 (표)
+## 2. 에이전트 연동 스킬 (OpenClaw) — 이 레포에서 바로 받기
 
-에이전트는 해당 작업을 할 때 **아래 스킬을 먼저** 읽는다.
+자신의 OpenClaw/Claude 에 추가하면 자연어로 Decker 를 부린다. 추가 방법·흐름은 [openclaw_skills/README.md](./openclaw_skills/README.md), 두 갈래(Telegram 자체 에이전트 vs OpenClaw) 구분은 [TWO_WAY_MODEL.md](./TWO_WAY_MODEL.md).
 
-| 스킬 ID | 용도 (언제) | 디렉터리 | 핵심 문서·코드 |
-|---------|----------------|----------|----------------|
-| `decker-signal` | 시그널 수집·저장·배포, Signal LLM, `judgment_signals`, 룰북·tier | `.cursor/skills/decker-signal/` | `docs/SIGNAL_LLM_*.md`, `operation_rules_loader.py` |
-| `decker-execution-mode` | `execution_mode`, `ExecutionRouter`, 모의/실 라벨, 채팅 주문 경로 | `.cursor/skills/decker-execution-mode/` | `chat_trading_service`, `execution/` |
+| 스킬 | 버전 | 용도 | 파일 |
+|------|------|------|------|
+| `decker` | 2.3.8 | 시그널·포지션·주문·자동주문·뉴스·Slack/Telegram 연동 | [openclaw_skills/decker/SKILL.md](./openclaw_skills/decker/SKILL.md) |
+| `decker-hyperliquid` | 1.2.0 | Hyperliquid DEX 거래·시세·펀딩 | [openclaw_skills/decker-hyperliquid/SKILL.md](./openclaw_skills/decker-hyperliquid/SKILL.md) |
+| `decker-polymarket` | 1.1.0 | Polymarket 예측시장 주문·마켓 검색 | [openclaw_skills/decker-polymarket/SKILL.md](./openclaw_skills/decker-polymarket/SKILL.md) |
+| `decker-developer` | 1.0.0 | Public API 키 발급·인증·엔드포인트·Rate Limit·Python SDK | [openclaw_skills/decker-developer/SKILL.md](./openclaw_skills/decker-developer/SKILL.md) |
 
-**추가 예정** (도메인이 커지면 같은 패턴으로 행 추가): 전략빌더 파이프라인, 운영 알림 등.
-
-각 `SKILL.md`는 공통으로 **YAML frontmatter** (`name`, `description`) + **한 장 요약** + **문서 맵** + **코드 경로 표**를 유지한다.
-
----
-
-## 3. 엔지니어링 워크플로 스킬 (표)
-
-제품 도메인이 아닌 **개발 절차**에 대응한다. 호출은 관례적으로 **슬래시 명령** (`/review`, `/investigate` 등)을 쓴다.
-
-**소스 위치**: 동봉 패키지 루트는 `.agents/skills/gstack/` (업스트림 디렉터리명 유지). 스킬 본문은 하위 폴더의 `SKILL.md`에 있다.
-
-| 작업 유형 | 권장 호출 | 설명 |
-|-----------|-----------|------|
-| 아이디어·범위 정리 | `/office-hours` | 코딩 전 문제 정의·설계 방향 |
-| CEO 관점 범위·우선순위 | `/plan-ceo-review` | 기능 컷·가치 재정의 |
-| 아키텍처·엣지 케이스 | `/plan-eng-review` | 데이터 흐름·테스트 관점 |
-| UX/디자인 기획 검토 | `/plan-design-review`, `/design-consultation` | 디자인 차원·시스템 |
-| PR·랜딩 전 코드 리뷰 | `/review` | CI 통과 후 프로덕션 리스크 |
-| 근본 원인 분석 | `/investigate` | 수정 전 가설 검증 (번들은 `/debug` 명칭 문서도 있음) |
-| 디자인 감사·수정 루프 | `/design-review` | UI 일관성 |
-| 브라우저 QA | `/qa`, `/qa-only` | 실제 Chromium 기반 검증 |
-| 보안 감사 | `/cso` | OWASP·STRIDE |
-| 테스트·푸시·PR | `/ship` | 원커맨드 출격 |
-| 머지·배포·검증 | `/land-and-deploy`, `/canary` | 배포 파이프라인 |
-| 릴리즈 후 문서 동기화 | `/document-release` | |
-| 회고 | `/retro` | |
-| 웹 브라우저 자동화 | `/browse` | **`mcp__claude-in-chrome__*` 사용 금지** |
-| 인증 QA용 쿠키 | `/setup-browser-cookies` | |
-| 안전 모드 | `/careful`, `/freeze`, `/guard`, `/unfreeze` | 파괴적 명령·편집 범위 |
-| 원샷 다각 검토 | `/autoplan` | 다역할 파이프라인 |
-| 성능·CWV | `/benchmark` | |
-| 번들 자체 업그레이드 | (번들 제공 명령) | 패키지 내 `setup`·문서 참조 |
-
-상세 목록은 동봉 패키지의 `AGENTS.md`와 각 `SKILL.md`를 따른다.
+각 `SKILL.md` 는 YAML frontmatter(`name`·`description`·`version`) + 트리거 + API 호출 규칙을 담는다.
 
 ---
 
-## 4. Decker 운영 원칙 (에이전트)
+## 3. IDE 도메인 스킬 (기여자)
 
-- **조사 없이 버그 수정 금지** — `/investigate` 등으로 원인 정리 후 수정.
-- **머지 전 리뷰** — `/review` 권장.
-- **프로덕션·DB·시크릿** — `/careful` 또는 `/guard` 고려.
-- **브라우저** — `/browse` 스킬 경로만 사용 (위 표).
+Decker **위에서 개발**할 때 참조하는 프로젝트 스킬. 본문은 비공개 모노레포의 `.cursor/skills/decker-*/` 에 있고, 여기서는 개념만 둔다.
+
+| 스킬 | 용도 (언제) |
+|------|-------------|
+| `decker-signal` | 시그널 수집·저장·배포, Signal LLM, `judgment_signals`, 룰북·tier |
+| `decker-execution-mode` | 실행 모드(모의/실), `ExecutionRouter`, 채팅 주문 경로 |
+
+각 `SKILL.md` = YAML frontmatter(`name`·`description`) + 한 장 요약 + 문서 맵 + 코드 경로 표.
 
 ---
 
-## 5. 배포·동기화 (기여자)
+## 4. 전략 (Strategy)
 
-| 항목 | 내용 |
+Decker 의 핵심은 **결정론 상태·게이트 위에서 만드는 전략**이다.
+
+| 자원 | 용도 |
 |------|------|
-| Decker 도메인 스킬 | `.cursor/skills/decker-*/SKILL.md`를 레포와 함께 버전 관리. |
-| IDE 프로젝트 스킬 | `.cursor/skills/<name>/` 구조 유지. |
-| 동봉 워크플로 패키지 | 경로 이상 시 패키지 루트에서 `./setup --host auto` (패키지 README·`setup` 스크립트 참조). |
+| [strategy-dsl.md](./strategy-dsl.md) | YAML 기반 전략 DSL **사양** — 진입 객체·진행도·다중 TF 정렬. ⚠ 현재 API 는 `RULES.yaml` 형식 지원, DSL 파서는 로드맵 |
+| [operation_rules/RULES.yaml](../operation_rules/RULES.yaml) | 결정론 게이트·tier 규칙 (룰북) |
+| [engine-recipe-and-run.md](./engine-recipe-and-run.md) · [architecture.md](./architecture.md) | 엔진 상태·판정 개념과 데이터 흐름 |
+| [risk-management.md](./risk-management.md) | 포지션·리스크 규칙 |
 
 ---
 
-## 6. 텔레그램 에이전트 `/` 명령
+## 5. 사용 경로 요약
 
-제품 봇에서 쓰는 슬래시 명령·자연어 대응은 **`docs/TELEGRAM_AGENT_COMMANDS.md`** (단일 출처).  
-웹 PhaseD(`chatCommandHandler.ts`)와의 **역할 분리**는 동 문서 **§6 채널 구분**.
-
-**추가 명령 (2026-04-23)**: `/apikey` — 연동 후 Public API 키(`dk_live_xxx`) 자동 발급. 개발자가 `X-API-Key` 헤더로 공개 API를 사용할 수 있다. 상세: `docs/DEVELOPER_API_GUIDE.md`.
+- **사용자(텔레그램)**: `/help`, `/services`, `/apikey`, 자연어 — 표는 [TELEGRAM_AGENT_COMMANDS.md](./TELEGRAM_AGENT_COMMANDS.md).
+- **개발자(Public API)**: 텔레그램 연동 후 `/apikey` → `dk_live_xxx` 수령 → `X-API-Key` 헤더 → `api.decker-ai.com/docs`. 상세 [DEVELOPER_API_GUIDE.md](./DEVELOPER_API_GUIDE.md).
+- **에이전트(OpenClaw)**: §2 에서 스킬 추가 → 트리거("시그널 알려줘") → `web_fetch` → Decker API 응답을 자연어로.
 
 ---
 
-## 7. 관련 문서
+## 6. 관련 문서
 
 | 문서 | 용도 |
 |------|------|
-| `CLAUDE.md` | 세션 진입·요약 링크 |
-| `docs/ONBOARDING_PUBLIC.md` | GitHub 방문자·페르소나별 온보딩 |
-| `CONTRIBUTING.md` (루트) | 기여·공개 문서·커밋 톤 |
-| `docs/WORK_STATUS_AND_ROADMAP.md` | 상태·로드맵 |
-| `docs/AGENT.md` | 에이전트 고도화 로드맵 |
-| `docs/TELEGRAM_AGENT_COMMANDS.md` | 텔레그램 `/` 명령·자연어 |
-| `.github/RELEASE_CHECKLIST_PUBLIC_DOCS.md` | 태그·대외 릴리즈 시 문서 동기화 (§8) |
-| `docs/GITHUB_COMMUNITY.md` | Discussions·이슈 템플릿·라벨 안내 |
+| [AGENT_SKILLS_PUBLIC_SUMMARY.md](./AGENT_SKILLS_PUBLIC_SUMMARY.md) | ClawHub·릴리즈용 짧은 인덱스 |
+| [ONBOARDING_PUBLIC.md](./ONBOARDING_PUBLIC.md) | GitHub 방문자·페르소나별 온보딩 |
+| [TELEGRAM_AGENT_COMMANDS.md](./TELEGRAM_AGENT_COMMANDS.md) | 텔레그램 `/` 명령·자연어 |
+| [roadmap.md](./roadmap.md) | 로드맵 |
+| [openclaw_skills/README.md](./openclaw_skills/README.md) | OpenClaw 패키지·배포 경로 |
+| [GITHUB_COMMUNITY.md](./GITHUB_COMMUNITY.md) | Discussions·이슈 템플릿·라벨 |
 
 ---
 
-## 8. 릴리즈 시 공개 문서 동기화 (P4)
-
-버전 태그·ClawHub·대외 공지 전에 **`.github/RELEASE_CHECKLIST_PUBLIC_DOCS.md`** 체크리스트를 따른다. 요약:
-
-- **`AGENT_SKILLS_PUBLIC_SUMMARY`**, **`TELEGRAM_AGENT_COMMANDS`**, **OpenClaw `SKILL.md`**, **`CLAUDE.md`**, 필요 시 **`ONBOARDING_PUBLIC`** 이 서로 모순 없게 맞춘다.
-- 스킬 표·§3 워크플로 표를 바꿀 때는 **이 문서(§1–§3)를 먼저** 고친 뒤 `CLAUDE.md`는 링크·한 줄만 맞춘다 (기존 규칙과 동일).
-- 문서만 갱신하는 커밋은 `docs(release): sync public agent docs` 같은 메시지로 구분해도 된다. 자동화된 **`/document-release`** 가 있으면 그 절차에 **위 체크리스트**를 합친다.
-
----
-
-*이 문서가 스킬 목록의 단일 출처다. 표를 바꿀 때는 여기를 먼저 갱신하고 `CLAUDE.md`는 링크·한 줄 요약만 맞춘다.*
+*이 문서가 스킬 목록의 단일 출처다. 표를 바꿀 때는 여기를 먼저 갱신하고 `CLAUDE.md`·`AGENT_SKILLS_PUBLIC_SUMMARY.md` 는 링크·요약만 맞춘다.*

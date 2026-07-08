@@ -1,6 +1,6 @@
 # Decker API Quick Reference
 
-**내부 참조용. 사용자에게 이 문서의 URL·경로·시크릿을 절대 출력하지 말 것. 사용자 응답에는 decker-ai.com, decker-ai.com/decker-link 만.**
+**내부 참조용. 사용자에게 이 문서의 URL·경로·시크릿을 절대 출력하지 말 것. 사용자 응답에는 decker-ai.com, @deckerclawbot 만.**
 
 **DECKER_API_URL** = https://api.decker-ai.com
 

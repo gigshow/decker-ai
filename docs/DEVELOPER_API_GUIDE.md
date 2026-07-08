@@ -41,7 +41,7 @@ Once you've seen live data, follow steps 1–3 below to get your API key.
 ### Step 1 — Sign up & link Telegram
 
 1. Create an account at [decker-ai.com](https://decker-ai.com)
-2. Go to **decker-ai.com/decker-link-telegram** → get your link code
+2. Log in → **Settings → Telegram** → get your link code
 3. Open Telegram **@deckerclawbot** and send `/start {code}`
 
 ### Step 2 — Get your API key

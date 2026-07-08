@@ -39,14 +39,14 @@
 
 | 항목                     | 내용                                                                                                                                   |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| Phase 2                | Slack 연동, /decker-link (OpenClaw 경유)                                                                                                 |
+| Phase 2                | Slack 연동 (OpenClaw 경유)                                                                                                              |
 | Phase 3                | 주문 승인 플로우                                                                                                                            |
 | Phase 4                | 좋은 시그널 알림, 시그널 제안 → order                                                                                                            |
 | Phase 5                | 사용자 여정, member_joined 환영                                                                                                             |
 | Our Story              | 서비스 페이지 스토리 섹션                                                                                                                       |
 | 턴키                     | turnkey/ 경량 Telegram 봇 (Railway 원클릭)                                                                                                 |
 | 오퍼레이션 룰북 **v2.4.7+**   | 9+ 레이어, progress·multi-TF·**엔진 merge 평면**(QKV·게이·줄기·`action_gate`·trigger 레인 등), [RULES.yaml](../operation_rules/RULES.yaml) — 공개 미러 |
-| Telegram               | @deckerclawbot, decker-link-telegram (자체 에이전트)                                                                                       |
+| Telegram               | @deckerclawbot (자체 에이전트), 연동=설정→텔레그램                                                                                          |
 | Hyperliquid·Polymarket | HL·PM 주문                                                                                                                             |
 | HL 시세·시그널 (백엔드)        | HL `allMids` → DB 시세(`hyperliquid`), 시장상태 시계열, funding 시그널(`hyperliquid_market`), watchlist 최초 노출 DB·알림, 배포 전 HL 단위테스트 CI 게이트        |
 | OpenClaw 스킬            | SKILL.md 공개, web_fetch → Decker API                                                                                                  |

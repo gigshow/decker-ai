@@ -67,7 +67,7 @@
 ## 5. 에이전트·IDE 스킬과의 관계
 
 - **텔레그램 `/`**: 위 표 — 제품 봇 UX.
-- **IDE `decker-*` 스킬** (`.cursor/skills/`): 코드·도메인 작업 (`docs/DECKER_AGENT_SKILLS.md`).
+- **IDE `decker-*` 스킬** (메인 비공개 모노레포 `.cursor/skills/`): 코드·도메인 작업 (`docs/DECKER_AGENT_SKILLS.md` §3).
 - 둘 다 “명령으로 빠르게 진입”이라는 점만 공유하고, **목록은 별도**로 유지한다.
 
 ---

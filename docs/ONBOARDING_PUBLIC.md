@@ -4,7 +4,7 @@
 
 **짧은 인덱스(표)**: [AGENT_SKILLS_PUBLIC_SUMMARY.md](./AGENT_SKILLS_PUBLIC_SUMMARY.md) — ClawHub·릴리즈 노트용으로 유지.
 
-**투웨이 모델 (Way 1 자체 에이전트 · Way 2 OpenClaw 스킬)** — [TWO_WAY_MODEL.md](./TWO_WAY_MODEL.md)에서 한 페이지로 정리한다.
+**Decker 접근 방법 (텔레그램 봇·MCP·OpenClaw 스킬·API·turnkey)** — [TWO_WAY_MODEL.md](./TWO_WAY_MODEL.md)에서 한 페이지로 정리한다.
 
 ---
 
@@ -17,7 +17,7 @@
 | API 문서 | [api.decker-ai.com/docs](https://api.decker-ai.com/docs) |
 | API 연동 가이드 | [DEVELOPER_API_GUIDE.md](./DEVELOPER_API_GUIDE.md) — 인증·SDK·Rate Limit |
 | 텔레그램 봇 `/` 명령·자연어 | [TELEGRAM_AGENT_COMMANDS.md](./TELEGRAM_AGENT_COMMANDS.md) (단일 출처) |
-| 연동(예) | [decker-link-telegram](https://decker-ai.com/decker-link-telegram), [decker-link (Slack)](https://decker-ai.com/decker-link) |
+| 연동(예) | 로그인 → 설정 → 텔레그램 연동 → [@deckerclawbot](https://t.me/deckerclawbot) |
 
 ---
 
@@ -70,7 +70,7 @@ git clone https://github.com/gigshow/decker-ai.git
 | 이 레포 빠른 시작 | [README.md](../README.md) **Quick Start** |
 | 로드맵 (이 레포) | [roadmap.md](./roadmap.md) |
 | 전체 플랫폼 상태·로드맵 | 비공개 [decker-trading-platform](https://github.com/gigshow/decker-trading-platform) 의 `docs/WORK_STATUS_AND_ROADMAP.md` (접근 가능한 경우) |
-| 엔지니어링 워크플로 스킬 표 | [DECKER_AGENT_SKILLS.md](./DECKER_AGENT_SKILLS.md) §3 — 일부 번들(`.agents/skills/gstack`)은 monorepo에만 존재 |
+| 에이전트·전략 스킬 표 | [DECKER_AGENT_SKILLS.md](./DECKER_AGENT_SKILLS.md) — OpenClaw 패키지(§2)·IDE 도메인 스킬(§3)·전략 DSL(§4) |
 | 이슈·Discussions | [GITHUB_COMMUNITY.md](./GITHUB_COMMUNITY.md), [`.github/ISSUE_TEMPLATE/`](../.github/ISSUE_TEMPLATE/) |
 | 릴리즈 시 공개 문서 | [RELEASE_CHECKLIST_PUBLIC_DOCS.md](../.github/RELEASE_CHECKLIST_PUBLIC_DOCS.md) |
 | 기여·문서 톤 | [CONTRIBUTING.md](../CONTRIBUTING.md) (루트) |
@@ -81,7 +81,7 @@ git clone https://github.com/gigshow/decker-ai.git
 
 | 문서 | 용도 |
 |------|------|
-| [TWO_WAY_MODEL.md](./TWO_WAY_MODEL.md) | Way 1·2·API·턴키 한 페이지 |
+| [TWO_WAY_MODEL.md](./TWO_WAY_MODEL.md) | 접근 방법(봇·MCP·OpenClaw·API·turnkey) 한 페이지 |
 | [AGENT_SKILLS_PUBLIC_SUMMARY.md](./AGENT_SKILLS_PUBLIC_SUMMARY.md) | 짧은 인덱스 |
 | [DECKER_AGENT_SKILLS.md](./DECKER_AGENT_SKILLS.md) | 스킬 구조·표 |
 | [TELEGRAM_AGENT_COMMANDS.md](./TELEGRAM_AGENT_COMMANDS.md) | 텔레그램·웹 PhaseD 구분 |

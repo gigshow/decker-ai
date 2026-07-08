@@ -3,8 +3,10 @@ name: decker-developer
 description: "Use when a developer asks about Decker's Public API — obtaining API keys, authentication, rate limits, signal endpoints, SDK usage. Triggers: API key, dk_live, X-API-Key, public API, /public/signals, REST API, developer, integrate Decker, rate limit."
 user-invocable: true
 metadata:
-  version: 1.0.0
-  updated: 2026-04-23
+  version: 1.0.1
+  updated: 2026-07-08
+  changelog:
+    - "1.0.1: 연동 경로 정직화 — 폐지된 decker-link-telegram(404) 제거, 현 연동=로그인→설정→텔레그램→@deckerclawbot /apikey. 실증: docs/AGENT_ENDPOINT_VERIFICATION.md."
 ---
 
 # Decker Developer API 스킬
@@ -20,7 +22,7 @@ metadata:
 **전체 흐름 (3단계)**:
 
 1. [decker-ai.com](https://decker-ai.com) 회원가입
-2. **decker-ai.com/decker-link-telegram** → 연동 코드 발급 → 텔레그램 `/start {코드}`
+2. 로그인 → **설정 → 텔레그램** → 연동 코드 발급 → 텔레그램 `/start {코드}`
 3. 텔레그램 @deckerclawbot 에서:
 
 ```

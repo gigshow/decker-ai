@@ -1,61 +1,46 @@
-# DeckerClaw 투웨이 모델 — 한 페이지
+# Decker 접근 방법 — 한 페이지
 
-**목적**: 같은 Decker API·시그널 엔진을 **Way 1(자체 에이전트)** 과 **Way 2(OpenClaw 스킬)** 로 쓸 때, 누가 무엇을 고르는지 한 화면에서 정리한다. API 직접·턴키는 아래 표에 함께 둔다.
+**목적**: 같은 Decker 엔진(시그널·상태·룰북)을 **어떤 방법으로 쓸 수 있는지** 사실 그대로 정리한다. 순위·전략이 아니라 **제공 기능 목록**이다. 상태(✅ 실증/⚠ 제약)는 [AGENT_ENDPOINT_VERIFICATION.md](./AGENT_ENDPOINT_VERIFICATION.md)(2026-07-08 실호출) 기준.
 
-**짧은 인덱스**: [AGENT_SKILLS_PUBLIC_SUMMARY.md](./AGENT_SKILLS_PUBLIC_SUMMARY.md) · 상세 브랜딩 표현: [BRAND_GUIDE.md](./BRAND_GUIDE.md)
-
----
-
-## 핵심 한 줄
-
-> **Telegram [@deckerclawbot](https://t.me/deckerclawbot) = Way 1 — Decker 자체 에이전트(OpenClaw 미경유). 자신의 OpenClaw에 스킬만 붙이는 경로 = Way 2 — `web_fetch` → Decker API.**
+**갱신**: 2026-07-08
 
 ---
 
-## 같은 백엔드, 다른 입구
+## 같은 엔진, 여러 입구
 
 ```
         ┌─────────────────────────────────────┐
-        │  Decker API · State Engine · RULES  │
+        │  Decker 엔진 · State · RULES · API   │
         └─────────────────┬───────────────────┘
-                          │
-          ┌───────────────┴───────────────┐
-          ▼                               ▼
-   Way 1 — 자체 에이전트              Way 2 — OpenClaw 스킬
-   Telegram / 웹 (호스팅)             사용자 OpenClaw → SKILL.md
+   ┌──────────────┬───────┴───────┬──────────────┐
+   ▼              ▼               ▼              ▼
+ 텔레그램 봇     MCP 서버        OpenClaw 스킬    공개 API / turnkey
+ @deckerclawbot  (내 에이전트)    (내 OpenClaw)   (직접 / 자가배포)
 ```
 
-문서·아키텍처의 **선택 A~D**와의 대응: [architecture.md](./architecture.md) (에이전트 레이어 다이어그램).
+## 접근 방법 표
 
-| 흔한 이름 | 문서상 코드명 | 요약 |
-|-----------|----------------|------|
-| Way 1 | 선택 A | 호스팅된 DeckerClaw — 룰북 우선 경로, 즉시 체험 |
-| Way 2 | 선택 B | 개발자 OpenClaw + Decker 스킬 |
-| REST | 선택 C | API 직접 |
-| 경량 봇 | 선택 D | OpenClaw 없이 [turnkey](../turnkey/README.md)로 자가 배포 |
+| 방법 | 무엇을 하나 | 읽기 | 주문 | 진입 |
+|------|-------------|:----:|:----:|------|
+| **텔레그램 봇** (@deckerclawbot) | Decker 호스팅 자체 에이전트 — 자연어로 시그널·포지션·주문 | ✅ | ✅ (실주문 검증) | 가입 → 설정 → 텔레그램 연동 → [@deckerclawbot](https://t.me/deckerclawbot) |
+| **MCP 서버** | 내 Claude/에이전트(Desktop·Cursor)를 Decker에 연결 (7 tools) | ✅ | — | [decker-ai.com/mcp](https://decker-ai.com/mcp) · 설정 → API 키 |
+| **OpenClaw 스킬** | 내 OpenClaw 에이전트에 스킬 추가 (web_fetch) | ✅ | ⚠ Slack 연동자만 | [openclaw_skills/README.md](./openclaw_skills/README.md) |
+| **공개 REST API** | 백엔드 직접 (X-API-Key / 무인증 read) | ✅ | — | [DEVELOPER_API_GUIDE.md](./DEVELOPER_API_GUIDE.md) · [api.decker-ai.com/docs](https://api.decker-ai.com/docs) |
+| **turnkey** | OpenClaw 없이 내 텔레그램 봇 자가 배포 | ✅ | (설정에 따라) | [turnkey/README.md](../turnkey/README.md) |
+
+> **읽기(시그널·상태·시장)는 모든 방법에서 제공**. **주문**은 텔레그램 봇(@deckerclawbot)에서 실주문까지 지원되며, OpenClaw 스킬은 Slack 연동된 사용자에 한한다(셀프 연동 페이지는 현재 미제공). 신규 사용자 주문은 @deckerclawbot 를 안내.
 
 ---
 
 ## 누구에게 무엇인가
 
-| 대상 | 경로 | 다음 한 걸음 |
-|------|------|----------------|
-| 바로 써보기 (비개발자) | **Way 1** | [decker-ai.com](https://decker-ai.com) · [@deckerclawbot](https://t.me/deckerclawbot) · [TELEGRAM_AGENT_COMMANDS.md](./TELEGRAM_AGENT_COMMANDS.md) |
-| OpenClaw·ClawHub 사용자 | **Way 2** | [openclaw_skills/README.md](./openclaw_skills/README.md) → `decker/SKILL.md` |
-| 백엔드만 붙이기 | **선택 C** | [api-guide.md](./api-guide.md) · [api.decker-ai.com/docs](https://api.decker-ai.com/docs) |
-| OpenClaw 없이 내 Telegram 봇 | **선택 D** | [turnkey/README.md](../turnkey/README.md) (Railway 등) |
-
----
-
-## 5분 데모 스크립트
-
-| 시간 | 행동 | 기대 결과 |
-|------|------|-----------|
-| ~30초 | `curl`로 시그널 state 조회 ([Try It Now](https://github.com/gigshow/decker-ai#-try-it-now) 예시) | JSON에 `progress_pct` 등 |
-| ~3분 | 레포 [examples/](../examples/) 스크립트 (예: `signal-push-strategy.sh`) | 로컬에서 전략·시그널 흐름 확인 |
-| ~5분 | Telegram에서 "비트코인 시그널 알려줘" | Way 1 응답 |
-| (선택) | Railway에 turnkey 배포 | 선택 D — 자가 호스팅 경량 봇 |
-| (선택) | OpenClaw에 Decker 스킬 추가 후 동일 의도 발화 | Way 2 — `web_fetch` → API |
+| 대상 | 방법 |
+|------|------|
+| 바로 써보기 (비개발자) | **텔레그램 봇** — [@deckerclawbot](https://t.me/deckerclawbot) |
+| 내 에이전트(Claude 등)에 붙이기 | **MCP** — [decker-ai.com/mcp](https://decker-ai.com/mcp) |
+| 내 OpenClaw 에이전트 | **OpenClaw 스킬** — [openclaw_skills/README.md](./openclaw_skills/README.md) |
+| 백엔드만 붙이기 | **공개 API** — [api-guide.md](./api-guide.md) |
+| 내 봇 자가 배포 | **turnkey** — [turnkey/README.md](../turnkey/README.md) |
 
 ---
 
@@ -63,8 +48,9 @@
 
 | 오해 | 실제 |
 |------|------|
-| "DeckerClaw = 전부 OpenClaw 기반" | **아님.** Telegram 메인 경로(Way 1)는 **자체 에이전트**다. |
-| "Slack이 Way 1과 동일" | Slack·Discord 쪽은 **Way 2**(OpenClaw 스킬)가 전형적이다. 제한·우선 채널은 [BRAND_GUIDE.md](./BRAND_GUIDE.md)를 따른다. |
+| "DeckerClaw = 전부 OpenClaw 기반" | **아님.** 텔레그램 봇(@deckerclawbot)은 Decker 자체 에이전트고, 내 에이전트 연결은 MCP·OpenClaw 두 방법이 있다. |
+| "OpenClaw `decker-link` 페이지에서 연동" | **구 경로 폐지(404).** 현재 연동 = 로그인 → 설정 → 텔레그램 / API 키. |
+| "주문은 아무 방법이나 된다" | 주문은 **@deckerclawbot** 에서(실주문 검증). OpenClaw 스킬 주문은 Slack 연동자만. |
 
 ---
 
@@ -72,6 +58,7 @@
 
 | 문서 | 용도 |
 |------|------|
+| [AGENT_ENDPOINT_VERIFICATION.md](./AGENT_ENDPOINT_VERIFICATION.md) | 각 방법 실호출 검증 결과 |
+| [AGENT_SKILLS_PUBLIC_SUMMARY.md](./AGENT_SKILLS_PUBLIC_SUMMARY.md) | 스킬·명령 짧은 인덱스 |
 | [ONBOARDING_PUBLIC.md](./ONBOARDING_PUBLIC.md) | 페르소나별 온보딩 |
-| [architecture.md](./architecture.md) | 선택 A~D 다이어그램 |
-| [roadmap.md](./roadmap.md) | 공개 로드맵 |
+| [architecture.md](./architecture.md) | 에이전트 레이어 다이어그램 |

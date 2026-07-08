@@ -28,7 +28,7 @@ All API paths (REST and SDK) require an API key. Get one now:
 The fastest way to see Decker in action:
 
 1. Open [@deckerclawbot](https://t.me/deckerclawbot)
-2. Connect at [decker-ai.com/decker-link-telegram](https://decker-ai.com/decker-link-telegram)
+2. Connect: log in → **Settings → Telegram** → [@deckerclawbot](https://t.me/deckerclawbot)
 3. Ask in plain language:
 
 | Say | What you get |
