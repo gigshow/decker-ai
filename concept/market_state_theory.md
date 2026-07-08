@@ -161,4 +161,3 @@ State Engine이 `build_signal_state`로 계산합니다.
 - [Signal LLM 개념](signal_llm_concept.md)
 - [라벨링 알고리즘](labeling_algorithm.md)
 - [Architecture](../docs/architecture.md)
-- [다중TF 분석](../../docs/multi_tf_시장상태_분석_및_개선_20260318.md)

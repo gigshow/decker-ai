@@ -208,8 +208,6 @@ risk:
 - [Operation Rules](../operation_rules/RULES.yaml) — 기본 룰북 (v2.0.0)
 - [시장 상태 이론](../concept/market_state_theory.md) — tf_alignment, 3축 모델
 - [라벨링 알고리즘](../concept/labeling_algorithm.md) — A/B/C 스윙, 2프라임
-- [다중TF 분석](../../docs/multi_tf_시장상태_분석_및_개선_20260318.md)
-- [덱커 서비스 모델](../../docs/덱커_서비스모델_상태엔진_운용_20260318.md) — 학습 루프, 알림 트리거
 
 ---
 

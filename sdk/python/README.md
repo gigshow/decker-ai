@@ -107,7 +107,7 @@ client = Client(api_key="dk_live_xxx", base_url="http://localhost:8000")
 ## API reference
 
 Full OpenAPI spec: [api.decker-ai.com/docs](https://api.decker-ai.com/docs)  
-Developer guide: [docs/DEVELOPER_API_GUIDE.md](../docs/DEVELOPER_API_GUIDE.md)
+Developer guide: [docs/DEVELOPER_API_GUIDE.md](../../docs/DEVELOPER_API_GUIDE.md)
 
 ## License
 

@@ -102,5 +102,5 @@ reading = client.reading.explain("BTCUSDT", "4h")
 ## 참고
 
 - [Decker API Guide](../docs/api-guide.md)
-- [Python SDK README](../../sdk/python/README.md)
+- [Python SDK README](../sdk/python/README.md)
 - [선택 기반 아키텍처](../docs/architecture.md) — 턴키 = 선택 D
