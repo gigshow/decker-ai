@@ -69,10 +69,10 @@ def build_row(date: str, key: str) -> str | None:
         return None
     scope = f"{len(syms)} views"
     scorecard = _tally([s.get("verdict") for s in syms if s.get("verdict")])
+    resolved = [s for s in syms if s.get("verdict") and s.get("verdict") != "unscorable"]
     sample = ", ".join(
-        f"{s.get('symbol')} {s.get('direction')} → "
-        f"{_OUTCOME.get(s.get('verdict'), s.get('verdict') or 'pending')}"
-        for s in syms[:3]
+        f"{s.get('symbol')} {s.get('direction')} → {_OUTCOME.get(s.get('verdict'), s.get('verdict'))}"
+        for s in resolved[:3]
     ) or "—"
     return f"| {date} | {scope} | {scorecard} | {sample} |"
 
