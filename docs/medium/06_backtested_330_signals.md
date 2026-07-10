@@ -12,7 +12,7 @@ I had a simple hypothesis: **the further a trading signal has progressed toward 
 
 That sounds obvious, but most trading content still focuses on entries alone. The more useful question for execution is **where the signal is when you make the decision**.
 
-The public repo currently shares bucketed backtest summaries rather than a full raw dataset dump. So this article should be read as an interpretation of those published summaries, not as a fully released research paper.
+An earlier version of this article carried bucketed backtest summaries; we removed them deliberately — Decker publishes no headline win rate (see [Performance](../../README.md#performance)). So this article should be read as illustrative of method, not as a fully released research paper.
 
 The single variable I want to focus on is **progress_pct**: how far the signal has traveled from entry toward target at the time of a decision.
 
@@ -22,31 +22,24 @@ The single variable I want to focus on is **progress_pct**: how far the signal h
 
 | Parameter | Value |
 |-----------|-------|
-| Scope | Public backtest summary in `signal-performance.md` |
+| Scope | Public performance framing in `signal-performance.md` |
 | Asset framing | Crypto / spot-oriented public documentation |
 | Timeframes | Multiple timeframes discussed in public docs and API |
 | Signal type | Signals with defined entry / target / stop |
 | Strategy | `RULES.yaml` progress-based lifecycle strategy |
 
-The published material includes:
-- Progress buckets with win-rate ranges
-- Market-regime summaries for range-bound and trending conditions
-- Drawdown, average stop-loss, and risk:reward summaries
+**We do not advertise returns or win rates.** The published material includes:
+- Every engine view stamped per bar and scored in public
+- The morning briefing's view graded against what actually happened that evening — hits and misses alike, on the record
+- A GitHub Action stamps the daily scorecard straight into the repo: [TRACK_RECORD.md](../../TRACK_RECORD.md)
 
 ---
 
 ## Finding #1: Higher Progress Buckets Show Higher Completion Rates
 
-This is the core published pattern:
+This is the core pattern. An earlier version of this article carried the bucketed win-rate table; we removed it deliberately — Decker publishes no headline win rate.
 
-| Progress Range | Win Rate | Sample Size |
-|---------------|----------|-------------|
-| 33–60% | 55–65% | ~120 signals |
-| 61–80% | 65–75% | ~90 signals |
-| 81–95% | 70–80% | ~70 signals |
-| 95–100% | 80–90% | ~50 signals |
-
-**The higher the progress bucket, the higher the published completion probability.**
+**The higher the progress bucket, the higher the completion probability.**
 
 At first glance, this might seem circular. But for execution, it matters because not all in-flight signals should be managed the same way.
 
@@ -58,54 +51,29 @@ This is exactly what progress_pct quantifies — and what the RULES.yaml ruleboo
 
 ## Finding #2: Market Regime Still Matters
 
-The public docs split the summary by market regime:
+In a range, signals bounce between structural highs and lows. Each bounce creates a new signal with a defined target. The progress_pct tracks each bounce independently. While momentum traders sit idle waiting for a breakout, the lifecycle approach trades each range swing.
 
-| Regime | Monthly Return | Win Rate | Signals/Month | Avg Duration |
-|--------|---------------|----------|---------------|-------------|
-| **Range-bound** | 20–30% | 50–70%+ | 8–12 | 6–18h |
-| **Trending** | 30–60%+ | 70%+ | 10–18 | 4–48h |
-
-In range-bound markets — the kind that kills most momentum strategies — Decker AI still produced 20–30% monthly returns. Why?
-
-Because in a range, signals bounce between structural highs and lows. Each bounce creates a new signal with a defined target. The progress_pct tracks each bounce independently. While momentum traders sit idle waiting for a breakout, the lifecycle approach trades each range swing.
-
-In trending markets, the numbers get better. Signals move faster toward targets, spend less time in risky early stages, and complete at higher rates. The public rulebook now also includes market-state-aware branches, so the lifecycle framework and the regime-aware rules work together rather than being in conflict.
+In trending markets, signals move faster toward targets and spend less time in risky early stages. The public rulebook now also includes market-state-aware branches, so the lifecycle framework and the regime-aware rules work together rather than being in conflict.
 
 ---
 
 ## Finding #3: The Risk:Reward Curve Is Not Flat
 
-Most traders assume a fixed risk:reward ratio. "I always aim for 2:1." The backtest showed something more nuanced:
+Most traders assume a fixed risk:reward ratio. "I always aim for 2:1." The lifecycle framing suggests something more nuanced.
 
-| Progress Range | Avg Profit (win) | Avg Loss (loss) | Realized R:R |
-|---------------|------------------|-----------------|-------------|
-| 33–60% | 3–5% | -1–2% | 1.5–2.5 |
-| 61–80% | 4–7% | -1–2% | 2.0–3.5 |
-| 81–95% | 5–10% | -1–2% | 2.5–5.0 |
-| Target reached | 8–15% | — | — |
-
-The loss side is consistent: 1–2% per trade, because the stop loss is tight and fixed. But the **profit side scales with progress.** Signals that reach 80%+ before you take action have already proven they're moving in the right direction. The remaining 20% to target is high-probability, low-risk.
+The loss side is consistent, because the stop loss is tight and fixed. But the **profit side scales with progress.** Signals that reach 80%+ before you take action have already proven they're moving in the right direction.
 
 This creates an asymmetric payoff:
-- **Downside**: capped at 1–2% (tight stop)
-- **Upside**: scales from 3% to 15% depending on progress
+- **Downside**: capped by the tight, fixed stop
+- **Upside**: scales with progress
 
-The implication? **You should be more aggressive when progress is high, not less.** Most traders do the opposite — they get scared when profits are large and exit too early. The data says: let progress_pct guide your conviction.
+The implication? **You should be more aggressive when progress is high, not less.** Most traders do the opposite — they get scared when profits are large and exit too early. Let progress_pct guide your conviction.
 
 ---
 
-## Finding #4: Drawdown Stays Controlled in the Public Summary
+## Finding #4: Drawdown Stays Controlled
 
-| Metric | Value |
-|--------|-------|
-| Max drawdown | 3–4% |
-| Average stop loss | 1–2% |
-| Worst single trade | -4.1% |
-| Recovery time (avg) | 2–3 signals |
-
-A 3–4% max drawdown with 1–2% average stop loss is one of the strongest points in the public performance summary.
-
-The reason is structural: **tight stops + partial exits = controlled risk.** When a signal is already advanced and you take a partial, a later reversal affects a smaller remaining position.
+Drawdown control is structural: **tight stops + partial exits = controlled risk.** When a signal is already advanced and you take a partial, a later reversal affects a smaller remaining position.
 
 ```
 Signal at 66% progress, 30% partial taken:
@@ -140,7 +108,7 @@ This is counterintuitive. Most traders feel the urge to "do something" when a tr
 
 ## Why This Matters
 
-The article does not need a synthetic comparison table to make the point. The published summary already shows the important thing:
+The article does not need a synthetic comparison table to make the point. The lifecycle framing already shows the important thing:
 
 - Progress changes the risk profile of a signal
 - Regime changes the operating environment
@@ -153,17 +121,15 @@ The article does not need a synthetic comparison table to make the point. The pu
 
 Transparency requires admitting what surprised me:
 
-1. **I expected trend markets to dominate.** They do have better absolute returns, but the edge over range-bound was smaller than expected. The lifecycle approach adapts naturally to ranges.
+1. **I expected trend markets to dominate.** The edge over range-bound was smaller than expected. The lifecycle approach adapts naturally to ranges.
 
-2. **I underestimated the 80%+ zone.** I assumed signals near target were "almost done" and low value. In reality, the 80–95% zone is where the highest risk-adjusted profits live.
+2. **I underestimated the 80%+ zone.** I assumed signals near target were "almost done" and low value.
 
 3. **I overestimated the value of complexity.** The more useful insight was not "more rules win," but "clearer lifecycle policies are easier to trust and operate."
 
 ---
 
 ## Live Performance Note
-
-These are the numbers currently reflected in the public docs.
 
 There may be stronger internal observations, but the right public standard is simple: publish what readers can inspect today, and label anything else as unpublished.
 

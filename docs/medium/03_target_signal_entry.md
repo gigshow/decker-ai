@@ -128,7 +128,7 @@ The market didn't fail. It told you where it's going. You just needed to listen.
 - At $3,550: Target = $3,250 (structural low). Entry short. New lifecycle begins.
 - Rinse and repeat.
 
-In a range, many bots sit idle. Decker AI treats each side of the range as a lifecycle with a defined target. That is one reason the public backtest summary still shows meaningful range-bound performance.
+In a range, many bots sit idle. Decker AI treats each side of the range as a lifecycle with a defined target.
 
 ---
 

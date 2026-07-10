@@ -4,7 +4,8 @@ Most signal products show you the wins. This file is the opposite: a
 GitHub Action appends **one row per resolved day**, straight from the live
 public API — no cherry-picking, no editing. Each row = that morning's views,
 scored on the record after their window closed. The repo itself is the
-receipt that the engine runs, deterministically, in the open.
+receipt that the engine runs, deterministically, in the open. Corrections
+stay in git history.
 
 > `hit` = view reached its target · `miss` = held, target not reached · `invalidated` = view changed (invalidation line touched) · `unscorable` = no candle to score. Full daily briefing + per-view tracking: [decker-ai.com/briefing](https://decker-ai.com/briefing).
 

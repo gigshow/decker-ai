@@ -140,7 +140,7 @@ The output is a ranked table: every observed context bucket, with its win rate a
 
 ## What the Data Looks Like After 90 Days
 
-Early results from real signal data (abbreviated for illustration):
+Abbreviated for illustration:
 
 ```
 tf_alignment=fully_aligned, entry_timing=signal, swing_state=A

@@ -197,14 +197,10 @@ The vision: **a platform where signals come from algorithms, lifecycle managemen
 |--------|-------|
 | GitHub stars | Growing |
 | Signals processed | Internal scale has grown over time |
-| Backtest win rate | 55–75% (range to trend) |
-| Monthly return (range) | 20–30% |
-| Monthly return (trend) | 30–60%+ |
-| Max drawdown | 3–4% |
 | LLM cost for core path | $0 |
 | Time to first API call | a few minutes |
 
-These aren't "I woke up and made $10,000" numbers. They are conservative public-facing numbers from a system you can inspect, fork, and modify.
+These aren't "I woke up and made $10,000" numbers — we don't publish a headline win rate (see [Performance](../../README.md#performance)). They are conservative public-facing numbers from a system you can inspect, fork, and modify.
 
 ---
 

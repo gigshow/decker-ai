@@ -132,29 +132,13 @@ The matching logic is simple: scan rules top-to-bottom, return the first match w
 
 ---
 
-## What the Public Backtest Summary Shows
+## Performance
 
-What matters publicly is not "YAML beats ML" as a universal law, but whether the lifecycle framing is useful. The current public performance summary shows a clear pattern.
+What matters publicly is not "YAML beats ML" as a universal law, but whether the lifecycle framing is useful.
 
-**Win Rate by progress range:**
+We don't publish a headline win rate. Backtest numbers without method and sample size are marketing, not evidence — and easy to cherry-pick. An earlier version of this article carried bucketed win-rate and return figures; we removed them deliberately — see [Performance](../../README.md#performance).
 
-| Progress Range | Win Rate | Samples | Notes |
-|---------------|----------|---------|-------|
-| 33–60% | 55–65% | ~120 | Entry timing sensitive |
-| 61–80% | 65–75% | ~90 | Partial profit effect |
-| 81–95% | 70–80% | ~70 | Near-target advantage |
-| 95–100% / target | 80–90% | ~50 | Full exit zone |
-
-**Win Rate by market regime:**
-
-| Regime | Monthly Return | Win Rate | Signals/Month |
-|--------|---------------|----------|---------------|
-| Range-bound | 20–30% | 50–70%+ | 8–12 |
-| Trending | 30–60%+ | 70%+ | 10–18 |
-
-The key insight: **higher progress = higher completion probability in the published backtest summary**. If a signal has already traveled 80% toward its target, it is generally in a different risk state than a fresh signal. The rulebook reflects that by taking more profit as progress increases.
-
-Average stop loss is listed at 1–2%. Max drawdown is listed at 3–4%. The published risk:reward range increases as progress rises.
+The key insight: **higher progress = higher completion probability**. If a signal has already traveled 80% toward its target, it is generally in a different risk state than a fresh signal. The rulebook reflects that by taking more profit as progress increases.
 
 ---
 

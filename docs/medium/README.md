@@ -15,7 +15,7 @@ English Medium articles. State Engine, sequence labeling, progress_pct, Target�
 | 3 | [Target → Signal → Entry: The Philosophy](03_target_signal_entry.md) | Contrarian philosophy |
 | 4 | [How I Replaced 17 Rules with One YAML](04_yaml_rules.md) | Operation Rules / RULES.yaml |
 | 5 | [Building a Crypto Signal API in 5 Minutes](05_signal_api_5min.md) | API onboarding |
-| 6 | [I Backtested 330 Signals — progress_pct Revealed](06_backtested_330_signals.md) | Backtest & performance |
+| 6 | [What Decker's Public Backtest Summary Suggests About progress_pct](06_backtested_330_signals.md) | Backtest & performance |
 | 7 | [State Machines in Trading: Deterministic vs ML](07_state_machines_vs_ml.md) | State Engine vs ML |
 | 8 | [From Side Project to Signal Engine: $0 LLM Cost](08_zero_llm_cost_story.md) | Building story & cost |
 | 9 | [Why Single-Timeframe Signals Fail — And How Multi-TF Alignment Fixes It](09_multi_tf_alignment.md) | Multi-timeframe alignment |

@@ -148,28 +148,15 @@ The Decker AI approach addresses all three by making the signal's lifecycle the 
 
 ## The Numbers
 
-From the current public backtest summary:
+We don't publish a headline win rate. Backtest numbers without method and sample size are marketing, not evidence — and easy to cherry-pick. An earlier version of this article carried backtest figures; we removed them deliberately — see [Performance](../../README.md#performance).
 
-| Progress Range | Win Rate | Avg Profit | Avg Loss | R:R |
-|---------------|----------|------------|----------|-----|
-| 33–60% | 55–65% | 3–5% | -1–2% | 1.5–2.5 |
-| 61–80% | 65–75% | 4–7% | -1–2% | 2–3.5 |
-| 81–95% | 70–80% | 5–10% | -1–2% | 2.5–5 |
-| 95%+ / target | 80–90% | 8–15% | — | — |
-
-The pattern is clear: **the further a signal progresses, the more likely it is to complete.** This is not a prediction — it's a statistical property of signal lifecycles.
-
-Monthly performance in range-bound markets: 20–30% returns with max drawdown of 3–4%.
-
-In trending markets: 30–60%+ with win rates above 70%.
-
-These aren't "I woke up rich" numbers. They're conservative public backtest summaries. That's a more useful foundation than a viral screenshot with no methodology.
+What we stand on instead: the morning briefing's view is graded against what actually happened that evening — hits and misses alike, on the record. A GitHub Action stamps the daily scorecard straight into the repo: [TRACK_RECORD.md](../../TRACK_RECORD.md). That's a more useful foundation than a viral screenshot with no methodology.
 
 ---
 
 ## Sustainability Over Virality
 
-I could title this article "How My Bot Makes 30% Monthly Returns." It would get more clicks.
+I could title this article "I Turned $1,000 into $10,000 with an LLM Trading Bot." It would get more clicks.
 
 But that's the exact problem I'm trying to solve. The trading AI space is drowning in engagement-optimized claims and starving for **transparent, sustainable systems**.
 
