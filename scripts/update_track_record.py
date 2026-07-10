@@ -58,9 +58,9 @@ def _tally(verdicts) -> str:
     return " · ".join(parts)
 
 
-def build_row(date: str, key: str) -> str | None:
+def build_row(date: str, key: str) -> tuple[str, list[dict]] | None:
     """Row for a *resolved* date = that date's morning views, scored.
-    Returns None if no morning briefing that date."""
+    Returns (row, resolved per-view list) or None if no morning briefing that date."""
     d = _get(f"/public/briefing?date={date}", key)
     if not d.get("date"):
         return None
@@ -74,7 +74,29 @@ def build_row(date: str, key: str) -> str | None:
         f"{s.get('symbol')} {s.get('direction')} → {_OUTCOME.get(s.get('verdict'), s.get('verdict'))}"
         for s in resolved[:3]
     ) or "—"
-    return f"| {date} | {scope} | {scorecard} | {sample} |"
+    return f"| {date} | {scope} | {scorecard} | {sample} |", resolved
+
+
+def build_weekly_digest(views: list[dict]) -> str:
+    """Per-symbol re-slice of the SAME resolved per-view verdicts from the last
+    7 resolved days — counts only (no invented rates), newest outcome as the arc."""
+    if not views:
+        return ""
+    by_sym: dict[str, list[dict]] = {}
+    for v in views:
+        by_sym.setdefault(v.get("symbol") or "?", []).append(v)
+    lines = [
+        "\n## Weekly digest — same views, grouped by symbol (last 7 resolved days)\n",
+        "| Symbol | hit | miss | invalidated | latest outcome |",
+        "|--------|-----|------|-------------|----------------|",
+    ]
+    for sym in sorted(by_sym):
+        vs = by_sym[sym]
+        c = {k: sum(1 for v in vs if v.get("verdict") == k) for k in ("hit", "miss", "invalidated")}
+        latest = vs[0]
+        arc = f"{latest.get('direction')} → {_OUTCOME.get(latest.get('verdict'), latest.get('verdict'))}"
+        lines.append(f"| {sym} | {c['hit']} | {c['miss']} | {c['invalidated']} | {arc} |")
+    return "\n".join(lines) + "\n"
 
 
 def _row_date(row: str) -> str:
@@ -114,11 +136,16 @@ def main() -> None:
 
     # Build fresh rows for recent *resolved* days (lag ≥1 = window closed; today skipped = unresolved).
     fresh: dict[str, str] = {}
+    week_views: list[dict] = []                    # newest-first (lag asc) — weekly digest 재료
     for lag in range(1, BACKFILL_DAYS + 1):
         d = (today - timedelta(days=lag)).isoformat()
-        row = build_row(d, key)
-        if row and "not yet scored" not in row:   # only stamp resolved days
+        built = build_row(d, key)
+        if built is None:
+            continue
+        row, resolved = built
+        if "not yet scored" not in row:            # only stamp resolved days
             fresh[d] = row
+            week_views.extend(resolved)
 
     # Fresh (resolved) rows replace any stale same-date row; keep older rows as-is.
     merged = list(fresh.values()) + [r for r in old_rows if _row_date(r) not in fresh]
@@ -132,10 +159,13 @@ def main() -> None:
         out.append(r)
     out = out[:MAX_ROWS]
 
+    digest = build_weekly_digest(week_views)
     with open(LEDGER, "w", encoding="utf-8") as f:
-        f.write(HEADER + "\n".join(out) + "\n\n_For information only. Not investment advice._\n")
+        f.write(HEADER + "\n".join(out) + "\n" + digest
+                + "\n_For information only. Not investment advice._\n")
 
-    print(f"track record updated: {len(fresh)} resolved rows refreshed, {len(out)} total")
+    print(f"track record updated: {len(fresh)} resolved rows refreshed, {len(out)} total, "
+          f"digest symbols {len({v.get('symbol') for v in week_views})}")
 
 
 if __name__ == "__main__":

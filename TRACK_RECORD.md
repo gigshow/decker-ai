@@ -16,4 +16,18 @@ receipt that the engine runs, deterministically, in the open.
 | 2026-07-06 | 3 views | miss 1 · invalidated 2 | BTCUSDT - → view changed, DOGEUSDT - → view changed, ETHUSDT + → held / no target |
 | 2026-07-05 | 2 views | hit 1 · invalidated 1 | BTCUSDT short → target hit, ETHUSDT long → view changed |
 
+## Weekly digest — same views, grouped by symbol (last 7 resolved days)
+
+| Symbol | hit | miss | invalidated | latest outcome |
+|--------|-----|------|-------------|----------------|
+| BNBUSDT | 0 | 1 | 1 | - → view changed |
+| BTCUSDT | 1 | 1 | 3 | - → view changed |
+| DOGEUSDT | 2 | 0 | 2 | - → target hit |
+| ETHUSDT | 0 | 2 | 3 | - → held / no target |
+| SOLUSDT | 0 | 0 | 2 | + → view changed |
+| XRPUSDT | 1 | 1 | 1 | - → held / no target |
+| XYZ_BRENTOILUSD | 1 | 1 | 0 | + → held / no target |
+| XYZ_KR200USD | 0 | 0 | 1 | + → view changed |
+| XYZ_TSLAUSD | 0 | 2 | 1 | - → held / no target |
+
 _For information only. Not investment advice._
