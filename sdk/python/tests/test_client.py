@@ -196,3 +196,71 @@ def test_client_context_manager():
         with Client(api_key="dk_live_test") as client:
             result = client.health.check()
     assert result.ok
+
+
+# ---------------------------------------------------------------------------
+# State
+# ---------------------------------------------------------------------------
+
+def test_state_get_live():
+    with respx.mock(base_url=BASE) as mock:
+        mock.get("/api/v1/public/state/live").mock(return_value=httpx.Response(200, json={
+            "data": {
+                "symbol": "BTCUSDT", "timeframe": "4h",
+                "primary_state": {"c_state": "B_FORMING", "action_gate": "GO", "key_direction": "+", "key_price": 100000.0},
+                "current_price": 101000.0,
+                "mtf_snapshot": {"1h": {"c_state": "A_FORMING", "action_gate": "GO", "key_direction": "+"}},
+            }
+        }))
+        client = Client(api_key="dk_live_test")
+        state = client.state.get_live("BTCUSDT", tf="4h")
+    assert state.symbol == "BTCUSDT"
+    assert state.action_gate == "GO"
+    assert state.key_direction == "+"
+    assert state.c_state == "B_FORMING"
+    assert "1h" in state.mtf
+    assert state.mtf["1h"].action_gate == "GO"
+
+
+# ---------------------------------------------------------------------------
+# Signals — consumer
+# ---------------------------------------------------------------------------
+
+def test_signals_get_consumer():
+    with respx.mock(base_url=BASE) as mock:
+        mock.get("/api/v1/public/signals/BTCUSDT/consumer").mock(return_value=httpx.Response(200, json={
+            "symbol": "BTCUSDT", "direction": "long", "decision": "ENTER",
+            "entry_price": 100000.0, "target_t1": 104000.0, "stop_price": 98000.0,
+            "risk_reward_ratio": 2.0, "mtf_verdict": "ALIGNED",
+            "effective_action_gate": "GO",
+            "overlay": {"applied": True, "filter_pass": True, "skill_id": "standard_v0", "changes": []},
+        }))
+        client = Client(api_key="dk_live_test")
+        sig = client.signals.get_consumer("BTCUSDT")
+    assert sig.symbol == "BTCUSDT"
+    assert sig.action_gate == "GO"
+    assert sig.entry_price == 100000.0
+    assert sig.overlay_filter_pass is True
+    assert sig.overlay_skill_id == "standard_v0"
+
+
+# ---------------------------------------------------------------------------
+# Reading
+# ---------------------------------------------------------------------------
+
+def test_reading_explain():
+    with respx.mock(base_url=BASE) as mock:
+        mock.get("/api/v1/public/reading/BTCUSDT/4h").mock(return_value=httpx.Response(200, json={
+            "data": {
+                "symbol": "BTCUSDT", "primary_tf": "4h",
+                "narrative": "현재 BTCUSDT는 B_FORMING 구간입니다. 상승 돌파 시 진입 고려.",
+                "execution_hint": {"stance": "LONG_BIAS", "preferred_direction": "+"},
+                "mtf_view": {"verdict": "ALIGNED"},
+            }
+        }))
+        client = Client(api_key="dk_live_test")
+        reading = client.reading.explain("BTCUSDT", "4h")
+    assert reading.symbol == "BTCUSDT"
+    assert "B_FORMING" in reading.narrative
+    assert reading.stance == "LONG_BIAS"
+    assert reading.mtf_verdict == "ALIGNED"

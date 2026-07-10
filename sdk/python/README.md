@@ -5,109 +5,154 @@ Official Python SDK for the [Decker](https://decker-ai.com) crypto signal & narr
 ## Install
 
 ```bash
-git clone https://github.com/gigshow/decker-ai.git
-pip install -e decker-ai/sdk/python/
+pip install decker-client
 ```
 
-Requires Python 3.9+.
+> PyPI 미등록 시 로컬 설치:
+> ```bash
+> pip install ./sdk/python
+> ```
 
-> `pip install decker-client` (PyPI) — 배포 준비 중. CI/CD 파이프라인은 구성 완료, PyPI Trusted Publisher 설정 후 활성화됩니다.
+---
 
-## Get your API key
+## API 키 발급
 
-Keys are issued via Telegram:
+`https://app.decker-ai.com/settings/apikey` 에서 발급  
+또는 Telegram 봇 `/apikey` 명령으로 발급
 
-1. Open [@deckerclawbot](https://t.me/deckerclawbot) → send `/start`
-2. Send `/apikey` → receive `dk_live_xxxxxxxxxxxxxxxxxxxxxxxx`
-3. Lost it? `/apikey reset` revokes and reissues
+---
 
 ## Quickstart
 
 ```python
 from decker_client import Client
 
-with Client(api_key="dk_live_xxx") as client:
-    # Latest signal
-    sig = client.signals.get_latest("BTCUSDT", timeframe="1h")
-    print(f"{sig.direction} | entry={sig.entry_price} | progress={sig.progress_pct}%")
-    print(f"gate: {sig.operation_gate}")  # GO / WATCH / HOLD
-
-    # Structural narrative
-    narr = client.signals.get_narrative("BTCUSDT", "4h")
-    print(narr.text)
-
-    # Health check (no API key required for underlying call)
-    health = client.health.check()
-    print(health.ok)  # True
-```
-
-**Supported symbols**: `BTCUSDT` `ETHUSDT` `SOLUSDT` `BNBUSDT` `XRPUSDT` `DOGEUSDT`  
-**Supported timeframes**: `30m` `1h` `4h` `1d`
-
-## Authentication
-
-All requests (except `health.check`) require a valid API key passed as `X-API-Key`.
-
-```python
 client = Client(api_key="dk_live_xxx")
-# or
-with Client(api_key="dk_live_xxx") as client:
-    ...
 ```
 
-## Rate limits
+---
 
-| Tier    | Daily limit    |
-|---------|---------------|
-| FREE    | 30 req/day    |
-| PRO     | 10,000 req/day |
-| ENTERPRISE | 100,000 req/day |
+## 주요 사용 패턴
 
-After any request, check `client.last_rate_limit`:
+### 1. 지금 진입해도 되나? — 엔진 상태 확인
 
 ```python
+state = client.state.get_live("BTCUSDT", tf="4h")
+
+print(state.action_gate)    # "GO" | "WATCH" | "HOLD"
+print(state.key_direction)  # "+" (롱) | "-" (숏)
+print(state.c_state)        # "B_FORMING" | "A_FORMING" | "BREAK_PLUS" | ...
+
+# MTF(멀티 타임프레임) 상태
+for tf, snap in state.mtf.items():
+    print(f"{tf}: gate={snap.action_gate}, dir={snap.key_direction}")
+```
+
+### 2. 구체적 진입가·목표가·손절가 — 소비자 시그널
+
+```python
+sig = client.signals.get_consumer("BTCUSDT")
+
+print(sig.entry_price)         # 진입가
+print(sig.target_t1)           # 목표가 T1
+print(sig.stop_price)          # 손절가
+print(sig.risk_reward_ratio)   # R:R 비율
+print(sig.mtf_verdict)         # "ALIGNED" | "NEUTRAL" | "MIXED" | "CONFLICT"
+print(sig.action_gate)         # "GO" | "WATCH" | "HOLD"
+
+# 내 스킬 overlay 결과 (스킬 설정 시)
+print(sig.overlay_filter_pass)  # True / False / None
+print(sig.overlay_skill_id)     # "conservative_v0" | "standard_v0" | ...
+```
+
+### 3. AI 판독 — 지금 시장이 뭐라고 하나
+
+```python
+reading = client.reading.explain("BTCUSDT", "4h")
+
+print(reading.narrative)          # 자연어 시장 설명
+print(reading.stance)             # "LONG_BIAS" | "SHORT_BIAS" | "NEUTRAL"
+print(reading.preferred_direction) # "+" | "-"
+print(reading.mtf_verdict)         # "ALIGNED" | "CONFLICT" | ...
+```
+
+### 4. 전체 흐름 — 에이전트 통합 예시
+
+```python
+from decker_client import Client, RateLimitError
+
+with Client(api_key="dk_live_xxx") as client:
+    # Step 1: 엔진 게이트 확인
+    state = client.state.get_live("BTCUSDT", tf="4h")
+    if state.action_gate != "GO":
+        print(f"대기 중 — gate={state.action_gate}")
+    else:
+        # Step 2: 진입 정보
+        sig = client.signals.get_consumer("BTCUSDT")
+        if sig.overlay_filter_pass is False:
+            print("내 스킬 조건 미달 — 스킵")
+        else:
+            # Step 3: AI 판독
+            reading = client.reading.explain("BTCUSDT", "4h")
+            print(f"[{state.key_direction}] {reading.stance}")
+            print(f"진입: {sig.entry_price} / 목표: {sig.target_t1} / 손절: {sig.stop_price}")
+            print(reading.narrative)
+```
+
+### 5. 기존 메서드 — narrative, latest
+
+```python
+# 자연어 요약
+narr = client.signals.get_narrative("BTCUSDT", "1h")
+print(narr.text)
+
+# 최신 시그널 (단순)
+latest = client.signals.get_latest("BTCUSDT")
+print(latest.direction, latest.entry_price)
+```
+
+---
+
+## Rate Limits
+
+| Tier    | 일일 한도 |
+|---------|----------|
+| FREE    | 100 req  |
+| PRO     | 10,000 req |
+| ENTERPRISE | 100,000 req |
+
+```python
+from decker_client import RateLimitError
+
+try:
+    sig = client.signals.get_consumer("BTCUSDT")
+except RateLimitError as e:
+    print(f"한도 초과 — {e.retry_after}초 후 재시도")
+
+# 매 요청 후 잔여 확인
 rl = client.last_rate_limit
-print(f"{rl.remaining}/{rl.limit} requests remaining today")
-print(f"Resets at: {rl.reset}")
+print(f"오늘 {rl.remaining}/{rl.limit} 남음")
 ```
 
-When the quota is exhausted, a `RateLimitError` is raised.
+---
 
-## Error handling
+## 에러 처리
 
-```python
-from decker_client import Client, RateLimitError, AuthError, NotFoundError
+| 예외 | HTTP | 의미 |
+|------|------|------|
+| `AuthError` | 401 | API 키 없음 또는 무효 |
+| `PermissionError` | 403 | 권한 없음 |
+| `NotFoundError` | 404 | 심볼 없음 |
+| `RateLimitError` | 429 | 일일 한도 초과 |
+| `APIError` | 5xx | 서버 오류 |
 
-with Client(api_key="dk_live_xxx") as client:
-    try:
-        sig = client.signals.get_latest("BTCUSDT")
-    except AuthError:
-        print("Invalid or revoked key — run /apikey reset in Telegram")
-    except NotFoundError:
-        print("No active signal for this symbol/timeframe")
-    except RateLimitError as e:
-        print(f"Rate limited — retry in {e.retry_after}s")
-```
+---
 
-| Exception         | HTTP status | Meaning                       |
-|------------------|-------------|-------------------------------|
-| `AuthError`      | 401         | Invalid or revoked API key    |
-| `NotFoundError`  | 404         | Symbol/TF not supported       |
-| `RateLimitError` | 429         | Daily quota exhausted         |
-| `APIError`       | 5xx         | Server error                  |
+## 전체 API 레퍼런스
 
-## Local testing
+OpenAPI 스펙: [api.decker-ai.com/docs](https://api.decker-ai.com/docs)
 
-Override the base URL for local development:
-
-```python
-client = Client(api_key="dk_live_xxx", base_url="http://localhost:8000")
-```
-
-## API reference
-
-Full OpenAPI spec: [api.decker-ai.com/docs](https://api.decker-ai.com/docs)  
-Developer guide: [docs/DEVELOPER_API_GUIDE.md](../../docs/DEVELOPER_API_GUIDE.md)
+---
 
 ## License
 
