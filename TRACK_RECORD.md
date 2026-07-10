@@ -10,9 +10,10 @@ receipt that the engine runs, deterministically, in the open.
 
 | Date (UTC) | Scope | Scorecard (hit · miss · invalidated) | Sample views (outcome) |
 |------------|-------|--------------------------------------|------------------------|
-| 2026-07-08 | 11 views | hit 5 · miss 1 · invalidated 5 | BNBUSDT + → view changed, BTCUSDT + → view changed, DOGEUSDT - → target hit |
-| 2026-07-07 | 11 views | miss 3 · invalidated 4 · unscorable 4 | BNBUSDT + → held / no target, BTCUSDT + → held / no target, DOGEUSDT - → view changed |
-| 2026-07-06 | 13 views | miss 2 · invalidated 8 | BNBUSDT + → held / no target, BTCUSDT - → view changed, DOGEUSDT - → view changed |
-| 2026-07-05 | 5 views | hit 1 · miss 1 · invalidated 2 · unscorable 1 | BTCUSDT short → target hit, ETHUSDT long → view changed, XYZ_CLUSD + → held / no target |
+| 2026-07-09 | 8 views | hit 1 · miss 4 · invalidated 3 | BNBUSDT - → view changed, BTCUSDT - → view changed, DOGEUSDT - → target hit |
+| 2026-07-08 | 7 views | hit 3 · invalidated 4 | BTCUSDT + → view changed, DOGEUSDT - → target hit, ETHUSDT + → view changed |
+| 2026-07-07 | 7 views | miss 3 · invalidated 4 | BNBUSDT + → held / no target, BTCUSDT + → held / no target, DOGEUSDT - → view changed |
+| 2026-07-06 | 3 views | miss 1 · invalidated 2 | BTCUSDT - → view changed, DOGEUSDT - → view changed, ETHUSDT + → held / no target |
+| 2026-07-05 | 2 views | hit 1 · invalidated 1 | BTCUSDT short → target hit, ETHUSDT long → view changed |
 
 _For information only. Not investment advice._
