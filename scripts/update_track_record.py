@@ -135,10 +135,14 @@ def main() -> None:
                 if s.startswith("| 20") and "| Date" not in s:
                     old_rows.append(s)
 
-    # Build fresh rows for recent *resolved* days (lag ≥1 = window closed; today skipped = unresolved).
+    # Build fresh rows for recent *resolved* days. lag 0 (today) included — the cron
+    # (23:30 UTC) fires ~12h after the evening self-scoring, so today IS resolved by
+    # then; unresolved days are already skipped by the "not yet scored" guard below.
+    # (S115 fix: range(1, …) unconditionally excluded today → every row published a
+    # full day late; 07-10 was scored 21/21 at 11:00Z yet absent on 07-11.)
     fresh: dict[str, str] = {}
     week_views: list[dict] = []                    # newest-first (lag asc) — weekly digest 재료
-    for lag in range(1, BACKFILL_DAYS + 1):
+    for lag in range(0, BACKFILL_DAYS + 1):
         d = (today - timedelta(days=lag)).isoformat()
         built = build_row(d, key)
         if built is None:
