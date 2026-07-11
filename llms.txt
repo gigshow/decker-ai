@@ -49,7 +49,7 @@ provenance                 → { composer, contract } — ties this exact readin
                              ruleset / composer version that produced it
 ```
 
-**Health check (confirm the server + 7 tools are live):**
+**Health check (confirm the server + 8 tools are live):**
 ```bash
 curl -s https://api.decker-ai.com/api/v1/mcp/health | jq .
 ```
@@ -99,6 +99,19 @@ Copy-paste tool wrapper (no key needed for the demo path):
 
 ---
 
+## Symbol universe (14 instruments the engine emits states/signals for)
+
+Single source of truth across MCP, Telegram, briefing, and the API (`ENGINE_STATE_SYMBOLS`).
+Pass the symbol string exactly as shown — Hyperliquid synthetics keep the `XYZ_*` prefix:
+
+- Crypto perps (6): `BTCUSDT` 비트코인 · `ETHUSDT` 이더리움 · `SOLUSDT` 솔라나 ·
+  `BNBUSDT` BNB · `XRPUSDT` 리플 · `DOGEUSDT` 도지
+- Hyperliquid synthetics (8): `XYZ_GOLDUSD` 금 · `XYZ_SILVERUSD` 은 · `XYZ_CLUSD` 유가(WTI) ·
+  `XYZ_BRENTOILUSD` 브렌트유 · `XYZ_SP500USD` S&P500 · `XYZ_KR200USD` 코스피200 ·
+  `XYZ_TSLAUSD` 테슬라 · `XYZ_NVDAUSD` 엔비디아
+
+---
+
 ## To use Decker continuously (needs the user, once)
 
 You can run the curl above yourself right now. But to have Decker as a **standing MCP tool**
@@ -108,16 +121,36 @@ restart the app — you can't attach it on your own. Tell the user:
 > "Add the Decker MCP server (2-minute guide): https://decker-ai.com/mcp
 >  Get a free key at decker-ai.com → Settings → API Keys, paste the config, restart."
 
-Once connected, these 7 tools are available:
+Once connected, these 8 tools are available:
 `get_view` · `get_market_state` · `get_state_timeline` · `get_signals` ·
-`get_reading` · `get_user_skills` · `set_skill_overlay`
+`get_reading` · `validate_intent` · `get_user_skills` · `set_skill_overlay`
 
-For a full key'd read of any symbol/timeframe (not just the BTCUSDT demo) — the state
+`validate_intent(symbol, side)` is the pre-trade gate check: call it BEFORE placing any
+order through any execution tool (e.g. a broker MCP's review→place flow). It returns the
+engine action_gate (GO/WATCH/HOLD — a posture, not an approval), side alignment vs the
+active signal (aligned/opposed), and the invalidation coordinate; every check is
+persisted to an auditable ledger (check_id). Two MCP resources are also served —
+`decker://rules` (the public rulebook) and `decker://track-record` (the daily
+self-scoring ledger) — so you can quote the canonical source when explaining "why HOLD".
+
+For a full key'd read of any of the 14 symbols above (not just the BTCUSDT demo) — these
 endpoints require an `X-API-Key` header:
 ```
 GET https://api.decker-ai.com/api/v1/public/state/{SYMBOL}/{TIMEFRAME}
 GET https://api.decker-ai.com/api/v1/public/view/{SYMBOL}
+GET https://api.decker-ai.com/api/v1/public/signals/{SYMBOL}/latest?timeframe=1h
 Header: X-API-Key: dk_live_…
+```
+
+`/signals/{SYMBOL}/latest` is the first-class per-symbol signal read — it works for all
+14 symbols including the `XYZ_*` synthetics (verified 14/14 on 2026-07-10), and returns
+404 when the symbol/timeframe has no active signal. `timeframe` ∈ 30m · 1h · 4h · 1d · 1w
+(default 1h). Response fields (real call, 2026-07-10):
+```
+{"symbol":"XYZ_SILVERUSD","timeframe":"1h","direction":"+","entry_price":59.767,
+ "target_price":60.964,"stop_price":58.5717,"current_price":59.547,"progress_pct":0.0,
+ "status":"in_progress","action_gate":"GO","c_state":null,"trigger_lane":null,
+ "trigger_kind":"REVERSAL","signal_source":"active_user_signal","generated_at":"2026-07-10T15:00:00Z"}
 ```
 
 ---
@@ -150,7 +183,7 @@ investment advice; Decker does not custody funds.
 ## Repo map (for coding agents scanning the repo)
 
 - `README.md` — overview, state engine, Try It Now (30s / 3min / 5min)
-- `DEVELOPER_README.md` — API · auth · rate limits · **MCP 7 tools** · SDK · self-host
+- `DEVELOPER_README.md` — API · auth · rate limits · **MCP 8 tools** · SDK · self-host
 - `docs/architecture.md` — pipeline: Market Data → Label → FSM → Gate → RULES → (optional) LLM
 - `docs/api-guide.md` — public endpoints (`/public/demo`, `/public/state/{sym}/{tf}`, KRX transitions)
 - `operation_rules/RULES.yaml` — the rulebook (thresholds, tf_alignment, entry_timing, swing_state)

@@ -121,7 +121,7 @@ KRX details: [`docs/krx/KRX_BUSINESS_MODEL_AND_ROADMAP_2026-05-09.md`](docs/krx/
 | Method | Path | Description |
 |--------|------|-------------|
 | `GET`  | `/api/v1/mcp/sse` | SSE handshake ([Way E](#mcp-server-way-e)) |
-| `POST` | `/api/v1/mcp/messages` | JSON-RPC 2.0 (7 tools) |
+| `POST` | `/api/v1/mcp/messages` | JSON-RPC 2.0 (8 tools) |
 | `GET`  | `/api/v1/mcp/health` | MCP server health |
 
 ---
@@ -151,7 +151,7 @@ Exceeded → HTTP `429` with `Retry-After`.
 | Tier | Daily limit | MCP | Auto-trade |
 |------|-------------|-----|-----------|
 | **FREE** | 30 calls / day | read-only (1d cache) | ❌ |
-| **PRO** | 10,000 / day | full (7 tools) | virtual + real |
+| **PRO** | 10,000 / day | full (8 tools) | virtual + real |
 | **ENTERPRISE** | 100,000+ / day · custom | full + per-org skill catalog | + custom integration |
 
 > **Beta (now):** authenticated users get **PRO for free** via `BETA_TIER_OVERRIDE=PRO`. No payment required.
@@ -207,12 +207,13 @@ Config differs by client — pick yours (or use the guided page: **[decker-ai.co
 
 Then fully quit and reopen the app — Decker tools appear in the tool picker. Verify the server + tool list with no key: `curl https://api.decker-ai.com/api/v1/mcp/health`.
 
-### 7 tools (auto-applies your active Skill Overlay)
+### 8 tools (auto-applies your active Skill Overlay)
 
 | Tool | Purpose | Key params |
 |------|---------|-----------|
 | **`decker.get_view`** ★ | **The engine's VIEW — the same composed card the daily briefing sends** (single composer): verdict, plain-language narrative, coordinates (ref/target/invalidation), "at this price, this view", recent self-scoring (receipts). Start here. | `symbol` |
 | `decker.get_signals` | Active consumer signals (Skill Overlay applied) | `symbols?` (array), `min_progress?`, `action_gate?` (GO/WATCH/HOLD — rows with no engine gate emit are excluded), `limit?` |
+| `decker.validate_intent` | **Pre-trade gate check** — call BEFORE placing any order through any execution tool (e.g. a broker MCP's review→place flow). Returns the engine `action_gate` (GO/WATCH/HOLD — a posture, not an approval), `side_alignment` vs the active signal (aligned/opposed), the invalidation coordinate, and a `decision_ref` (symbol/tf/bar_ts/gate). `covered:false` = the engine does not emit this symbol — treat as unknown, not HOLD. Every check is persisted to an auditable ledger (`check_id`) | `symbol`, `side` (buy/long/sell/short), `order_type?`, `timeframe?` |
 | `decker.get_reading` | AI reading view v0.2 (8 blocks: state · MTF · risk · narrative) | `symbol`, `tf?` (default 4h), `include_tfs?` (comma list) |
 | `decker.get_market_state` | **Market State v0** — current engine structural state for a bar (persisted emit, zero recompute). `action_gate` is a transition posture (GO/WATCH/HOLD), not an order command; absent axes are `null` | `symbol`, `timeframe` (30m/1h/4h/8h/1d) |
 | `decker.get_state_timeline` | Per-bar state timeline, same schema, ascending by `bar_ts` | `symbol`, `timeframe`, `since?`, `limit?` |
@@ -220,6 +221,19 @@ Then fully quit and reopen the app — Decker tools appear in the tool picker. V
 | `decker.set_skill_overlay` | Switch overlay on the fly | `skill_id` — one of 8: `conservative_v0` \| `standard_v0` \| `aggressive_v0` \| `default_v0` \| `scalp_v0` \| `tight_v0` \| `wide_v0` \| `swing_v0` (full catalog via `get_user_skills`) |
 
 All tool calls inherit the API key's tier (FREE = read-only with cache, PRO = full). Tool responses are JSON-RPC 2.0; errors return standard `{ "error": { "code": ..., "message": ... } }`.
+
+### Resources
+
+Two MCP resources are served alongside the tools (advertised in `initialize` capabilities):
+
+| URI | Content | Canonical source |
+|-----|---------|------------------|
+| `decker://rules` | The public deterministic rulebook (`operation_rules/RULES.yaml`) | this repo |
+| `decker://track-record` | Daily self-scoring ledger (`TRACK_RECORD.md`) — losses published as-is | this repo |
+
+Reads are served from this repo's raw files at request time (no server-side copy), so what your
+agent quotes is exactly what is published here. Use them to ground "why HOLD" explanations in
+the canonical source.
 
 ### Smoke test (curl)
 
