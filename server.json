@@ -1,7 +1,7 @@
 {
-  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-07-09/server.json",
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.gigshow/decker",
-  "description": "Deterministic market-state engine for trading agents — zero LLM in the signal path. Structural market state & phase, action gate (GO/WATCH/HOLD) as a transition posture, entry/target/invalidation coordinates, bar-by-bar state timeline, composed view cards, and pre-trade intent validation. Every output traces to a bar-stamped ledger with a public daily self-scoring track record (misses included). Crypto + TradFi synthetics (gold, oil, S&P 500, Tesla, NVIDIA, KOSPI 200).",
+  "description": "Deterministic market-state engine for trading agents — state, gate, coordinates, with receipts.",
   "repository": {
     "url": "https://github.com/gigshow/decker-ai",
     "source": "github"
