@@ -11,6 +11,7 @@ stay in git history.
 
 | Date (UTC) | Scope | Scorecard (hit · miss · invalidated) | Sample views (outcome) |
 |------------|-------|--------------------------------------|------------------------|
+| 2026-07-13 | 12 views | hit 1 · miss 4 · invalidated 7 | BNBUSDT + → view changed, BTCUSDT + → view changed, DOGEUSDT + → view changed |
 | 2026-07-12 | 14 views | hit 2 · miss 5 · invalidated 7 | BNBUSDT + → view changed, BTCUSDT + → held / no target, DOGEUSDT + → view changed |
 | 2026-07-11 | 14 views | miss 6 · invalidated 8 | BNBUSDT + → held / no target, BTCUSDT + → held / no target, DOGEUSDT - → view changed |
 | 2026-07-10 | 14 views | miss 6 · invalidated 8 | BNBUSDT + → view changed, BTCUSDT - → view changed, DOGEUSDT + → view changed |
@@ -24,19 +25,19 @@ stay in git history.
 
 | Symbol | hit | miss | invalidated | latest outcome |
 |--------|-----|------|-------------|----------------|
-| BNBUSDT | 0 | 2 | 3 | + → view changed |
-| BTCUSDT | 1 | 3 | 4 | + → held / no target |
-| DOGEUSDT | 2 | 0 | 5 | + → view changed |
-| ETHUSDT | 0 | 4 | 4 | + → held / no target |
-| SOLUSDT | 1 | 1 | 3 | - → target hit |
-| XRPUSDT | 1 | 2 | 3 | + → view changed |
+| BNBUSDT | 0 | 2 | 4 | + → view changed |
+| BTCUSDT | 0 | 3 | 5 | + → view changed |
+| DOGEUSDT | 2 | 0 | 6 | + → view changed |
+| ETHUSDT | 0 | 5 | 3 | + → held / no target |
+| SOLUSDT | 1 | 1 | 4 | + → view changed |
+| XRPUSDT | 1 | 2 | 4 | + → view changed |
 | XYZ_BRENTOILUSD | 2 | 3 | 0 | + → target hit |
-| XYZ_CLUSD | 0 | 2 | 1 | - → view changed |
-| XYZ_GOLDUSD | 0 | 1 | 2 | + → held / no target |
-| XYZ_KR200USD | 0 | 0 | 4 | + → view changed |
-| XYZ_NVDAUSD | 0 | 2 | 1 | - → view changed |
+| XYZ_CLUSD | 0 | 3 | 1 | + → held / no target |
+| XYZ_GOLDUSD | 0 | 1 | 3 | + → view changed |
+| XYZ_KR200USD | 1 | 0 | 4 | - → target hit |
+| XYZ_NVDAUSD | 0 | 3 | 1 | + → held / no target |
 | XYZ_SILVERUSD | 0 | 1 | 2 | - → held / no target |
-| XYZ_SP500USD | 0 | 0 | 3 | - → view changed |
-| XYZ_TSLAUSD | 0 | 4 | 2 | + → held / no target |
+| XYZ_SP500USD | 0 | 1 | 3 | - → held / no target |
+| XYZ_TSLAUSD | 0 | 4 | 3 | - → view changed |
 
 _For information only. Not investment advice._
