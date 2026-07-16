@@ -11,6 +11,7 @@ stay in git history.
 
 | Date (UTC) | Scope | Scorecard (hit · miss · invalidated) | Sample views (outcome) |
 |------------|-------|--------------------------------------|------------------------|
+| 2026-07-16 | 14 views | wrong 7 · correct 3 · flat 4 | BNBUSDT - → wrong, BTCUSDT + → wrong, DOGEUSDT + → wrong |
 | 2026-07-15 | 13 views | flat 4 · correct 6 · wrong 3 | BNBUSDT + → flat, BTCUSDT + → correct, DOGEUSDT + → wrong |
 | 2026-07-14 | 14 views | invalidated 14 | BNBUSDT + → view changed, BTCUSDT - → view changed, DOGEUSDT + → view changed |
 | 2026-07-13 | 12 views | hit 1 · miss 4 · invalidated 7 | BNBUSDT + → view changed, BTCUSDT + → view changed, DOGEUSDT + → view changed |
@@ -27,19 +28,19 @@ stay in git history.
 
 | Symbol | hit | miss | invalidated | latest outcome |
 |--------|-----|------|-------------|----------------|
-| BNBUSDT | 0 | 1 | 5 | + → flat |
-| BTCUSDT | 0 | 2 | 5 | + → correct |
-| DOGEUSDT | 2 | 0 | 5 | + → wrong |
-| ETHUSDT | 0 | 4 | 3 | + → flat |
-| SOLUSDT | 1 | 1 | 4 | + → correct |
-| XRPUSDT | 1 | 2 | 4 | - → wrong |
-| XYZ_BRENTOILUSD | 2 | 3 | 1 | - → view changed |
+| BNBUSDT | 0 | 1 | 5 | - → wrong |
+| BTCUSDT | 0 | 2 | 4 | + → wrong |
+| DOGEUSDT | 1 | 0 | 5 | + → wrong |
+| ETHUSDT | 0 | 4 | 2 | + → wrong |
+| SOLUSDT | 1 | 1 | 3 | + → wrong |
+| XRPUSDT | 0 | 2 | 4 | + → correct |
+| XYZ_BRENTOILUSD | 1 | 3 | 1 | - → wrong |
 | XYZ_CLUSD | 0 | 3 | 2 | + → flat |
-| XYZ_GOLDUSD | 0 | 1 | 4 | + → correct |
-| XYZ_KR200USD | 1 | 0 | 5 | + → correct |
-| XYZ_NVDAUSD | 0 | 3 | 2 | + → correct |
-| XYZ_SILVERUSD | 0 | 1 | 3 | + → wrong |
+| XYZ_GOLDUSD | 0 | 1 | 4 | + → wrong |
+| XYZ_KR200USD | 1 | 0 | 5 | - → correct |
+| XYZ_NVDAUSD | 0 | 3 | 2 | - → flat |
+| XYZ_SILVERUSD | 0 | 1 | 3 | - → correct |
 | XYZ_SP500USD | 0 | 1 | 4 | - → flat |
-| XYZ_TSLAUSD | 0 | 3 | 4 | + → correct |
+| XYZ_TSLAUSD | 0 | 3 | 3 | - → flat |
 
 _For information only. Not investment advice._
