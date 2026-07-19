@@ -27,12 +27,19 @@ LEDGER = "TRACK_RECORD.md"
 MAX_ROWS = 120          # ~4 months of daily rows
 BACKFILL_DAYS = 7       # each run fills any missing resolved day in this window
 
-# view outcome, plain-English (the arc, not just the state)
+# view outcome, plain-English (the arc, not just the state).
+# Direction-scoring vocabulary (current engine): correct / wrong / flat / pending.
+# Legacy coordinate-scoring vocabulary (rows before the cutover): hit / miss / invalidated.
 _OUTCOME = {
-    "hit": "target hit",
-    "miss": "held / no target",
-    "invalidated": "view changed",
+    "correct": "direction correct",
+    "wrong": "direction wrong",
+    "flat": "barely moved",
+    "pending": "in progress",
     "unscorable": "no candle",
+    # legacy (pre direction-scoring rows only — kept so old rows in the window still render)
+    "hit": "target hit (legacy)",
+    "miss": "held / no target (legacy)",
+    "invalidated": "view changed (legacy)",
 }
 
 
@@ -52,7 +59,8 @@ def _tally(verdicts) -> str:
             counts[v] = counts.get(v, 0) + 1
     if not counts:
         return "— (not yet scored)"
-    order = ["hit", "miss", "invalidated", "unscorable"]
+    order = ["correct", "wrong", "flat", "pending", "unscorable",
+             "hit", "miss", "invalidated"]  # current vocab first, legacy tail
     parts = [f"{k} {counts[k]}" for k in order if k in counts]
     parts += [f"{k} {n}" for k, n in counts.items() if k not in order]
     return " · ".join(parts)
@@ -87,15 +95,18 @@ def build_weekly_digest(views: list[dict]) -> str:
         by_sym.setdefault(v.get("symbol") or "?", []).append(v)
     lines = [
         "\n## Weekly digest — same views, grouped by symbol (last 7 resolved days)\n",
-        "| Symbol | hit | miss | invalidated | latest outcome |",
-        "|--------|-----|------|-------------|----------------|",
+        "| Symbol | correct | wrong | flat | legacy | latest outcome |",
+        "|--------|---------|-------|------|--------|----------------|",
     ]
     for sym in sorted(by_sym):
         vs = by_sym[sym]
-        c = {k: sum(1 for v in vs if v.get("verdict") == k) for k in ("hit", "miss", "invalidated")}
+        c = {k: sum(1 for v in vs if v.get("verdict") == k) for k in ("correct", "wrong", "flat")}
+        # legacy = rows scored before the direction-scoring cutover (self-cleans as window rolls)
+        legacy = sum(1 for v in vs if v.get("verdict") in ("hit", "miss", "invalidated"))
         latest = vs[0]
         arc = f"{latest.get('direction')} → {_OUTCOME.get(latest.get('verdict'), latest.get('verdict'))}"
-        lines.append(f"| {sym} | {c['hit']} | {c['miss']} | {c['invalidated']} | {arc} |")
+        lines.append(f"| {sym} | {c['correct']} | {c['wrong']} | {c['flat']} | {legacy} | {arc}"
+                     " |")
     return "\n".join(lines) + "\n"
 
 
@@ -111,11 +122,14 @@ HEADER = (
     "scored on the record after their window closed. The repo itself is the\n"
     "receipt that the engine runs, deterministically, in the open. Corrections\n"
     "stay in git history.\n\n"
-    "> `hit` = view reached its target · `miss` = held, target not reached · "
-    "`invalidated` = view changed (invalidation line touched) · `unscorable` = "
-    "no candle to score. Full daily briefing + per-view tracking: "
+    "> Direction scoring (current): `correct` = the shown direction was realized at the "
+    "view's horizon close · `wrong` = price went the other way · `flat` = barely moved "
+    "(within the deadband) · `pending` = horizon bar not closed yet · `unscorable` = no "
+    "candle to score. Rows before 2026-07-15 use the legacy coordinate vocabulary "
+    "(`hit`/`miss`/`invalidated`) — kept as-is, corrections stay in git history. "
+    "Full daily briefing + per-view tracking: "
     "[decker-ai.com/briefing](https://decker-ai.com/briefing).\n\n"
-    "| Date (UTC) | Scope | Scorecard (hit · miss · invalidated) | Sample views (outcome) |\n"
+    "| Date (UTC) | Scope | Scorecard (correct · wrong · flat) | Sample views (outcome) |\n"
     "|------------|-------|--------------------------------------|------------------------|\n"
 )
 

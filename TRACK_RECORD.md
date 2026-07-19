@@ -7,17 +7,18 @@ scored on the record after their window closed. The repo itself is the
 receipt that the engine runs, deterministically, in the open. Corrections
 stay in git history.
 
-> `hit` = view reached its target · `miss` = held, target not reached · `invalidated` = view changed (invalidation line touched) · `unscorable` = no candle to score. Full daily briefing + per-view tracking: [decker-ai.com/briefing](https://decker-ai.com/briefing).
+> Direction scoring (current): `correct` = the shown direction was realized at the view's horizon close · `wrong` = price went the other way · `flat` = barely moved (within the deadband) · `pending` = horizon bar not closed yet · `unscorable` = no candle to score. Rows before 2026-07-15 use the legacy coordinate vocabulary (`hit`/`miss`/`invalidated`) — kept as-is, corrections stay in git history. Full daily briefing + per-view tracking: [decker-ai.com/briefing](https://decker-ai.com/briefing).
 
-| Date (UTC) | Scope | Scorecard (hit · miss · invalidated) | Sample views (outcome) |
+| Date (UTC) | Scope | Scorecard (correct · wrong · flat) | Sample views (outcome) |
 |------------|-------|--------------------------------------|------------------------|
-| 2026-07-18 | 14 views | wrong 4 · flat 6 · correct 4 | BNBUSDT + → wrong, BTCUSDT - → wrong, DOGEUSDT + → flat |
-| 2026-07-17 | 13 views | correct 8 · wrong 3 | BNBUSDT - → correct, BTCUSDT - → correct, DOGEUSDT - → correct |
-| 2026-07-16 | 14 views | wrong 7 · correct 3 · flat 4 | BNBUSDT - → wrong, BTCUSDT + → wrong, DOGEUSDT + → wrong |
-| 2026-07-15 | 13 views | flat 4 · correct 6 · wrong 3 | BNBUSDT + → flat, BTCUSDT + → correct, DOGEUSDT + → wrong |
-| 2026-07-14 | 14 views | invalidated 14 | BNBUSDT + → view changed, BTCUSDT - → view changed, DOGEUSDT + → view changed |
-| 2026-07-13 | 12 views | hit 1 · miss 4 · invalidated 7 | BNBUSDT + → view changed, BTCUSDT + → view changed, DOGEUSDT + → view changed |
-| 2026-07-12 | 14 views | hit 2 · miss 5 · invalidated 7 | BNBUSDT + → view changed, BTCUSDT + → held / no target, DOGEUSDT + → view changed |
+| 2026-07-19 | 14 views | correct 6 · wrong 3 · flat 5 | BNBUSDT + → barely moved, BTCUSDT - → direction wrong, DOGEUSDT + → direction wrong |
+| 2026-07-18 | 14 views | correct 4 · wrong 4 · flat 6 | BNBUSDT + → direction wrong, BTCUSDT - → direction wrong, DOGEUSDT + → barely moved |
+| 2026-07-17 | 13 views | correct 8 · wrong 3 | BNBUSDT - → direction correct, BTCUSDT - → direction correct, DOGEUSDT - → direction correct |
+| 2026-07-16 | 14 views | correct 3 · wrong 7 · flat 4 | BNBUSDT - → direction wrong, BTCUSDT + → direction wrong, DOGEUSDT + → direction wrong |
+| 2026-07-15 | 13 views | correct 6 · wrong 3 · flat 4 | BNBUSDT + → barely moved, BTCUSDT + → direction correct, DOGEUSDT + → direction wrong |
+| 2026-07-14 | 14 views | invalidated 14 | BNBUSDT + → view changed (legacy), BTCUSDT - → view changed (legacy), DOGEUSDT + → view changed (legacy) |
+| 2026-07-13 | 12 views | hit 1 · miss 4 · invalidated 7 | BNBUSDT + → view changed (legacy), BTCUSDT + → view changed (legacy), DOGEUSDT + → view changed (legacy) |
+| 2026-07-12 | 14 views | hit 2 · miss 5 · invalidated 7 | BNBUSDT + → view changed (legacy), BTCUSDT + → held / no target (legacy), DOGEUSDT + → view changed (legacy) |
 | 2026-07-11 | 14 views | miss 6 · invalidated 8 | BNBUSDT + → held / no target, BTCUSDT + → held / no target, DOGEUSDT - → view changed |
 | 2026-07-10 | 14 views | miss 6 · invalidated 8 | BNBUSDT + → view changed, BTCUSDT - → view changed, DOGEUSDT + → view changed |
 | 2026-07-09 | 8 views | hit 1 · miss 4 · invalidated 3 | BNBUSDT - → view changed, BTCUSDT - → view changed, DOGEUSDT - → target hit |
@@ -28,21 +29,21 @@ stay in git history.
 
 ## Weekly digest — same views, grouped by symbol (last 7 resolved days)
 
-| Symbol | hit | miss | invalidated | latest outcome |
-|--------|-----|------|-------------|----------------|
-| BNBUSDT | 0 | 1 | 3 | + → wrong |
-| BTCUSDT | 0 | 2 | 2 | - → wrong |
-| DOGEUSDT | 0 | 0 | 4 | + → flat |
-| ETHUSDT | 0 | 3 | 1 | - → correct |
-| SOLUSDT | 1 | 0 | 3 | - → flat |
-| XRPUSDT | 0 | 0 | 4 | - → wrong |
-| XYZ_BRENTOILUSD | 1 | 1 | 1 | + → correct |
-| XYZ_CLUSD | 0 | 2 | 2 | + → correct |
-| XYZ_GOLDUSD | 0 | 1 | 3 | + → flat |
-| XYZ_KR200USD | 1 | 0 | 3 | + → flat |
-| XYZ_NVDAUSD | 0 | 2 | 2 | + → flat |
-| XYZ_SILVERUSD | 0 | 1 | 2 | + → wrong |
-| XYZ_SP500USD | 0 | 1 | 3 | - → correct |
-| XYZ_TSLAUSD | 0 | 1 | 3 | - → flat |
+| Symbol | correct | wrong | flat | legacy | latest outcome |
+|--------|---------|-------|------|--------|----------------|
+| BNBUSDT | 1 | 2 | 2 | 3 | + → barely moved |
+| BTCUSDT | 2 | 3 | 0 | 3 | - → direction wrong |
+| DOGEUSDT | 1 | 3 | 1 | 3 | + → direction wrong |
+| ETHUSDT | 3 | 1 | 1 | 3 | - → direction correct |
+| SOLUSDT | 3 | 1 | 1 | 3 | + → direction correct |
+| XRPUSDT | 2 | 3 | 0 | 3 | + → direction correct |
+| XYZ_BRENTOILUSD | 1 | 1 | 1 | 2 | + → barely moved |
+| XYZ_CLUSD | 3 | 0 | 2 | 3 | + → direction correct |
+| XYZ_GOLDUSD | 1 | 2 | 2 | 3 | + → barely moved |
+| XYZ_KR200USD | 2 | 1 | 1 | 3 | + → direction wrong |
+| XYZ_NVDAUSD | 3 | 0 | 2 | 3 | - → direction correct |
+| XYZ_SILVERUSD | 1 | 2 | 1 | 2 | + → barely moved |
+| XYZ_SP500USD | 3 | 0 | 2 | 3 | - → direction correct |
+| XYZ_TSLAUSD | 1 | 1 | 3 | 3 | + → barely moved |
 
 _For information only. Not investment advice._
