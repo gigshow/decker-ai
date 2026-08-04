@@ -120,9 +120,10 @@ KRX details: [`docs/krx/KRX_BUSINESS_MODEL_AND_ROADMAP_2026-05-09.md`](docs/krx/
 
 | Method | Path | Description |
 |--------|------|-------------|
-| `GET`  | `/api/v1/mcp/sse` | SSE handshake ([Way E](#mcp-server-way-e)) |
-| `POST` | `/api/v1/mcp/messages` | JSON-RPC 2.0 (8 tools) |
+| `POST` | `/api/v1/mcp` | Streamable HTTP, stateless (JSON-RPC 2.0) ([Way E](#mcp-server-way-e)) |
 | `GET`  | `/api/v1/mcp/health` | MCP server health |
+
+> ⚠ Legacy `/api/v1/mcp/sse` + `/api/v1/mcp/messages` (SSE, in-memory session) are retired — session died on every redeploy/multi-replica rollover. `/sse` now returns `405 Method Not Allowed`.
 
 ---
 
@@ -151,7 +152,7 @@ Exceeded → HTTP `429` with `Retry-After`.
 | Tier | Daily limit | MCP | Auto-trade |
 |------|-------------|-----|-----------|
 | **FREE** | 30 calls / day | read-only (1d cache) | ❌ |
-| **PRO** | 10,000 / day | full (8 tools) | virtual + real |
+| **PRO** | 10,000 / day | full (9 tools) | virtual + real |
 | **ENTERPRISE** | 100,000+ / day · custom | full + per-org skill catalog | + custom integration |
 
 > **Beta (now):** authenticated users get **PRO for free** via `BETA_TIER_OVERRIDE=PRO`. No payment required.
@@ -167,30 +168,29 @@ Add Decker AI to any [MCP-compatible](https://modelcontextprotocol.io/) AI agent
 ### Endpoints (live)
 
 ```
-GET  https://api.decker-ai.com/api/v1/mcp/sse           (SSE handshake)
-POST https://api.decker-ai.com/api/v1/mcp/messages      (JSON-RPC 2.0)
-GET  https://api.decker-ai.com/api/v1/mcp/health        (monitoring)
+POST https://api.decker-ai.com/api/v1/mcp        (Streamable HTTP, stateless, JSON-RPC 2.0)
+GET  https://api.decker-ai.com/api/v1/mcp/health (monitoring)
 ```
 
 Config differs by client — pick yours (or use the guided page: **[decker-ai.com/mcp](https://decker-ai.com/mcp)**).
 
 ### Claude Desktop / Codex (via `mcp-remote`, needs Node/npx)
 
-`Settings → Developer → Edit Config` (Claude Desktop) or `~/.codex/config.toml` (Codex). Claude Desktop reaches a remote SSE server through the `mcp-remote` bridge:
+`Settings → Developer → Edit Config` (Claude Desktop) or `~/.codex/config.toml` (Codex). Claude Desktop reaches the remote streamable-HTTP server through the `mcp-remote` bridge:
 
 ```json
 {
   "mcpServers": {
     "decker": {
       "command": "npx",
-      "args": ["-y", "mcp-remote", "https://api.decker-ai.com/api/v1/mcp/sse", "--header", "X-API-Key:${DECKER_API_KEY}"],
+      "args": ["-y", "mcp-remote", "https://api.decker-ai.com/api/v1/mcp", "--header", "X-API-Key:${DECKER_API_KEY}"],
       "env": { "DECKER_API_KEY": "dk_live_YOUR_KEY" }
     }
   }
 }
 ```
 
-### Cursor (native remote SSE — no bridge)
+### Cursor (native remote HTTP — no bridge)
 
 `~/.cursor/mcp.json` accepts a URL + headers directly:
 
@@ -198,20 +198,27 @@ Config differs by client — pick yours (or use the guided page: **[decker-ai.co
 {
   "mcpServers": {
     "decker": {
-      "url": "https://api.decker-ai.com/api/v1/mcp/sse",
+      "url": "https://api.decker-ai.com/api/v1/mcp",
       "headers": { "X-API-Key": "dk_live_YOUR_KEY" }
     }
   }
 }
 ```
 
-Then fully quit and reopen the app — Decker tools appear in the tool picker. Verify the server + tool list with no key: `curl https://api.decker-ai.com/api/v1/mcp/health`.
+### Claude Code CLI (native remote HTTP — no bridge)
 
-### 8 tools (auto-applies your active Skill Overlay)
+```bash
+claude mcp add decker https://api.decker-ai.com/api/v1/mcp --transport http -H "X-API-Key: dk_live_YOUR_KEY"
+```
+
+Then fully quit and reopen the app (or start a new Claude Code session) — Decker tools appear in the tool picker. Config changes only take effect for a *new* session; a session already running keeps its old connection until restarted. Verify the server + tool list with no key: `curl https://api.decker-ai.com/api/v1/mcp/health`.
+
+### 9 tools (auto-applies your active Skill Overlay)
 
 | Tool | Purpose | Key params |
 |------|---------|-----------|
 | **`decker.get_view`** ★ | **The engine's VIEW — the same composed card the daily briefing sends** (single composer): verdict, plain-language narrative, coordinates (ref/target/invalidation), "at this price, this view", recent self-scoring (receipts). Start here. | `symbol` |
+| `decker.get_assembly` | **Multi-timeframe optimal-path assembly** — one deterministic verdict per symbol combining all live timeframes: direction, grade (aligned / structure+pullback / exhaustion-reversal), entry (now vs wait, source TF), stop, target, RR, conditional switch coordinate. Single judgment authority — narrate or filter it, do not re-decide coordinates | `symbol?` (omit for all 14 universe symbols) |
 | `decker.get_signals` | Active consumer signals (Skill Overlay applied) | `symbols?` (array), `min_progress?`, `action_gate?` (GO/WATCH/HOLD — rows with no engine gate emit are excluded), `limit?` |
 | `decker.validate_intent` | **Pre-trade gate check** — call BEFORE placing any order through any execution tool (e.g. a broker MCP's review→place flow). Returns the engine `action_gate` (GO/WATCH/HOLD — a posture, not an approval), `side_alignment` vs the active signal (aligned/opposed), the invalidation coordinate, and a `decision_ref` (symbol/tf/bar_ts/gate). `covered:false` = the engine does not emit this symbol — treat as unknown, not HOLD. Every check is persisted to an auditable ledger (`check_id`) | `symbol`, `side` (buy/long/sell/short), `order_type?`, `timeframe?` |
 | `decker.get_reading` | AI reading view v0.2 (8 blocks: state · MTF · risk · narrative) | `symbol`, `tf?` (default 4h), `include_tfs?` (comma list) |
@@ -238,18 +245,17 @@ the canonical source.
 ### Smoke test (curl)
 
 ```bash
-# 1. Handshake (will hang — Ctrl+C after seeing "endpoint")
-curl -N -H "X-API-Key: dk_live_xxx" \
-  https://api.decker-ai.com/api/v1/mcp/sse
+# 1. Health check (no key)
+curl https://api.decker-ai.com/api/v1/mcp/health
 
 # 2. List tools
-curl -X POST https://api.decker-ai.com/api/v1/mcp/messages \
+curl -X POST https://api.decker-ai.com/api/v1/mcp \
   -H "X-API-Key: dk_live_xxx" \
   -H "Content-Type: application/json" \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
 
 # 3. Call a tool
-curl -X POST https://api.decker-ai.com/api/v1/mcp/messages \
+curl -X POST https://api.decker-ai.com/api/v1/mcp \
   -H "X-API-Key: dk_live_xxx" \
   -H "Content-Type: application/json" \
   -d '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"decker.get_signals","arguments":{"symbols":["BTCUSDT"]}}}'

@@ -37,15 +37,18 @@
 | `GET /api/v1/public/signals/{symbol}/narrative?timeframe=4h` | ✅ 200 (`narrative·axis`) |
 | (참고) 키 없이 호출 | ⚠ 422 Validation — 깨끗한 401/403 대신. 백엔드 정정 백로그 |
 
-## 4. MCP 서버 (SSE + JSON-RPC 2.0)
+## 4. MCP 서버 (Streamable HTTP, stateless + JSON-RPC 2.0)
+
+> ⚠ **2026-08-04 갱신**: 아래 §4 원문(2026-07-08 검증)은 구 SSE 서버(`/mcp/sse`+`/mcp/messages`, in-memory 세션) 기준 — 그날 이후 `041ac6c`(2026-07-10)로 stateless `/api/v1/mcp` 단일 엔드포인트로 컷오버됨. 등록 URL을 안 바꾼 기존 클라이언트는 "session not found"(404)를 계속 겪는다 — 아래는 이번 실사용자 재검증 결과, §4 나머지 항목(다른 섹션)은 미재검증.
 
 | 항목 | 결과 |
 |------|------|
-| `GET /api/v1/mcp/health` | ✅ 200 (`protocol 2024-11-05`, 7 tools) |
-| 실 클라이언트 E2E (handshake→initialize→tools/list→tools/call) | ✅ `get_market_state(BTCUSDT,4h)` 라이브 엔진 데이터 반환 |
+| `GET /api/v1/mcp/health` | ✅ 200 (`protocol 2024-11-05`) |
+| `POST /api/v1/mcp` `tools/list` | ✅ 200, 9 tools (실측 2026-08-04) |
+| 구 `/api/v1/mcp/sse` (신규 등록) | 🔴 405 Method Not Allowed — 완전 폐기됨 |
 
-- **7 tools**: `get_signals·get_reading·get_view·get_market_state·get_state_timeline·get_user_skills·set_skill_overlay`
-- **진입**: [decker-ai.com/mcp](https://decker-ai.com/mcp) (`mcp-remote`). 세션은 SSE 스트림 유지 동안만 존재 → 스트림 유지 클라이언트(Claude Desktop·Cursor·`mcp-remote`) 필요. 스트림 미유지 시 `/messages`가 "session not found".
+- **9 tools (실측)**: `get_signals·get_assembly·get_reading·get_view·get_market_state·get_state_timeline·get_user_skills·set_skill_overlay·validate_intent` — 이전 메모("get_assembly·validate_intent 미기재")는 부정확했음: `validate_intent`는 이미 DEVELOPER_README 표에 있었고, 실누락은 `get_assembly` 1건뿐. DEVELOPER_README "8 tools"→"9 tools" 헤더+행 추가, README 가격표 "7 tools"→"9 tools" 모두 수정 완료(2026-08-04).
+- **진입**: [decker-ai.com/mcp](https://decker-ai.com/mcp). 엔드포인트는 **stateless** — 세션 유지 불필요, 매 요청 독립. 클라이언트 등록 URL 변경은 **새 세션/앱 재시작 후에만 적용** — 실행 중인 세션은 재시작 전까지 구 커넥션 유지.
 
 ## 5. OpenClaw 스킬 — 능력별 상태
 

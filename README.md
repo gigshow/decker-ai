@@ -132,7 +132,7 @@ Entry                                                           Target
 | Tier | Price | Daily API limit | MCP | Auto-trade |
 |------|-------|-----------------|-----|------------|
 | **FREE** | $0 forever | 30 calls/day | read-only (1d cache) | ❌ |
-| **PRO** | $20 / mo · 7-day trial | 10,000 / day | full (7 tools) | virtual + real |
+| **PRO** | $20 / mo · 7-day trial | 10,000 / day | full (9 tools) | virtual + real |
 | **ENTERPRISE** | Contact us | 100,000+ / day · custom | full + per-org skill catalog | + custom integration |
 
 > **Beta (now):** all authenticated users get **PRO for free** via `BETA_TIER_OVERRIDE=PRO`. No payment required.
@@ -178,14 +178,16 @@ Cursor (`~/.cursor/mcp.json`) takes a remote server directly:
 {
   "mcpServers": {
     "decker": {
-      "url": "https://api.decker-ai.com/api/v1/mcp/sse",
+      "url": "https://api.decker-ai.com/api/v1/mcp",
       "headers": { "X-API-Key": "dk_live_YOUR_KEY" }
     }
   }
 }
 ```
 
-Claude Desktop / Codex reach it through the `mcp-remote` bridge (needs Node/npx) — see [decker-ai.com/mcp](https://decker-ai.com/mcp) or **[DEVELOPER_README.md](DEVELOPER_README.md)** (endpoints · auth · rate limits · MCP 7 tools · SDK · OpenClaw · self-host).
+> ⚠ Endpoint is `/api/v1/mcp` (stateless Streamable HTTP) — an old `/sse` suffix now returns `405 Method Not Allowed`.
+
+Claude Desktop / Codex reach it through the `mcp-remote` bridge (needs Node/npx) — see [decker-ai.com/mcp](https://decker-ai.com/mcp) or **[DEVELOPER_README.md](DEVELOPER_README.md)** (endpoints · auth · rate limits · MCP tools · SDK · OpenClaw · self-host).
 
 **Running a multi-agent crew** (TradingAgents / LangGraph / AutoGen)? Give your analysts one deterministic market-state instrument — with receipts — instead of re-deriving structure per prompt: → **[docs/integrations/multi-agent-frameworks.md](docs/integrations/multi-agent-frameworks.md)**
 

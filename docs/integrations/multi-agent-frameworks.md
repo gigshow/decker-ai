@@ -56,7 +56,7 @@ Decker solves exactly that layer, and only that layer:
 {
   "mcpServers": {
     "decker-ai": {
-      "url": "https://api.decker-ai.com/api/v1/mcp/sse",
+      "url": "https://api.decker-ai.com/api/v1/mcp",
       "headers": { "X-API-Key": "dk_live_xxx" }
     }
   }
