@@ -252,6 +252,8 @@ Decker's MCP tools split into two very different categories, and it matters whic
 
 **In short**: if you never turn on real trading on decker-ai.com, `place_order` is a safe paper-trading sandbox. If you do turn it on, Decker is now moving your money on your behalf when your agent calls this tool — treat it with the same care you'd give any autonomous-agent broker integration.
 
+**Who `place_order` is actually for**: existing (or willing-to-become) Decker platform users who already trust Decker to hold their exchange key and want an agent-driven front-end in addition to the web chat UI — not a "connect any external agent, no other relationship with Decker" feature. If you're purely MCP-native and want to keep execution entirely in your own stack, `validate_intent` + your own broker connection (or broker MCP) is the intended path — that's what it was built for.
+
 ### Resources
 
 Two MCP resources are served alongside the tools (advertised in `initialize` capabilities):
