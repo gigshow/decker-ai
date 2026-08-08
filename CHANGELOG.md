@@ -4,6 +4,16 @@ All notable changes to the Decker AI are documented in this file.
 
 ---
 
+## [v1.12.0] - 2026-08-08
+
+### Added — **Position management: close_position (11 → 12 tools)**
+
+- **`decker.close_position`** (12th tool): closes or partially reduces (`close_fraction`) a position you already hold. No crypto-6 restriction (closing reduces risk, so any symbol works, including HL-synthetic/paper positions) — the asymmetric counterpart to `place_order`'s crypto-6-only, real-money-gated write path. See the expanded [Placing orders vs. reading state](DEVELOPER_README.md#placing-orders-vs-reading-state) section for how it decides which position(s) to close.
+- Author feedback prompting this: "order integration isn't just about placing orders — isn't there a position-management role too?" `place_order` alone could only open new positions; there was no way to exit one via MCP.
+- Tool count corrected to **12** everywhere.
+
+---
+
 ## [v1.11.0] - 2026-08-08
 
 ### Added — **Positions + order placement (9 → 11 tools)**

@@ -153,7 +153,7 @@ Exceeded → HTTP `429` with `Retry-After`.
 | Tier | Daily limit | MCP | Auto-trade |
 |------|-------------|-----|-----------|
 | **FREE** | 30 calls / day | read-only (1d cache) | ❌ |
-| **PRO** | 10,000 / day | full (11 tools) | virtual + real |
+| **PRO** | 10,000 / day | full (12 tools) | virtual + real |
 | **ENTERPRISE** | 100,000+ / day · custom | full + per-org skill catalog | + custom integration |
 
 > **Beta (now):** authenticated users get **PRO for free** via `BETA_TIER_OVERRIDE=PRO`. No payment required.
@@ -214,11 +214,11 @@ claude mcp add decker https://api.decker-ai.com/api/v1/mcp --transport http -H "
 
 Then fully quit and reopen the app (or start a new Claude Code session) — Decker tools appear in the tool picker. Config changes only take effect for a *new* session; a session already running keeps its old connection until restarted. Verify the server + tool list with no key: `curl https://api.decker-ai.com/api/v1/mcp/health`.
 
-### 11 tools (auto-applies your active Skill Overlay)
+### 12 tools (auto-applies your active Skill Overlay)
 
 **Read tools (9) work the instant you have an API key — no other setup.** They tell you what the engine sees (state), what it recommends (signals), and what your account is currently holding (positions). They never move money.
 
-**`decker.place_order` (1 tool) is different — read [Placing orders](#placing-orders-vs-reading-state) below before you call it.**
+**`decker.place_order` and `decker.close_position` (2 tools) are different — read [Placing orders](#placing-orders-vs-reading-state) below before you call either.**
 
 | Tool | Purpose | Key params |
 |------|---------|-----------|
@@ -233,6 +233,7 @@ Then fully quit and reopen the app (or start a new Claude Code session) — Deck
 | `decker.set_skill_overlay` | Switch overlay on the fly | `skill_id` — one of 8: `conservative_v0` \| `standard_v0` \| `aggressive_v0` \| `default_v0` \| `scalp_v0` \| `tight_v0` \| `wide_v0` \| `swing_v0` (full catalog via `get_user_skills`) |
 | `decker.get_positions` | **Your actual exposure** — real open futures positions (with live stop/target), virtual (paper) open positions, and the last 10 closed round-trips per mode. Read-only, no money moved. Check this before `place_order` to avoid duplicate/over-exposure. | — |
 | `decker.place_order` | **Places a market order through Decker's own execution engine** — the same pipe as the web chat trading UI, not your agent's own broker connection. See [Placing orders](#placing-orders-vs-reading-state). Restricted to the crypto-6 universe. | `symbol` (BTCUSDT/ETHUSDT/SOLUSDT/BNBUSDT/XRPUSDT/DOGEUSDT), `side` (buy/long/sell/short), `notional_usd` |
+| `decker.close_position` | **Closes (or partially reduces) a position** you already hold, through the same Decker-side execution engine as `place_order`. No crypto-6 restriction — closing reduces risk, so any symbol you actually hold (including HL-synthetic/paper positions) can be closed. Looks up whichever position(s) actually exist for the symbol (real + virtual independently) rather than trusting a mode you pass in; calling it on a symbol with nothing open is a clean "not found," not an error, so it's safe to call speculatively. | `symbol`, `close_fraction?` (0 < x ≤ 1, default 1.0 = full close) |
 
 All tool calls inherit the API key's tier (FREE = read-only with cache, PRO = full). Tool responses are JSON-RPC 2.0; errors return standard `{ "error": { "code": ..., "message": ... } }`.
 
@@ -242,17 +243,17 @@ Decker's MCP tools split into two very different categories, and it matters whic
 
 **Reading (10 tools — `get_*`, `set_skill_overlay`, `validate_intent`)**: pure information. Decker tells you what the engine sees and what your account already holds. Nothing here ever touches money, and none of it requires anything beyond your API key. If you want your *own* agent to decide and execute trades through your *own* broker connection — a separate broker MCP server, your own exchange API keys, your own risk logic — these are all you need. `validate_intent` is built for exactly that: a pre-trade stance check you call before handing off to your own execution path. This is Decker's core intended usage — **"Decker provides the market judgment, your agent decides and executes."**
 
-**Placing (`decker.place_order`)**: Decker executes the order itself, through Decker's own account infrastructure — **not** your agent's own broker connection. Concretely:
+**Placing/closing (`decker.place_order`, `decker.close_position`)**: Decker executes the order itself, through Decker's own account infrastructure — **not** your agent's own broker connection. Concretely:
 
-1. `place_order` resolves your API key back to your Decker account.
-2. It routes through the exact same order pipeline as the [decker-ai.com](https://decker-ai.com) chat trading UI.
-3. For it to move **real** money, that Decker account must **separately**, on the website, have: your own exchange (Binance) API key linked, real-money trading turned on in account settings, and PRO/ENTERPRISE tier (or admin). None of that happens through MCP — it's account setup you do once on the platform.
-4. **If any of that isn't done, `place_order` silently executes as a virtual (paper) trade instead of failing** — check the `execution_mode` field in the response; it's authoritative even if you expected `real`.
-5. Real orders are capped per your account tier (max notional / leverage / daily order count) and rate-limited against rapid duplicate calls (a repeated call for the same symbol+side within ~10s is rejected, not re-executed) — but there is no cross-session "are you sure" confirmation, so a real-trading-enabled account will execute whatever `place_order` sends.
+1. Both resolve your API key back to your Decker account.
+2. They route through the exact same order pipeline as the [decker-ai.com](https://decker-ai.com) chat trading UI — `close_position` specifically reuses the same manual-close path as the website's "Close" button (`reduce_only`, always allowed regardless of the real-trading kill switch — closing is risk-reducing, not risk-adding).
+3. For `place_order` to move **real** money, that Decker account must **separately**, on the website, have: your own exchange (Binance) API key linked, real-money trading turned on in account settings, and PRO/ENTERPRISE tier (or admin). None of that happens through MCP — it's account setup you do once on the platform. `close_position` has no tier/opt-in gate — if you hold a real position (however it was opened), you can always close it.
+4. **If `place_order`'s requirements aren't met, it silently executes as a virtual (paper) trade instead of failing** — check the `execution_mode` field in the response; it's authoritative even if you expected `real`. `close_position` instead looks up whatever position(s) genuinely exist (real and virtual independently) and closes those — no position for the symbol = a clean not-found, not a silent mode swap.
+5. `place_order`'s real orders are capped per your account tier (max notional / leverage / daily order count) and rate-limited against rapid duplicate calls (a repeated call for the same symbol+side within ~10s is rejected, not re-executed) — but there is no cross-session "are you sure" confirmation, so a real-trading-enabled account will execute whatever you send. `close_position` doesn't need this — closing never increases exposure, and re-closing an already-closed position just returns not-found.
 
-**In short**: if you never turn on real trading on decker-ai.com, `place_order` is a safe paper-trading sandbox. If you do turn it on, Decker is now moving your money on your behalf when your agent calls this tool — treat it with the same care you'd give any autonomous-agent broker integration.
+**In short**: if you never turn on real trading on decker-ai.com, both tools operate on your paper-trading sandbox only. If you do turn it on, Decker is now moving your money on your behalf when your agent calls `place_order` (and can close whatever's open when it calls `close_position`) — treat both with the same care you'd give any autonomous-agent broker integration.
 
-**Who `place_order` is actually for**: existing (or willing-to-become) Decker platform users who already trust Decker to hold their exchange key and want an agent-driven front-end in addition to the web chat UI — not a "connect any external agent, no other relationship with Decker" feature. If you're purely MCP-native and want to keep execution entirely in your own stack, `validate_intent` + your own broker connection (or broker MCP) is the intended path — that's what it was built for.
+**Who these are actually for**: existing (or willing-to-become) Decker platform users who already trust Decker to hold their exchange key and want an agent-driven front-end in addition to the web chat UI — not a "connect any external agent, no other relationship with Decker" feature. If you're purely MCP-native and want to keep execution entirely in your own stack, `validate_intent` + your own broker connection (or broker MCP) is the intended path — that's what it was built for.
 
 ### Resources
 
