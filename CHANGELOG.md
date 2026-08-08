@@ -4,6 +4,16 @@ All notable changes to the Decker AI are documented in this file.
 
 ---
 
+## [v1.11.0] - 2026-08-08
+
+### Added — **Positions + order placement (9 → 11 tools)**
+
+- **`decker.get_positions`** (10th tool): real open futures positions (with live stop/target) + virtual open positions + last 10 closed round-trips per mode. Read-only.
+- **`decker.place_order`** (11th tool): places a market order through Decker's own execution engine — crypto-6 universe only (BTCUSDT/ETHUSDT/SOLUSDT/BNBUSDT/XRPUSDT/DOGEUSDT). **This is a different kind of tool than the other 10** — see the new [Placing orders vs. reading state](DEVELOPER_README.md#placing-orders-vs-reading-state) section: it executes through Decker's own linked-exchange-account infrastructure (same pipe as the web chat trading UI), not your agent's own broker connection, and real-money execution requires separate account setup on decker-ai.com beyond just holding an API key.
+- Tool count corrected to **11** everywhere (rate-limit table, tool table, README).
+
+---
+
 ## [v1.10.0] - 2026-07-07
 
 ### Added

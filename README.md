@@ -132,7 +132,7 @@ Entry                                                           Target
 | Tier | Price | Daily API limit | MCP | Auto-trade |
 |------|-------|-----------------|-----|------------|
 | **FREE** | $0 forever | 30 calls/day | read-only (1d cache) | ❌ |
-| **PRO** | $20 / mo · 7-day trial | 10,000 / day | full (9 tools) | virtual + real |
+| **PRO** | $20 / mo · 7-day trial | 10,000 / day | full (11 tools) | virtual + real |
 | **ENTERPRISE** | Contact us | 100,000+ / day · custom | full + per-org skill catalog | + custom integration |
 
 > **Beta (now):** all authenticated users get **PRO for free** via `BETA_TIER_OVERRIDE=PRO`. No payment required.
