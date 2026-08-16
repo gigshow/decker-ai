@@ -4,6 +4,16 @@ All notable changes to the Decker AI are documented in this file.
 
 ---
 
+## [v1.13.0] - 2026-08-17
+
+### Added — **`decker-client` published on PyPI**
+
+- `pip install decker-client` now works — first real publish (`sdk-v0.2.0`) via the existing `publish-sdk.yml` Trusted Publisher workflow (OIDC, no stored secrets). See [pypi.org/project/decker-client](https://pypi.org/project/decker-client/).
+- Docs de-drifted: every "PyPI publish is planned / pending" caveat (README, DEVELOPER_README, docs/quickstart.md, docs/api-guide.md, docs/DEVELOPER_API_GUIDE.md, turnkey/README.md, docs/roadmap.md, sdk/python/README.md) replaced with the working `pip install decker-client` path; PyPI version badge added to README.
+- First GitHub Discussions post published (Announcements category) — builder-facing MCP intro, reusing existing approved copy (`POSITIONING_MESSAGING_CANONICAL` §2) verbatim.
+
+---
+
 ## [v1.12.0] - 2026-08-08
 
 ### Added — **Position management: close_position (11 → 12 tools)**

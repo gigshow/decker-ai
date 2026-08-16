@@ -68,7 +68,7 @@ turnkey 인스턴스는 자체 엔진 없음. 모든 데이터는 Decker 공개 
 
 **Python SDK 연동 (선택)**:
 ```python
-pip install ./sdk/python  # PyPI(decker-client) 배포 준비 중 — 현재는 로컬 설치
+pip install decker-client
 ```
 ```python
 from decker_client import Client

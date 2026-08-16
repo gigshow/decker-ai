@@ -430,7 +430,7 @@ curl https://api.decker-ai.com/api/v1/public/demo
 ## Python SDK
 
 ```bash
-pip install ./sdk/python     # PyPI (decker-client) publish pending — install from source for now
+pip install decker-client
 ```
 
 ```python

@@ -313,14 +313,11 @@ KRX symbols are also served by **Market State API v0 and MCP** with the same sch
 
 ## 6. Python SDK
 
-The SDK is included in this repository at [`sdk/python/`](../sdk/python/).
-
 ```bash
-git clone https://github.com/gigshow/decker-ai.git
-pip install -e decker-ai/sdk/python/
+pip install decker-client
 ```
 
-> `pip install decker-client` (PyPI) is planned — not yet published.
+Source lives in this repository at [`sdk/python/`](../sdk/python/) — `git clone` + `pip install -e sdk/python/` also works for local hacking.
 
 ### Basic usage
 

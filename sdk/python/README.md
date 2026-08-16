@@ -8,10 +8,11 @@ Official Python SDK for the [Decker](https://decker-ai.com) crypto signal & narr
 pip install decker-client
 ```
 
-> PyPI 미등록 시 로컬 설치:
-> ```bash
-> pip install ./sdk/python
-> ```
+로컬에서 개발하려면:
+```bash
+git clone https://github.com/gigshow/decker-ai.git
+pip install -e decker-ai/sdk/python/
+```
 
 ---
 

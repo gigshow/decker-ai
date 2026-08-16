@@ -293,12 +293,11 @@ Full step-by-step guide (per-client config, prompts, troubleshooting): **[decker
 
 ## Python SDK
 
-The SDK is included in this repository at [`sdk/python/`](sdk/python/).
-
 ```bash
-git clone https://github.com/gigshow/decker-ai.git
-pip install -e decker-ai/sdk/python/
+pip install decker-client
 ```
+
+Source lives in this repository at [`sdk/python/`](sdk/python/) — `git clone` + `pip install -e sdk/python/` also works if you want to hack on it locally.
 
 ```python
 from decker_client import Client, RateLimitError, AuthError, NotFoundError
@@ -327,8 +326,7 @@ except RateLimitError as e:
     print(f"Rate limited — retry in {e.retry_after}s")
 ```
 
-> `pip install decker-client` (PyPI) is planned — not yet published. Use the local install above until then.
-> Full reference: [sdk/python/README.md](sdk/python/README.md).
+> Full reference: [sdk/python/README.md](sdk/python/README.md) · [PyPI](https://pypi.org/project/decker-client/).
 
 ---
 
@@ -361,9 +359,6 @@ Symbols / timeframes outside this list return `404`. More symbols expanding.
 
 **Where do I get an API key?**
 [decker-ai.com](https://decker-ai.com) → **Settings → API Keys**, or Telegram [@deckerclawbot](https://t.me/deckerclawbot) → `/apikey`.
-
-**Why no `pip install decker-client`?**
-PyPI publish is planned; not yet shipped. Until then, install from this repo with `pip install -e sdk/python/`.
 
 **Why is `WATCH` a separate gate?**
 Most tools collapse the "signal forming but not confirmed" state into either `BUY` (too early) or `nothing` (silent). Decker keeps it explicit so you can monitor without acting.

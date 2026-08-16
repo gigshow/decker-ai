@@ -50,7 +50,7 @@
 | Hyperliquid·Polymarket | HL·PM 주문                                                                                                                             |
 | HL 시세·시그널 (백엔드)        | HL `allMids` → DB 시세(`hyperliquid`), 시장상태 시계열, funding 시그널(`hyperliquid_market`), watchlist 최초 노출 DB·알림, 배포 전 HL 단위테스트 CI 게이트        |
 | OpenClaw 스킬            | SKILL.md 공개, web_fetch → Decker API                                                                                                  |
-| **공개 API + Python SDK** | `POST /public/auth/verify` · `X-API-Key` 인증 · tier 기반 Rate Limit (FREE 30 / PRO 10k / ENTERPRISE 100k req/day) · Redis INCR+EXPIREAT · Python SDK v0.1.0 (repo install · PyPI 준비 중) · OpenAPI 공개 스펙 · [DEVELOPER_API_GUIDE.md](DEVELOPER_API_GUIDE.md) |
+| **공개 API + Python SDK** | `POST /public/auth/verify` · `X-API-Key` 인증 · tier 기반 Rate Limit (FREE 30 / PRO 10k / ENTERPRISE 100k req/day) · Redis INCR+EXPIREAT · Python SDK v0.2.0 (`pip install decker-client`, [PyPI](https://pypi.org/project/decker-client/)) · OpenAPI 공개 스펙 · [DEVELOPER_API_GUIDE.md](DEVELOPER_API_GUIDE.md) |
 
 
 ---

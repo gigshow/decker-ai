@@ -74,11 +74,8 @@ All `/public/*` endpoints require `X-API-Key`. Rate limit headers are returned o
 
 ## Path C — Python SDK
 
-The SDK is included in this repository:
-
 ```bash
-git clone https://github.com/gigshow/decker-ai.git
-pip install -e decker-ai/sdk/python/
+pip install decker-client
 ```
 
 ```python
@@ -99,9 +96,7 @@ with Client(api_key="dk_live_xxx") as client:
     print(f"{rl.remaining}/{rl.limit} remaining today")
 ```
 
-> `pip install decker-client` (PyPI) is planned — not yet published. Use the local install above.
-
-→ SDK reference: [sdk/python/README.md](../sdk/python/README.md)
+→ SDK reference: [sdk/python/README.md](../sdk/python/README.md) · [PyPI](https://pypi.org/project/decker-client/)
 
 ---
 
