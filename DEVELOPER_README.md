@@ -153,7 +153,7 @@ Exceeded → HTTP `429` with `Retry-After`.
 | Tier | Daily limit | MCP | Auto-trade |
 |------|-------------|-----|-----------|
 | **FREE** | 30 calls / day | read-only (1d cache) | ❌ |
-| **PRO** | 10,000 / day | full (12 tools) | virtual + real |
+| **PRO** | 1,000 / day | full (13 tools) | virtual + real |
 | **ENTERPRISE** | 100,000+ / day · custom | full + per-org skill catalog | + custom integration |
 
 > **Beta (now):** authenticated users get **PRO for free** via `BETA_TIER_OVERRIDE=PRO`. No payment required.
@@ -214,11 +214,11 @@ claude mcp add decker https://api.decker-ai.com/api/v1/mcp --transport http -H "
 
 Then fully quit and reopen the app (or start a new Claude Code session) — Decker tools appear in the tool picker. Config changes only take effect for a *new* session; a session already running keeps its old connection until restarted. Verify the server + tool list with no key: `curl https://api.decker-ai.com/api/v1/mcp/health`.
 
-### 12 tools (auto-applies your active Skill Overlay)
+### 13 tools (auto-applies your active Skill Overlay)
 
-**Read tools (9) work the instant you have an API key — no other setup.** They tell you what the engine sees (state), what it recommends (signals), and what your account is currently holding (positions). They never move money.
+**Read tools (10) work the instant you have an API key — no other setup.** They tell you what the engine sees (state), what it recommends (signals), and what your account is currently holding (positions). They never move money.
 
-**`decker.place_order` and `decker.close_position` (2 tools) are different — read [Placing orders](#placing-orders-vs-reading-state) below before you call either.**
+**`decker.place_order`, `decker.close_position`, and `decker.update_protective_stops` (3 tools) are different — read [Placing orders](#placing-orders-vs-reading-state) below before you call any of them.**
 
 | Tool | Purpose | Key params |
 |------|---------|-----------|
@@ -234,6 +234,7 @@ Then fully quit and reopen the app (or start a new Claude Code session) — Deck
 | `decker.get_positions` | **Your actual exposure** — real open futures positions (with live stop/target), virtual (paper) open positions, and the last 10 closed round-trips per mode. Read-only, no money moved. Check this before `place_order` to avoid duplicate/over-exposure. | — |
 | `decker.place_order` | **Places a market order through Decker's own execution engine** — the same pipe as the web chat trading UI, not your agent's own broker connection. See [Placing orders](#placing-orders-vs-reading-state). Restricted to the crypto-6 universe. | `symbol` (BTCUSDT/ETHUSDT/SOLUSDT/BNBUSDT/XRPUSDT/DOGEUSDT), `side` (buy/long/sell/short), `notional_usd` |
 | `decker.close_position` | **Closes (or partially reduces) a position** you already hold, through the same Decker-side execution engine as `place_order`. No crypto-6 restriction — closing reduces risk, so any symbol you actually hold (including HL-synthetic/paper positions) can be closed. Looks up whichever position(s) actually exist for the symbol (real + virtual independently) rather than trusting a mode you pass in; calling it on a symbol with nothing open is a clean "not found," not an error, so it's safe to call speculatively. | `symbol`, `close_fraction?` (0 < x ≤ 1, default 1.0 = full close) |
+| `decker.update_protective_stops` | **Modifies the stop-loss and/or take-profit on a position you already hold.** There's no `cancel_order` tool because Decker only places market orders (nothing resting to cancel) — this fills the actual gap, adjusting protection on an open position. `real`: cancels the old exchange SL/TP order(s) and places new ones at the given price(s) — new order first, old one canceled after (no unprotected window). `virtual`: updates the paper position's columns directly. Provide at least one of `sl_price`/`tp_price`; the other side is left unchanged if omitted. If both a real and virtual position are open for the symbol, `mode` is required. | `symbol`, `sl_price?`, `tp_price?`, `mode?` (`real`\|`virtual` — required only if both open) |
 
 All tool calls inherit the API key's tier (FREE = read-only with cache, PRO = full). Tool responses are JSON-RPC 2.0; errors return standard `{ "error": { "code": ..., "message": ... } }`.
 
@@ -242,6 +243,8 @@ All tool calls inherit the API key's tier (FREE = read-only with cache, PRO = fu
 Decker's MCP tools split into two very different categories, and it matters which one you're calling:
 
 **Reading (10 tools — `get_*`, `set_skill_overlay`, `validate_intent`)**: pure information. Decker tells you what the engine sees and what your account already holds. Nothing here ever touches money, and none of it requires anything beyond your API key. If you want your *own* agent to decide and execute trades through your *own* broker connection — a separate broker MCP server, your own exchange API keys, your own risk logic — these are all you need. `validate_intent` is built for exactly that: a pre-trade stance check you call before handing off to your own execution path. This is Decker's core intended usage — **"Decker provides the market judgment, your agent decides and executes."**
+
+**Adjusting protection (`decker.update_protective_stops`)**: modifies the stop-loss and/or take-profit on a position you already hold — there's no `cancel_order` tool because Decker only places market orders (nothing resting to cancel), so this is the actual gap it fills. `real`: cancels the old exchange SL/TP order(s) and places new ones at the given price(s), new order first so there's no unprotected window. `virtual`: updates the paper position's columns directly. If both a real and virtual position are open for the symbol, pass `mode` explicitly or the call is rejected asking which one — no silent fallback here.
 
 **Placing/closing (`decker.place_order`, `decker.close_position`)**: Decker executes the order itself, through Decker's own account infrastructure — **not** your agent's own broker connection. Concretely:
 

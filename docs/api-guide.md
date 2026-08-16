@@ -27,7 +27,7 @@ X-API-Key: dk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 | Tier | Price | Daily Limit | Headers |
 |------|-------|-------------|---------|
 | **FREE** | $0 (forever) | 30 calls/day | `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset` |
-| **PRO** | $20 / month · 7d trial | 10,000 calls/day | same |
+| **PRO** | $20 / month · 7d trial | 1,000 calls/day | same |
 | **ENTERPRISE** | Contact us | 100,000+ calls/day · custom | same |
 
 > **Beta**: all authenticated users get **PRO full access** for free during beta (`BETA_TIER_OVERRIDE=PRO`).
@@ -63,7 +63,7 @@ curl -X POST https://api.decker-ai.com/api/v1/public/auth/verify \
 {
   "valid": true,
   "tier": "pro",
-  "rate_limit": 10000,
+  "rate_limit": 1000,
   "permissions": ["signals:read", "signals:narrative"]
 }
 ```

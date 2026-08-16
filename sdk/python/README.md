@@ -118,8 +118,8 @@ print(latest.direction, latest.entry_price)
 
 | Tier    | 일일 한도 |
 |---------|----------|
-| FREE    | 100 req  |
-| PRO     | 10,000 req |
+| FREE    | 30 req  |
+| PRO     | 1,000 req |
 | ENTERPRISE | 100,000 req |
 
 ```python

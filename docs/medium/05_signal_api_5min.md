@@ -267,7 +267,7 @@ The read endpoints are free because **adoption beats monetization at this stage*
 
 The revenue model is simple:
 - **Free**: 30 API calls/day, Web + Telegram included
-- **Pro** ($20/mo): 10,000 calls/day, full MCP (7 tools), auto-trade
+- **Pro** ($20/mo): 1,000 calls/day, full MCP (13 tools), auto-trade
 - **Enterprise**: custom limits, per-org skill catalog, custom integration
 
 During the open beta, signed-up users get **Pro for free**.

@@ -33,7 +33,7 @@ metadata:
 - `/apikey reset` — 기존 키 폐기 후 재발급.
 - 키는 **한 번만** 전체 표시. 분실 시 `/apikey reset`.
 
-**Tier**: 기본 FREE (100 req/day). 상위 플랜 문의는 텔레그램.
+**Tier**: 기본 FREE (30 req/day). 상위 플랜 문의는 텔레그램.
 
 ---
 
@@ -110,7 +110,7 @@ curl -H "X-API-Key: dk_live_..." \
 | Tier | 일일 한도 | 비고 |
 |------|-----------|------|
 | FREE | 30 req/day | 웹 Settings→API Keys · 텔레그램 /apikey |
-| PRO | 10,000 req/day | $20/mo |
+| PRO | 1,000 req/day | $20/mo |
 | ENTERPRISE | 100,000 req/day | 문의 |
 
 429 응답 시 내일 리셋. 헤더: `X-RateLimit-Remaining`.

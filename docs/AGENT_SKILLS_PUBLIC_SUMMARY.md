@@ -7,7 +7,7 @@
 | [DEVELOPER_API_GUIDE.md](./DEVELOPER_API_GUIDE.md) | **개발자 진입점**: 인증·Rate Limit·SDK·엔드포인트·FAQ |
 | [TWO_WAY_MODEL.md](./TWO_WAY_MODEL.md) | Decker 접근 방법(텔레그램 봇·MCP·OpenClaw·API·turnkey) 한 페이지 |
 | [AGENT_ENDPOINT_VERIFICATION.md](./AGENT_ENDPOINT_VERIFICATION.md) | 각 방법 실호출 검증 결과 (읽기/주문 상태) |
-| [decker-ai.com/mcp](https://decker-ai.com/mcp) | MCP 서버 연결 가이드 (내 Claude/에이전트 ↔ Decker, 7 tools) |
+| [decker-ai.com/mcp](https://decker-ai.com/mcp) | MCP 서버 연결 가이드 (내 Claude/에이전트 ↔ Decker, 13 tools) |
 | [ONBOARDING_PUBLIC.md](./ONBOARDING_PUBLIC.md) | 레포 방문자: 써보기·IDE 스킬·기여 경로 한 장 |
 | [DECKER_AGENT_SKILLS.md](./DECKER_AGENT_SKILLS.md) | Decker 스킬 — OpenClaw 패키지·IDE 도메인 스킬·전략 DSL |
 | [TELEGRAM_AGENT_COMMANDS.md](./TELEGRAM_AGENT_COMMANDS.md) | 텔레그램 봇 `/` 명령·자연어·웹 PhaseD와 채널 구분 |
@@ -27,7 +27,7 @@
 
 - **개발(IDE 스킬)**: 도메인은 `decker-signal`, `decker-execution-mode` 등 프로젝트 스킬.
 - **사용자(텔레그램)**: `/help`, `/services`, `/apikey`(API 키 발급), 자연어 동일 동작 — 표는 `TELEGRAM_AGENT_COMMANDS.md`. **주문·포지션은 @deckerclawbot**(실주문 검증).
-- **에이전트(MCP)**: 내 Claude/Cursor를 Decker MCP에 연결 → 시그널·상태·시장 7 tools ([decker-ai.com/mcp](https://decker-ai.com/mcp)).
+- **에이전트(MCP)**: 내 Claude/Cursor를 Decker MCP에 연결 → 시그널·상태·시장 + 주문 13 tools ([decker-ai.com/mcp](https://decker-ai.com/mcp)).
 - **개발자(Public API)**: 텔레그램 연동 후 `/apikey` → `dk_live_xxx` 수령 → `X-API-Key` 헤더 → `api.decker-ai.com/docs`.
 - **웹 PhaseD 데모 채팅**: `service-page` 내장 명령 — 텔레그램과 1:1 아님(§6).
 

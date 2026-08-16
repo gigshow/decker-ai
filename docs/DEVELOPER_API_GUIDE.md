@@ -118,7 +118,7 @@ Quota resets daily at **UTC midnight**.
 | Tier | Price | Daily Limit | How to upgrade |
 |------|-------|------------|----------------|
 | FREE | $0 (forever) | 30 calls/day | Default on `/apikey` |
-| PRO | $20 / month · 7d trial | 10,000 calls/day | Telegram bot · auto-charge after trial |
+| PRO | $20 / month · 7d trial | 1,000 calls/day | Telegram bot · auto-charge after trial |
 | ENTERPRISE | Contact us | 100,000+ calls/day · custom SLA | Contact via Telegram bot |
 
 > **Beta** (current): all authenticated users get **PRO full access** for free (`BETA_TIER_OVERRIDE=PRO` env on backend).

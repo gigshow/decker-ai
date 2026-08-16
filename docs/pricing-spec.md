@@ -7,7 +7,7 @@ Canonical tiers: **FREE / PRO / ENTERPRISE**. Matches the [README pricing table]
 | Tier | Price | Daily API limit | MCP | Auto-trade |
 |------|-------|-----------------|-----|------------|
 | **FREE** | $0 forever | 30 calls/day | read-only (1d cache) | — |
-| **PRO** | $20/mo · 7-day trial | 10,000/day | full (7 tools) | virtual + real |
+| **PRO** | $20/mo · 7-day trial | 1,000/day | full (13 tools) | virtual + real |
 | **ENTERPRISE** | Contact us | 100,000+/day · custom | full + per-org skill catalog | + custom integration |
 
 ---
@@ -23,10 +23,10 @@ Canonical tiers: **FREE / PRO / ENTERPRISE**. Matches the [README pricing table]
 
 - Everything in FREE
 - Real-time signal alerts
-- Full MCP (7 tools)
+- Full MCP (13 tools)
 - Auto-trade (virtual + real)
 - 7-day free trial
-- API: 10,000 calls/day
+- API: 1,000 calls/day
 
 ## ENTERPRISE — contact us
 

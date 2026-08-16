@@ -135,7 +135,7 @@
 | **인증** | `X-API-Key` 헤더 필수 (모든 `/public/*` 경로) |
 | **키 발급** | [decker-ai.com](https://decker-ai.com) → 설정 → API 키 |
 | **FREE** | $0 (영구) · 30 calls/day |
-| **PRO** | $20/mo · 7d trial · 10,000 calls/day · MCP full · 자동주문 |
+| **PRO** | $20/mo · 7d trial · 1,000 calls/day · MCP full(13 tools) · 자동주문 |
 | **ENTERPRISE** | 문의 · 100,000+ calls/day · 우선 SLA · custom |
 | **초과 시** | HTTP 429 + `Retry-After` |
 | **베타** | 모든 사용자 PRO 풀 액세스 무료 (`BETA_TIER_OVERRIDE=PRO`) |
