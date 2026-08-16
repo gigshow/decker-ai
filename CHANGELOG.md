@@ -4,6 +4,18 @@ All notable changes to the Decker AI are documented in this file.
 
 ---
 
+## [v1.14.0] - 2026-08-17
+
+### Changed — **Developer docs restructured: one entry point instead of four**
+
+- Walked the actual first-visit-to-last-step reader journey and found the real root cause behind repeated rate-limit/tool-count drift: the same facts were copy-pasted across four competing "developer guide" documents (`DEVELOPER_README.md`, `docs/DEVELOPER_API_GUIDE.md`, `docs/api-guide.md`, `docs/quickstart.md`) that different parts of the repo each linked to as if it were *the* canonical one — so every fact had 3-5 places to go stale in independently.
+- **Retired `docs/DEVELOPER_API_GUIDE.md`** — its unique content (KRX endpoint schemas, `/stats`, mechanical FAQ) merged into `DEVELOPER_README.md` (now fully self-contained: quickstart, endpoints, auth, rate limits, **new Error codes section**, MCP, SDK, FAQ) and `docs/api-guide.md` (now the single field-level deep reference). Redirected all 13 inbound links across the repo (README, docs/README persona index, ONBOARDING_PUBLIC, TWO_WAY_MODEL, roadmap, TELEGRAM_AGENT_COMMANDS, AGENT_SKILLS_PUBLIC_SUMMARY, DECKER_AGENT_SKILLS, both OpenClaw SKILL.md files) — zero broken links, verified by a full-repo link-resolution pass.
+- `docs/api-guide.md`: dropped the duplicate auth/rate-limit/quickstart sections it had accumulated, added a grounded **Error Codes** table (traced against actual backend responses — 401/404/422 return a plain-text `detail`, not the fabricated `code` field both old docs claimed; a completely missing API key used to be `422`, has been `401` since 2026-07-08).
+- `docs/quickstart.md`: fixed its persona placement (it's a Builder doc, `docs/README.md`'s table only listed it under Trader), removed its own duplicate rate-limit table.
+- Fixed factual drift found along the way: `llms.txt` (the AI-agent discovery file) told agents Decker exposes **8 MCP tools**, omitting `get_assembly`/`place_order`/`close_position`/`get_positions`/`update_protective_stops` entirely — corrected to the real 13, split into reading (10) vs. order/execution (3). Also fixed a stray `PRO 10k/day` in `docs/roadmap.md` and the OpenClaw `decker` skill's `API_QUICK.md` reference (missed by grep in the previous rate-limit pass because they used the `10k` abbreviation, not `10,000`).
+
+---
+
 ## [v1.13.0] - 2026-08-17
 
 ### Added — **`decker-client` published on PyPI**

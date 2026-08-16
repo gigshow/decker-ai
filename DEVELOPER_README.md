@@ -6,7 +6,7 @@
 
 Build with Decker: REST API · MCP server · Python SDK · OpenClaw skill · [multi-agent crews](docs/integrations/multi-agent-frameworks.md).
 
-[Main README](README.md) · [API docs](https://api.decker-ai.com/docs) · [DEVELOPER_API_GUIDE.md](docs/DEVELOPER_API_GUIDE.md)
+[Main README](README.md) · [API docs](https://api.decker-ai.com/docs) · [Deep API reference](docs/api-guide.md)
 
 </div>
 
@@ -18,6 +18,7 @@ Build with Decker: REST API · MCP server · Python SDK · OpenClaw skill · [mu
 - [Endpoints](#endpoints)
 - [Auth](#auth)
 - [Rate limits](#rate-limits)
+- [Error codes](#error-codes)
 - [MCP server (Way E) — full guide](#mcp-server-way-e)
   - [Placing orders vs. reading state](#placing-orders-vs-reading-state)
 - [Multi-agent frameworks (TradingAgents · LangGraph · AutoGen)](docs/integrations/multi-agent-frameworks.md)
@@ -87,6 +88,9 @@ Full OpenAPI spec: **[api.decker-ai.com/docs](https://api.decker-ai.com/docs)**.
 | `GET`  | `/api/v1/public/state/live` | Engine state (c_state · gate · MTF) |
 | `GET`  | `/api/v1/public/state/{symbol}/{tf}` | **Market State v0** — persisted per-bar engine state, read as-is (zero recompute). `state` (label · swing · c_state · gate) + `why` (reason_codes · hold_reason · mtf_verdict) + `provenance` |
 | `GET`  | `/api/v1/public/state/{symbol}/{tf}/timeline` | Per-bar state timeline (`since`, `limit` ≤ 500). Bars the engine did not emit are simply absent — honest gaps, no filling |
+| `GET`  | `/api/v1/public/reading/{sym}/{tf}` | AI reading view v0.2 (8 blocks) — full response schema: [api-guide.md](docs/api-guide.md#market-reading-ai-synthesis) |
+| `GET`  | `/api/v1/public/reading/{sym}/{tf}/explain?provider=claude` | Passes the reading view to an LLM (Claude/OpenAI), returns a Korean-language narrative — falls back to rule-based rendering if the LLM is unavailable |
+| `GET`  | `/api/v1/public/stats` | No auth. 30-day engine evaluation counts + GO/WATCH/HOLD distribution per symbol, 60s cache |
 
 **Market State v0 coverage** — one schema, three symbol families:
 
@@ -97,7 +101,6 @@ Full OpenAPI spec: **[api.decker-ai.com/docs](https://api.decker-ai.com/docs)**.
 | KRX Korean stocks | `000270.KRX` | `1d` `1w` | daily 16:30 KST (`1w` Fri 17:00) | `krx:daily` |
 
 KRX is a daily batch, so a large `freshness_sec` is the honest value, not staleness.
-| `GET`  | `/api/v1/public/reading/{sym}/{tf}` | AI reading view v0.2 (8 blocks) |
 
 ### KRX (Beta — free)
 
@@ -134,7 +137,14 @@ KRX details: [`docs/krx/KRX_BUSINESS_MODEL_AND_ROADMAP_2026-05-09.md`](docs/krx/
 X-API-Key: dk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
-Keys are issued from the web UI (**Settings → API Keys**) or via Telegram `/apikey`. See [DEVELOPER_API_GUIDE.md](docs/DEVELOPER_API_GUIDE.md) for full auth flow, scopes, and rotation.
+| Field | Value |
+|-------|-------|
+| Key format | `dk_live_<32 URL-safe chars>` |
+| Where to issue | Web: Settings → API Keys · Telegram: `/apikey` |
+| Expiry | None by default |
+| Revoke / reissue | `/apikey reset` in Telegram, or Settings → API Keys on the web |
+
+> `Authorization: Bearer` headers are not recognized by the public API — use `X-API-Key`.
 
 ---
 
@@ -157,6 +167,21 @@ Exceeded → HTTP `429` with `Retry-After`.
 | **ENTERPRISE** | 100,000+ / day · custom | full + per-org skill catalog | + custom integration |
 
 > **Beta (now):** authenticated users get **PRO for free** via `BETA_TIER_OVERRIDE=PRO`. No payment required.
+
+---
+
+## Error codes
+
+401/404/422 return a plain-text `detail` string — no machine `code` field. Only 429 is structured.
+
+| HTTP | Cause |
+|------|-------|
+| 401 | `X-API-Key` header missing, malformed, or the key is invalid/revoked |
+| 404 | Unknown symbol, or a supported symbol with no active signal right now (message tells you which) |
+| 422 | Unsupported value for a parameter like `timeframe` on that endpoint |
+| 429 | Daily quota exhausted — structured `{"code": "RATE_LIMIT_EXCEEDED", "limit", "reset"}` + `Retry-After` header |
+
+Full cause/message table with real examples: [api-guide.md → Error Codes](docs/api-guide.md#error-codes).
 
 ---
 
@@ -370,10 +395,16 @@ Most tools collapse the "signal forming but not confirmed" state into either `BU
 No. The LLM only **explains** the structural state produced by the deterministic engine. The rules path runs at `$0` LLM cost; the explanation layer is opt-in.
 
 **How is auto-trade gated?**
-PRO tier + per-symbol skill enabled in your Strategy preset + execution_mode (`paper` vs `live`) set per channel. See [DEVELOPER_API_GUIDE.md](docs/DEVELOPER_API_GUIDE.md) for the full execution-mode contract.
+PRO tier + per-symbol skill enabled in your Strategy preset + `execution_mode` (`paper` vs `live`) set per channel.
 
 **Can I use Decker for backtesting?**
 The same rulebook (`operation_rules/RULES.yaml`) drives backtest and live evaluation. See [docs/signal-performance.md](docs/signal-performance.md) for our internal backtest methodology.
+
+**How do I point the SDK at a local/self-hosted instance?**
+`Client(api_key="...", base_url="http://localhost:8000")`.
+
+**I keep getting 429.**
+FREE tier is 30 req/day. Upgrade to PRO (1,000/day) at decker-ai.com → Settings → API Keys, or via the Telegram bot — free during beta (`BETA_TIER_OVERRIDE=PRO`).
 
 ---
 
@@ -381,9 +412,8 @@ The same rulebook (`operation_rules/RULES.yaml`) drives backtest and live evalua
 
 | | |
 |--|--|
-| [Developer API Guide](docs/DEVELOPER_API_GUIDE.md) | Full auth · rate limits · SDK · FAQ |
-| [Quick Start](docs/quickstart.md) | 3-step per path |
-| [API Guide](docs/api-guide.md) | Endpoint reference (long form) |
+| [Quick Start](docs/quickstart.md) | 5-minute path picker — Telegram / MCP / REST / SDK |
+| [API Guide](docs/api-guide.md) | Full field-level endpoint reference + error codes |
 | [Architecture](docs/architecture.md) | Pipeline, state engine, modules |
 | [Model & Algorithm](docs/model.md) | How the signal engine works |
 | [Operation Rules](operation_rules/RULES.yaml) | Open YAML rulebook (v2.4.7+) |

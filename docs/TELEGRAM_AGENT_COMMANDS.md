@@ -51,7 +51,7 @@
 | `/apikey reset` | — | API 키 재발급 | 기존 키 폐기 후 새 키 발급 |
 
 **흐름**: 연동 완료 → `/apikey` → `dk_live_xxx` 수령 → `X-API-Key` 헤더로 API 호출  
-**문서**: [DEVELOPER_API_GUIDE.md](./DEVELOPER_API_GUIDE.md)
+**문서**: [DEVELOPER_README.md](../DEVELOPER_README.md)
 
 ---
 

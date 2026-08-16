@@ -1,52 +1,17 @@
-# Decker API Guide
+# Decker API Guide — deep reference
 
 Base URL: `https://api.decker-ai.com`  
 OpenAPI spec: [api.decker-ai.com/docs](https://api.decker-ai.com/docs)
 
----
-
-## Authentication
-
-All `/api/v1/public/*` endpoints require an `X-API-Key` header.
-
-```
-X-API-Key: dk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-```
-
-**Get your key via Telegram:**
-1. Open [@deckerclawbot](https://t.me/deckerclawbot) → send `/start`
-2. Send `/apikey` → receive your key
-3. Lost it? `/apikey reset` revokes and reissues
-
-> Keys can also be issued and revoked on the web: **decker-ai.com → Settings → API Keys**. Telegram and web are interchangeable.
-
----
-
-## Rate Limits
-
-| Tier | Price | Daily Limit | Headers |
-|------|-------|-------------|---------|
-| **FREE** | $0 (forever) | 30 calls/day | `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset` |
-| **PRO** | $20 / month · 7d trial | 1,000 calls/day | same |
-| **ENTERPRISE** | Contact us | 100,000+ calls/day · custom | same |
-
-> **Beta**: all authenticated users get **PRO full access** for free during beta (`BETA_TIER_OVERRIDE=PRO`).
-
-Limit exceeded → `HTTP 429` with `Retry-After` header.
-
-Verify your key and tier:
-
-```bash
-curl -X POST https://api.decker-ai.com/api/v1/public/auth/verify \
-  -H "X-API-Key: dk_live_xxx"
-# → {"valid": true, "tier": "free", "rate_limit": 100}
-```
+**New here?** This page is the field-by-field reference — full response schemas for every endpoint. For setup (getting a key, auth header, rate limits, your first call), start at **[DEVELOPER_README.md](../DEVELOPER_README.md)** instead; come back here once you need to know exactly what a response contains.
 
 ---
 
 ## Public Endpoints
 
-These require `X-API-Key`. Responses include rate limit headers.
+These require `X-API-Key` (except where noted "No Auth"). Responses include rate limit headers. Auth format and current rate limits: [DEVELOPER_README.md → Auth](../DEVELOPER_README.md#auth) / [→ Rate limits](../DEVELOPER_README.md#rate-limits).
+
+> **Timeframe support varies by endpoint** — the crypto-6 `/signals/*` endpoints serve `30m`/`1h`/`4h`/`1d`; the lower-level `/state/*` and `/reading/*` endpoints read the engine directly and additionally support `15m`/`8h`/`1w`. Each endpoint below states its own valid set.
 
 ### Verify API Key
 
@@ -427,35 +392,88 @@ curl https://api.decker-ai.com/api/v1/public/demo
 
 ---
 
-## Python SDK
+### KRX Korean Stocks (Beta, free)
+
+Same deterministic engine on KOSPI + KOSDAQ, with **portfolio actions** (ADD/HOLD/REDUCE/EXIT) instead of buy/sell — see [DEVELOPER_README.md → Endpoints](../DEVELOPER_README.md#endpoints) for the endpoint list and [KRX Business Model & Roadmap](krx/KRX_BUSINESS_MODEL_AND_ROADMAP_2026-05-09.md) for the beta scope.
+
+```
+GET /api/v1/public/krx/signals
+```
 
 ```bash
-pip install decker-client
+curl -H "X-API-Key: $KEY" \
+  'https://api.decker-ai.com/api/v1/public/krx/signals?gate=GO&market=KOSPI&limit=10'
 ```
 
-```python
-from decker_client import Client, RateLimitError
+**Query**: `gate` (GO/WATCH/HOLD) · `action` (ADD/HOLD/REDUCE/EXIT) · `sector` · `market` (KOSPI/KOSDAQ/ALL) · `timeframe` (1d/1w) · `limit` (≤500)
 
-with Client(api_key="dk_live_xxx") as client:
-    # Structural narrative (rule-based)
-    narr = client.signals.get_narrative("BTCUSDT", "1h")
-    print(narr.text)
-
-    # Latest signal
-    sig = client.signals.get_latest("BTCUSDT")
-    print(f"{sig.direction} | entry={sig.entry_price} target={sig.target_price}")
-
-    # Rate limit remaining
-    print(client.last_rate_limit.remaining)
-
-    # Handle rate limits
-    try:
-        narr = client.signals.get_narrative("SOLUSDT", "4h")
-    except RateLimitError as e:
-        print(f"Retry in {e.retry_after}s")
+**Response signal fields**:
+```typescript
+{
+  ticker:           string                // "005930"
+  company_name:     string                // "삼성전자"
+  market:           "KOSPI" | "KOSDAQ"
+  sector:           string                // KSIC 33-classification
+  action_gate:      "GO" | "WATCH" | "HOLD"
+  portfolio_action: "ADD" | "HOLD" | "REDUCE" | "EXIT"
+  entry_krw:        number | null         // entry price (KRW)
+  target_krw:       number | null
+  stop_krw:         number | null
+  key_direction:    "+" | "-" | "0"
+  c_state:          string                // engine FSM state
+  user_state:       "DRIVE" | "FORMING" | "PENDING" | "WATCH" | "IDLE"
+  krx_context: {
+    foreign_streak:        number | null  // foreign net-buy days (KIS API integration pending)
+    kospi200_rs_pct:       number | null
+    dart_recency_days:     number | null
+    limit_lock_state:      "normal" | "upper_limit_locked" | "lower_limit_locked"
+  }
+}
 ```
 
-Full guide: [DEVELOPER_API_GUIDE.md](DEVELOPER_API_GUIDE.md)
+Response meta: `gate_counts` · `action_counts` · `data_freshness` (fresh/stale/danger).
+
+```
+GET /api/v1/public/krx/transitions
+```
+
+Only tickers whose engine state or gate **actually changed** at the latest close — a noise-zero daily diff. This is the data spine of the "daily checkup" product surface (site strip + Telegram closing-bell briefing).
+
+```bash
+curl -H "X-API-Key: dk_live_xxx" \
+  'https://api.decker-ai.com/api/v1/public/krx/transitions?limit=40'
+```
+
+```jsonc
+{
+  "transitions": [{
+    "ticker": "000660", "company_name": "SK하이닉스",
+    "prev_c_state": "B_SET", "c_state": "B_OBSERVING",
+    "prev_gate": "HOLD", "gate": "GO", "gate_changed": true,
+    "portfolio_action": "ADD", "key_price_krw": 2650000.0,
+    "is_new": false, "evaluated_at": "2026-07-03T06:30:00"
+  }],
+  "total": 24, "evaluated_date": "2026-07-03"
+}
+```
+
+```
+GET /api/v1/public/krx/market
+```
+
+Market header — USD/KRW · base rate · KOSPI200 · signal distribution + sector breakdown + `data_freshness`.
+
+```bash
+curl -H "X-API-Key: $KEY" 'https://api.decker-ai.com/api/v1/public/krx/market'
+```
+
+> **KRX beta limits**: Foreign net-buy / market cap / fundamentals require KIS Open API integration (Q3-Q4 2026). KIS automated trading is on the Q4 roadmap.
+
+---
+
+## Python SDK
+
+Setup, usage, and error handling: [DEVELOPER_README.md → Python SDK](../DEVELOPER_README.md#python-sdk).
 
 ---
 
@@ -518,14 +536,17 @@ The engine tracks a C → B → A cycle for each structural swing:
 
 ## Error Codes
 
-| HTTP | Code | Meaning |
-|------|------|---------|
-| 401 | `invalid_api_key` | Key missing, malformed, or not found |
-| 403 | `permission_denied` | Key valid but lacks required permission |
-| 404 | `not_found` | Symbol has no active signal |
-| 422 | `validation_error` | Bad request parameters |
-| 429 | `rate_limit_exceeded` | Daily quota exhausted — check `Retry-After` |
-| 500 | `server_error` | Internal error |
+401/404/422 return a plain-text `detail` string (no machine `code` field) — read the message, it's written to be actionable. Only 429 returns a structured body.
+
+| HTTP | Cause | `detail` you'll see |
+|------|-------|----------------------|
+| 401 | Header missing, key malformed (<20 chars), or key not found/revoked | e.g. `"API key required. Send header 'X-API-Key: dk_live_...'..."` or `"Invalid or revoked API key"` |
+| 404 | Symbol never evaluated by the engine, vs. a supported symbol with no active signal right now — these are two different messages | e.g. `"Unknown symbol 'BTC' — use the full symbol, e.g. BTCUSDT..."` vs. `"No active signal for BTCUSDT 1h right now — the engine is in a neutral/observing state..."` |
+| 422 | Unsupported `timeframe` value for that endpoint | `"unsupported timeframe '2h' (valid: [...])"` |
+| 429 | Daily quota exhausted | structured: `{"code": "RATE_LIMIT_EXCEEDED", "message": "Daily API quota exceeded", "limit": ..., "reset": ...}` + `Retry-After` header |
+| 5xx | Transient server error | retry with backoff |
+
+> A completely missing `X-API-Key` header used to return `422` — that changed to a clean `401` with an issuance hint (2026-07-08). If you're matching on status code from before that date, update to `401`.
 
 ---
 

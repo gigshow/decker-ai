@@ -166,4 +166,4 @@ async def get_signal(symbol: str, timeframe: str = "1h") -> dict:
 
 ---
 
-*단일 출처: `docs/openclaw_skills/decker-developer/SKILL.md`. 상세 안내: `docs/DEVELOPER_API_GUIDE.md`.*
+*단일 출처: `docs/openclaw_skills/decker-developer/SKILL.md`. 상세 안내: `DEVELOPER_README.md`.*

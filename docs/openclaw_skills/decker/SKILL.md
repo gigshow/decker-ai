@@ -13,7 +13,7 @@ metadata:
       description: "Decker ↔ OpenClaw 인증 (decker-ai.com 연동 시 발급, X-OpenClaw-Secret 헤더용)"
   changelog:
     - "2.3.9: 연동 URL 정직화 (2026-07-08 실증) — 폐지된 decker-link·decker-link-telegram(404) 제거, 현 연동=로그인→설정→텔레그램 코드→@deckerclawbot. Slack 셀프 연동은 현재 미제공(관리자 링크만). READ(시그널·상태·시장)는 연동 없이 공개 API/키로 동작. 실증 기록: docs/AGENT_ENDPOINT_VERIFICATION.md."
-    - "2.3.8: Public API 키 발급 경로 추가 — 텔레그램 /apikey 명령(연동 후 dk_live_xxx 자동 발급), 공개 엔드포인트 /public/signals/{symbol}/latest·/narrative 안내. 개발자 진입점: api.decker-ai.com/docs, DEVELOPER_API_GUIDE.md 참조."
+    - "2.3.8: Public API 키 발급 경로 추가 — 텔레그램 /apikey 명령(연동 후 dk_live_xxx 자동 발급), 공개 엔드포인트 /public/signals/{symbol}/latest·/narrative 안내. 개발자 진입점: api.decker-ai.com/docs, DEVELOPER_README.md 참조."
     - "2.3.7: 시그널·추천 요약 UX — 사용자 응답에서 신뢰도% 단독 헤드라인 지양, 갱신 시각·반영 출처·강도·가격 중심(제품과 동일). GET judgment/signals/public 은 symbol 필수. 추천종목은 Assistant 우선(전략/trades 보조 조회 실패해도 추천 리스트 유지되는 서버 동작). 운영 검증: docs/AGENT_ENDPOINT_VERIFICATION.md, docs/VERIFICATION_EXECUTION_REPORT.md"
     - "2.3.6: 시그널 전략·상의 응답에 상태 품질·코드 개념(서버) — 사용자에게 API 경로·필드명 나열 금지 정책 유지. 레포: docs/SIGNAL_LLM_AGENT_VERIFICATION.md (개발자용)"
     - "2.3.5: Hyperliquid 시세·시그널 병행 안내 (메인 Binance, watchlist·HL funding 시그널, decker-hyperliquid 연계)"

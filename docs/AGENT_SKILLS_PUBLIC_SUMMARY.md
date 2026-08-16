@@ -4,7 +4,7 @@
 
 | 문서 | 내용 |
 |------|------|
-| [DEVELOPER_API_GUIDE.md](./DEVELOPER_API_GUIDE.md) | **개발자 진입점**: 인증·Rate Limit·SDK·엔드포인트·FAQ |
+| [DEVELOPER_README.md](../DEVELOPER_README.md) | **개발자 진입점**: 인증·Rate Limit·SDK·MCP·엔드포인트·FAQ |
 | [TWO_WAY_MODEL.md](./TWO_WAY_MODEL.md) | Decker 접근 방법(텔레그램 봇·MCP·OpenClaw·API·turnkey) 한 페이지 |
 | [AGENT_ENDPOINT_VERIFICATION.md](./AGENT_ENDPOINT_VERIFICATION.md) | 각 방법 실호출 검증 결과 (읽기/주문 상태) |
 | [decker-ai.com/mcp](https://decker-ai.com/mcp) | MCP 서버 연결 가이드 (내 Claude/에이전트 ↔ Decker, 13 tools) |

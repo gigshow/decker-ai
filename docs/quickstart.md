@@ -50,7 +50,7 @@ curl https://api.decker-ai.com/api/v1/public/health
 # Verify your key
 curl -X POST https://api.decker-ai.com/api/v1/public/auth/verify \
   -H "X-API-Key: dk_live_xxx"
-# → {"valid": true, "tier": "free", "rate_limit": 100}
+# → {"valid": true, "tier": "free", "rate_limit": 30}
 
 # Latest signal
 curl "https://api.decker-ai.com/api/v1/public/signals/BTCUSDT/latest?timeframe=1h" \
@@ -98,20 +98,7 @@ with Client(api_key="dk_live_xxx") as client:
 
 → SDK reference: [sdk/python/README.md](../sdk/python/README.md) · [PyPI](https://pypi.org/project/decker-client/)
 
----
-
-## Rate Limits
-
-| Tier | Price | Limit | How to upgrade |
-|------|-------|-------|----------------|
-| FREE | $0 (forever) | 30 calls/day | Default on `/apikey` |
-| PRO | $20 / month · 7d trial | 1,000 calls/day | Telegram bot · auto-charge after trial |
-| ENTERPRISE | Contact us | 100,000+ calls/day · custom | Contact via Telegram bot |
-
-> **Beta** (current): all users get **PRO full access** for free (`BETA_TIER_OVERRIDE=PRO`).
-
-Headers on every response: `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`  
-Exceeded → HTTP 429 + `Retry-After`
+Rate limits (FREE 30/day · PRO 1,000/day · free during beta): [DEVELOPER_README → Rate limits](../DEVELOPER_README.md#rate-limits).
 
 ---
 
@@ -146,8 +133,8 @@ Exceeded → HTTP 429 + `Retry-After`
 
 ## Next Steps
 
-- [Developer API Guide](DEVELOPER_API_GUIDE.md) — Auth, error codes, SDK, FAQ
-- [API Guide](api-guide.md) — Full endpoint reference
+- [DEVELOPER_README](../DEVELOPER_README.md) — auth, rate limits, error codes, MCP, SDK, FAQ
+- [API Guide](api-guide.md) — full field-level endpoint reference
 - [Architecture](architecture.md) — How the signal engine works
 - [RULES.yaml](../operation_rules/RULES.yaml) — Open rulebook (v2.4.7+)
 - [Article Series](medium/README.md) — Deep dives

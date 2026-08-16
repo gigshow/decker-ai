@@ -25,7 +25,7 @@
 | **텔레그램 봇** (@deckerclawbot) | Decker 호스팅 자체 에이전트 — 자연어로 시그널·포지션·주문 | ✅ | ✅ (실주문 검증) | 가입 → 설정 → 텔레그램 연동 → [@deckerclawbot](https://t.me/deckerclawbot) |
 | **MCP 서버** | 내 Claude/에이전트(Desktop·Cursor)를 Decker에 연결 (13 tools) | ✅ | ✅ (`place_order`/`close_position`/`update_protective_stops`, crypto-6·PRO 이상) | [decker-ai.com/mcp](https://decker-ai.com/mcp) · 설정 → API 키 |
 | **OpenClaw 스킬** | 내 OpenClaw 에이전트에 스킬 추가 (web_fetch) | ✅ | ⚠ Slack 연동자만 | [openclaw_skills/README.md](./openclaw_skills/README.md) |
-| **공개 REST API** | 백엔드 직접 (X-API-Key / 무인증 read) | ✅ | — | [DEVELOPER_API_GUIDE.md](./DEVELOPER_API_GUIDE.md) · [api.decker-ai.com/docs](https://api.decker-ai.com/docs) |
+| **공개 REST API** | 백엔드 직접 (X-API-Key / 무인증 read) | ✅ | — | [DEVELOPER_README.md](../DEVELOPER_README.md) · [api.decker-ai.com/docs](https://api.decker-ai.com/docs) |
 | **turnkey** | OpenClaw 없이 내 텔레그램 봇 자가 배포 | ✅ | (설정에 따라) | [turnkey/README.md](../turnkey/README.md) |
 
 > **읽기(시그널·상태·시장)는 모든 방법에서 제공**. **주문**은 텔레그램 봇(@deckerclawbot)과 MCP 서버(`place_order`/`close_position`/`update_protective_stops`, crypto-6·PRO 이상)에서 실주문까지 지원되며, OpenClaw 스킬은 Slack 연동된 사용자에 한한다(셀프 연동 페이지는 현재 미제공). 신규 사용자 주문은 @deckerclawbot 를 안내.

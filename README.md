@@ -252,7 +252,9 @@ Method and rulebook are open: [Model & Algorithm](docs/model.md) · [Operation R
 | | |
 |--|--|
 | **[DEVELOPER_README.md](DEVELOPER_README.md)** | API · MCP · SDK · OpenClaw · self-host — **start here if you're building** |
-| [Developer API Guide](docs/DEVELOPER_API_GUIDE.md) | Auth · rate limits · FAQ (long form) |
+| [Quick Start](docs/quickstart.md) | 5-minute path picker — Telegram / MCP / REST / SDK |
+| [API Guide](docs/api-guide.md) | Full field-level endpoint reference + error codes |
+| [Docs by persona](docs/README.md) | Trader / Builder / Curious about the engine / Evaluating claims |
 | [Architecture](docs/architecture.md) | Pipeline, state engine, modules |
 | [Model & Algorithm](docs/model.md) | How the signal engine works |
 | [Operation Rules](operation_rules/RULES.yaml) | Open YAML rulebook (v2.4.7+) |

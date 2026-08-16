@@ -61,7 +61,7 @@ Decker 의 핵심은 **결정론 상태·게이트 위에서 만드는 전략**�
 ## 5. 사용 경로 요약
 
 - **사용자(텔레그램)**: `/help`, `/services`, `/apikey`, 자연어 — 표는 [TELEGRAM_AGENT_COMMANDS.md](./TELEGRAM_AGENT_COMMANDS.md).
-- **개발자(Public API)**: 텔레그램 연동 후 `/apikey` → `dk_live_xxx` 수령 → `X-API-Key` 헤더 → `api.decker-ai.com/docs`. 상세 [DEVELOPER_API_GUIDE.md](./DEVELOPER_API_GUIDE.md).
+- **개발자(Public API)**: 텔레그램 연동 후 `/apikey` → `dk_live_xxx` 수령 → `X-API-Key` 헤더 → `api.decker-ai.com/docs`. 상세 [DEVELOPER_README.md](../DEVELOPER_README.md).
 - **에이전트(OpenClaw)**: §2 에서 스킬 추가 → 트리거("시그널 알려줘") → `web_fetch` → Decker API 응답을 자연어로.
 
 ---
