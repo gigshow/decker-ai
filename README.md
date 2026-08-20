@@ -63,7 +63,7 @@ curl -s https://api.decker-ai.com/api/v1/public/demo | jq .
 
 <a href="https://gigshow.github.io/decker-ai/assets/video/decker-mcp-demo.mp4"><img src="assets/screenshots/posters/decker-mcp-demo.jpg" width="760" alt="MCP journey demo — all 13 tools chained through one live session: explore, set risk, decide, execute, manage" /></a>
 
-▶️ **[Play — MCP journey demo (38s)](https://gigshow.github.io/decker-ai/assets/video/decker-mcp-demo.mp4)** · One live session, all 13 tools: explore a market → set your risk profile → decide → execute → manage — **zero LLM in the signal path.**
+▶️ **[Play — MCP journey demo (30s)](https://gigshow.github.io/decker-ai/assets/video/decker-mcp-demo.mp4)** · One live session, all 13 tools: explore a market → set your risk profile → decide → execute → manage — **zero LLM in the signal path.**
 
 ### The engine room — live FSM, MTF alignment, R:R
 
