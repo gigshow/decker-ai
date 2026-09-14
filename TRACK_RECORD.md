@@ -11,6 +11,7 @@ stay in git history.
 
 | Date (UTC) | Scope | Scorecard (correct · wrong · flat) | Sample views (outcome) |
 |------------|-------|--------------------------------------|------------------------|
+| 2026-09-13 | 14 views | correct 1 · flat 13 | BNBUSDT + → barely moved, BTCUSDT - → barely moved, DOGEUSDT + → barely moved |
 | 2026-09-12 | 14 views | correct 4 · wrong 4 · flat 6 | BNBUSDT - → direction wrong, BTCUSDT - → direction wrong, DOGEUSDT + → direction correct |
 | 2026-09-11 | 14 views | correct 4 · wrong 3 · flat 7 | BNBUSDT - → barely moved, BTCUSDT - → barely moved, DOGEUSDT - → direction wrong |
 | 2026-09-10 | 14 views | correct 5 · wrong 4 · flat 5 | BNBUSDT + → direction correct, BTCUSDT - → direction wrong, DOGEUSDT - → direction wrong |
@@ -86,17 +87,17 @@ stay in git history.
 
 | Symbol | correct | wrong | flat | legacy | latest outcome |
 |--------|---------|-------|------|--------|----------------|
-| BNBUSDT | 2 | 4 | 1 | 0 | - → direction wrong |
-| BTCUSDT | 1 | 3 | 3 | 0 | - → direction wrong |
-| DOGEUSDT | 5 | 2 | 0 | 0 | + → direction correct |
-| ETHUSDT | 2 | 1 | 4 | 0 | + → barely moved |
-| SOLUSDT | 2 | 1 | 4 | 0 | + → barely moved |
-| XRPUSDT | 4 | 1 | 2 | 0 | + → direction correct |
-| XYZ_BRENTOILUSD | 3 | 1 | 3 | 0 | - → direction correct |
-| XYZ_CLUSD | 3 | 2 | 2 | 0 | - → direction correct |
+| BNBUSDT | 2 | 3 | 2 | 0 | + → barely moved |
+| BTCUSDT | 1 | 2 | 4 | 0 | - → barely moved |
+| DOGEUSDT | 4 | 2 | 1 | 0 | + → barely moved |
+| ETHUSDT | 1 | 1 | 5 | 0 | + → barely moved |
+| SOLUSDT | 1 | 1 | 5 | 0 | + → barely moved |
+| XRPUSDT | 3 | 1 | 3 | 0 | + → barely moved |
+| XYZ_BRENTOILUSD | 3 | 1 | 3 | 0 | + → barely moved |
+| XYZ_CLUSD | 2 | 2 | 3 | 0 | + → barely moved |
 | XYZ_GOLDUSD | 2 | 2 | 3 | 0 | + → barely moved |
-| XYZ_KR200USD | 3 | 3 | 1 | 0 | - → direction wrong |
-| XYZ_NVDAUSD | 0 | 2 | 5 | 0 | - → direction wrong |
+| XYZ_KR200USD | 3 | 3 | 1 | 0 | - → barely moved |
+| XYZ_NVDAUSD | 1 | 2 | 4 | 0 | - → direction correct |
 | XYZ_SILVERUSD | 2 | 2 | 3 | 0 | - → barely moved |
 | XYZ_SP500USD | 0 | 1 | 6 | 0 | + → barely moved |
 | XYZ_TSLAUSD | 2 | 0 | 5 | 0 | + → barely moved |
