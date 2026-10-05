@@ -12,6 +12,7 @@ All notable changes to the Decker AI are documented in this file.
 - **`decker.get_view` and the daily briefing card read the same record** — direction and prices now always agree with `get_market_state` (previously the card could disagree with it on direction for ~4 in 10 symbol/timeframe pairs). The card is three lines: state per timeframe → reason → entry/target/stop, times in KST.
 - **Legacy tools `decker.get_engine_state_raw` and `decker.get_price_axis_state` are DEPRECATED** — use `get_market_state`.
 - **New REST endpoint** `GET /api/v1/public/state/{symbol}/{tf}/events` — the persisted event list for one timeframe, newest first (`since`, `limit` ≤ 200).
+- **Removed the legacy `object_context` block from MCP tool responses** (`get_view`, `get_reading`, `get_signals`, `validate_intent`, and the deprecated raw tools). It carried a second direction (`confirmed_direction`) and a percent-fallback target that could disagree with the card and `get_market_state` in the same response. Direction, entry, stop and target now come from one record.
 - Fixed: a *sell* "judgment pending" message told the reader the confirm/fail conditions the wrong way round.
 - Docs: tool count corrected to **14** (`get_trigger_history` was missing from the tables); `llms.txt` describes the current demo response (`lines[]`) instead of the retired `c_state` field.
 
