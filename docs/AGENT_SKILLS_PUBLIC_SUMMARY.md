@@ -27,7 +27,7 @@
 
 - **개발(IDE 스킬)**: 도메인은 `decker-signal`, `decker-execution-mode` 등 프로젝트 스킬.
 - **사용자(텔레그램)**: `/help`, `/services`, `/apikey`(API 키 발급), 자연어 동일 동작 — 표는 `TELEGRAM_AGENT_COMMANDS.md`. **주문·포지션은 @deckerclawbot**(실주문 검증).
-- **에이전트(MCP)**: 내 Claude/Cursor를 Decker MCP에 연결 → 시그널·상태·시장 + 주문 13 tools ([decker-ai.com/mcp](https://decker-ai.com/mcp)).
+- **에이전트(MCP)**: 내 Claude/Cursor를 Decker MCP에 연결 → 시그널·상태·시장 + 주문 14 tools ([decker-ai.com/mcp](https://decker-ai.com/mcp)).
 - **개발자(Public API)**: 텔레그램 연동 후 `/apikey` → `dk_live_xxx` 수령 → `X-API-Key` 헤더 → `api.decker-ai.com/docs`.
 - **웹 PhaseD 데모 채팅**: `service-page` 내장 명령 — 텔레그램과 1:1 아님(§6).
 
