@@ -11,6 +11,7 @@ stay in git history.
 
 | Date (UTC) | Scope | Scorecard (correct · wrong · flat) | Sample views (outcome) |
 |------------|-------|--------------------------------------|------------------------|
+| 2026-10-15 | 14 views | correct 8 · wrong 2 | DOGEUSDT - → direction correct, ETHUSDT - → direction correct, SOLUSDT - → direction correct |
 | 2026-10-14 | 14 views | correct 1 · wrong 5 · flat 2 | BNBUSDT - → direction wrong, BTCUSDT - → direction wrong, DOGEUSDT - → direction wrong |
 | 2026-10-13 | 14 views | correct 2 · wrong 5 · flat 1 | BNBUSDT - → direction wrong, ETHUSDT - → direction wrong, XRPUSDT - → direction wrong |
 | 2026-10-12 | 2 views | wrong 1 · flat 1 | BTCUSDT - → barely moved, ETHUSDT - → direction wrong |
@@ -118,19 +119,19 @@ stay in git history.
 
 | Symbol | correct | wrong | flat | legacy | latest outcome |
 |--------|---------|-------|------|--------|----------------|
-| BNBUSDT | 1 | 5 | 0 | 0 | - → direction wrong |
-| BTCUSDT | 2 | 2 | 2 | 0 | - → direction wrong |
-| DOGEUSDT | 2 | 2 | 1 | 0 | - → direction wrong |
-| ETHUSDT | 1 | 3 | 2 | 0 | - → barely moved |
-| SOLUSDT | 1 | 2 | 1 | 0 | - → direction wrong |
-| XRPUSDT | 0 | 4 | 1 | 0 | - → direction wrong |
-| XYZ_BRENTOILUSD | 2 | 1 | 1 | 0 | + → direction wrong |
-| XYZ_CLUSD | 1 | 2 | 1 | 0 | + → barely moved |
-| XYZ_GOLDUSD | 0 | 2 | 2 | 0 | - → barely moved |
-| XYZ_KR200USD | 2 | 1 | 0 | 0 | - → direction correct |
-| XYZ_NVDAUSD | 1 | 2 | 1 | 0 | - → direction correct |
-| XYZ_SILVERUSD | 0 | 2 | 2 | 0 | - → barely moved |
-| XYZ_SP500USD | 0 | 0 | 4 | 0 | - → barely moved |
-| XYZ_TSLAUSD | 2 | 2 | 2 | 0 | + → direction correct |
+| BNBUSDT | 1 | 4 | 0 | 0 | - → direction wrong |
+| BTCUSDT | 1 | 2 | 2 | 0 | - → direction wrong |
+| DOGEUSDT | 3 | 2 | 0 | 0 | - → direction correct |
+| ETHUSDT | 1 | 3 | 2 | 0 | - → direction correct |
+| SOLUSDT | 2 | 2 | 1 | 0 | - → direction correct |
+| XRPUSDT | 1 | 4 | 0 | 0 | - → direction correct |
+| XYZ_BRENTOILUSD | 1 | 2 | 1 | 0 | + → direction wrong |
+| XYZ_CLUSD | 2 | 1 | 1 | 0 | - → direction correct |
+| XYZ_GOLDUSD | 0 | 2 | 2 | 0 | - → direction wrong |
+| XYZ_KR200USD | 3 | 0 | 0 | 0 | - → direction correct |
+| XYZ_NVDAUSD | 2 | 2 | 1 | 0 | - → direction correct |
+| XYZ_SILVERUSD | 0 | 1 | 2 | 0 | - → barely moved |
+| XYZ_SP500USD | 1 | 0 | 4 | 0 | - → direction correct |
+| XYZ_TSLAUSD | 1 | 2 | 2 | 0 | + → direction correct |
 
 _For information only. Not investment advice._
