@@ -11,6 +11,7 @@ stay in git history.
 
 | Date (UTC) | Scope | Scorecard (correct · wrong · flat) | Sample views (outcome) |
 |------------|-------|--------------------------------------|------------------------|
+| 2026-10-24 | 14 views | correct 1 · wrong 4 · flat 2 | BTCUSDT + → barely moved, DOGEUSDT - → direction wrong, ETHUSDT + → direction correct |
 | 2026-10-23 | 14 views | correct 4 · wrong 3 · flat 1 | BTCUSDT + → direction correct, DOGEUSDT - → direction wrong, ETHUSDT + → direction correct |
 | 2026-10-22 | 14 views | correct 3 · wrong 3 | DOGEUSDT - → direction correct, ETHUSDT + → direction wrong, SOLUSDT + → direction wrong |
 | 2026-10-21 | 14 views | correct 3 · flat 1 | DOGEUSDT - → direction correct, XYZ_CLUSD + → direction correct, XYZ_SILVERUSD - → direction correct |
@@ -128,17 +129,17 @@ stay in git history.
 | Symbol | correct | wrong | flat | legacy | latest outcome |
 |--------|---------|-------|------|--------|----------------|
 | BNBUSDT | 0 | 2 | 1 | 0 | - → barely moved |
-| BTCUSDT | 2 | 2 | 0 | 0 | + → direction correct |
-| DOGEUSDT | 3 | 3 | 1 | 0 | - → direction wrong |
-| ETHUSDT | 1 | 4 | 1 | 0 | + → direction correct |
+| BTCUSDT | 1 | 2 | 1 | 0 | + → barely moved |
+| DOGEUSDT | 2 | 4 | 1 | 0 | - → direction wrong |
+| ETHUSDT | 2 | 4 | 0 | 0 | + → direction correct |
 | SOLUSDT | 0 | 4 | 1 | 0 | - → direction wrong |
-| XRPUSDT | 0 | 2 | 2 | 0 | - → barely moved |
-| XYZ_BRENTOILUSD | 2 | 0 | 1 | 0 | + → direction correct |
-| XYZ_CLUSD | 5 | 2 | 0 | 0 | + → direction correct |
+| XRPUSDT | 0 | 2 | 1 | 0 | - → barely moved |
+| XYZ_BRENTOILUSD | 1 | 1 | 1 | 0 | + → direction wrong |
+| XYZ_CLUSD | 4 | 3 | 0 | 0 | + → direction wrong |
 | XYZ_GOLDUSD | 1 | 0 | 2 | 0 | + → barely moved |
 | XYZ_KR200USD | 1 | 3 | 0 | 0 | - → direction wrong |
-| XYZ_NVDAUSD | 0 | 3 | 1 | 0 | - → barely moved |
-| XYZ_SILVERUSD | 3 | 3 | 1 | 0 | - → direction correct |
+| XYZ_NVDAUSD | 0 | 2 | 1 | 0 | - → barely moved |
+| XYZ_SILVERUSD | 3 | 4 | 0 | 0 | - → direction wrong |
 | XYZ_SP500USD | 0 | 1 | 5 | 0 | + → barely moved |
 | XYZ_TSLAUSD | 1 | 1 | 0 | 0 | - → direction correct |
 
