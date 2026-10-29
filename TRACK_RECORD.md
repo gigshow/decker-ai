@@ -11,6 +11,7 @@ stay in git history.
 
 | Date (UTC) | Scope | Scorecard (correct · wrong · flat) | Sample views (outcome) |
 |------------|-------|--------------------------------------|------------------------|
+| 2026-10-28 | 14 views | correct 1 · wrong 1 | ETHUSDT + → direction correct, SOLUSDT - → direction wrong |
 | 2026-10-27 | 14 views | wrong 4 · flat 1 | DOGEUSDT - → direction wrong, XRPUSDT - → direction wrong, XYZ_CLUSD + → direction wrong |
 | 2026-10-26 | 14 views | correct 1 · wrong 2 · flat 2 | BTCUSDT - → direction correct, XYZ_BRENTOILUSD + → direction wrong, XYZ_CLUSD + → direction wrong |
 | 2026-10-25 | 14 views | wrong 4 · flat 2 | BTCUSDT - → direction wrong, DOGEUSDT - → direction wrong, XRPUSDT - → direction wrong |
@@ -132,15 +133,15 @@ stay in git history.
 | Symbol | correct | wrong | flat | legacy | latest outcome |
 |--------|---------|-------|------|--------|----------------|
 | BTCUSDT | 2 | 1 | 1 | 0 | - → direction correct |
-| DOGEUSDT | 2 | 4 | 0 | 0 | - → direction wrong |
-| ETHUSDT | 2 | 1 | 0 | 0 | + → direction correct |
-| SOLUSDT | 0 | 2 | 0 | 0 | - → direction wrong |
+| DOGEUSDT | 1 | 4 | 0 | 0 | - → direction wrong |
+| ETHUSDT | 3 | 1 | 0 | 0 | + → direction correct |
+| SOLUSDT | 0 | 3 | 0 | 0 | - → direction wrong |
 | XRPUSDT | 0 | 2 | 0 | 0 | - → direction wrong |
 | XYZ_BRENTOILUSD | 0 | 2 | 1 | 0 | + → direction wrong |
-| XYZ_CLUSD | 3 | 4 | 0 | 0 | + → direction wrong |
+| XYZ_CLUSD | 2 | 4 | 0 | 0 | + → direction wrong |
 | XYZ_GOLDUSD | 0 | 0 | 3 | 0 | - → barely moved |
 | XYZ_KR200USD | 0 | 2 | 0 | 0 | - → direction wrong |
-| XYZ_SILVERUSD | 3 | 1 | 1 | 0 | - → barely moved |
-| XYZ_SP500USD | 0 | 1 | 3 | 0 | + → barely moved |
+| XYZ_SILVERUSD | 2 | 1 | 1 | 0 | - → barely moved |
+| XYZ_SP500USD | 0 | 1 | 2 | 0 | + → barely moved |
 
 _For information only. Not investment advice._
