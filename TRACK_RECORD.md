@@ -11,6 +11,7 @@ stay in git history.
 
 | Date (UTC) | Scope | Scorecard (correct · wrong · flat) | Sample views (outcome) |
 |------------|-------|--------------------------------------|------------------------|
+| 2026-10-30 | 14 views | correct 2 · wrong 1 · flat 1 | BTCUSDT + → direction wrong, DOGEUSDT - → barely moved, XYZ_GOLDUSD - → direction correct |
 | 2026-10-29 | 14 views | correct 2 · wrong 1 | DOGEUSDT - → direction correct, XYZ_CLUSD + → direction wrong, XYZ_GOLDUSD - → direction correct |
 | 2026-10-28 | 14 views | correct 1 · wrong 1 | ETHUSDT + → direction correct, SOLUSDT - → direction wrong |
 | 2026-10-27 | 14 views | wrong 4 · flat 1 | DOGEUSDT - → direction wrong, XRPUSDT - → direction wrong, XYZ_CLUSD + → direction wrong |
@@ -133,16 +134,16 @@ stay in git history.
 
 | Symbol | correct | wrong | flat | legacy | latest outcome |
 |--------|---------|-------|------|--------|----------------|
-| BTCUSDT | 2 | 1 | 1 | 0 | - → direction correct |
-| DOGEUSDT | 1 | 4 | 0 | 0 | - → direction correct |
-| ETHUSDT | 3 | 0 | 0 | 0 | + → direction correct |
-| SOLUSDT | 0 | 2 | 0 | 0 | - → direction wrong |
+| BTCUSDT | 1 | 2 | 1 | 0 | + → direction wrong |
+| DOGEUSDT | 1 | 3 | 1 | 0 | - → barely moved |
+| ETHUSDT | 2 | 0 | 0 | 0 | + → direction correct |
+| SOLUSDT | 0 | 1 | 0 | 0 | - → direction wrong |
 | XRPUSDT | 0 | 2 | 0 | 0 | - → direction wrong |
 | XYZ_BRENTOILUSD | 0 | 2 | 1 | 0 | + → direction wrong |
-| XYZ_CLUSD | 1 | 5 | 0 | 0 | + → direction wrong |
-| XYZ_GOLDUSD | 1 | 0 | 3 | 0 | - → direction correct |
-| XYZ_KR200USD | 0 | 2 | 0 | 0 | - → direction wrong |
-| XYZ_SILVERUSD | 1 | 1 | 1 | 0 | - → barely moved |
-| XYZ_SP500USD | 0 | 0 | 2 | 0 | + → barely moved |
+| XYZ_CLUSD | 0 | 5 | 0 | 0 | + → direction wrong |
+| XYZ_GOLDUSD | 2 | 0 | 3 | 0 | - → direction correct |
+| XYZ_KR200USD | 0 | 1 | 0 | 0 | - → direction wrong |
+| XYZ_SILVERUSD | 1 | 1 | 1 | 0 | - → direction correct |
+| XYZ_SP500USD | 0 | 0 | 1 | 0 | + → barely moved |
 
 _For information only. Not investment advice._
