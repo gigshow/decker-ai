@@ -135,15 +135,14 @@ stay in git history.
 
 | Symbol | correct | wrong | flat | legacy | latest outcome |
 |--------|---------|-------|------|--------|----------------|
-| BTCUSDT | 1 | 1 | 0 | 0 | + → direction wrong |
+| BTCUSDT | 0 | 1 | 0 | 0 | + → direction wrong |
 | DOGEUSDT | 1 | 1 | 2 | 0 | - → barely moved |
 | ETHUSDT | 1 | 0 | 0 | 0 | + → direction correct |
 | SOLUSDT | 0 | 1 | 0 | 0 | - → direction wrong |
 | XRPUSDT | 0 | 1 | 0 | 0 | - → direction wrong |
-| XYZ_BRENTOILUSD | 0 | 1 | 0 | 0 | + → direction wrong |
-| XYZ_CLUSD | 0 | 3 | 1 | 0 | + → barely moved |
-| XYZ_GOLDUSD | 2 | 0 | 3 | 0 | - → barely moved |
+| XYZ_CLUSD | 0 | 2 | 1 | 0 | + → barely moved |
+| XYZ_GOLDUSD | 2 | 0 | 2 | 0 | - → barely moved |
 | XYZ_KR200USD | 0 | 1 | 1 | 0 | - → barely moved |
-| XYZ_SILVERUSD | 1 | 0 | 2 | 0 | - → barely moved |
+| XYZ_SILVERUSD | 1 | 0 | 1 | 0 | - → barely moved |
 
 _For information only. Not investment advice._
