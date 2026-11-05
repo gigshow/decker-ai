@@ -137,8 +137,6 @@ stay in git history.
 |--------|---------|-------|------|--------|----------------|
 | BTCUSDT | 0 | 1 | 0 | 0 | + → direction wrong |
 | DOGEUSDT | 1 | 0 | 2 | 0 | - → barely moved |
-| ETHUSDT | 1 | 0 | 0 | 0 | + → direction correct |
-| SOLUSDT | 0 | 1 | 0 | 0 | - → direction wrong |
 | XYZ_CLUSD | 0 | 1 | 1 | 0 | + → barely moved |
 | XYZ_GOLDUSD | 2 | 0 | 1 | 0 | - → barely moved |
 | XYZ_KR200USD | 0 | 0 | 1 | 0 | - → barely moved |
